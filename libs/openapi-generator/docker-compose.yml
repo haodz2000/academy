@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  openapi-generator:
+    environment:
+      OPENAPI_SERVER: ${OPENAPI_SERVER}
+      OPENAPI_GENERATOR_USER: ${OPENAPI_GENERATOR_USER}
+      OPENAPI_GENERATOR_UID: ${OPENAPI_GENERATOR_UID}
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./src/generated:/local/out
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'

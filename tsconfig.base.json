@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@client/*": ["apps/client/src/*"],
+      "@libs/constants/*": ["libs/constants/src/*"],
+      "@libs/entities/*": ["libs/entities/src/*"],
+      "@libs/openapi-generator/*": ["libs/openapi-generator/src/*"],
+      "@libs/swagger-property/*": ["libs/swagger-property/src/*"],
+      "@libs/utils/*": ["libs/utils/src/*"],
+      "@server/*": ["apps/server/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

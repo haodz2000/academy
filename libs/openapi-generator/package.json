@@ -1,0 +1,6 @@
+{
+  "name": "openapi-generator",
+  "scripts": {
+    "gen": "docker compose up --build openapi-generator"
+  }
+}

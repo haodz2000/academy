@@ -10,23 +10,33 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
-import { useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import { store } from '@client/stores/store';
 import Script from 'next/script';
+import { NextPage } from 'next';
 import { AuthProvider } from '@client/providers/AuthProvider';
-import { AppLayout } from '@client/components/layout/AppLayout';
+import { AppLayout } from '@client/components/layouts/AppLayout';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppThemeProvider } from '@client/providers/ThemeProvider';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 interface MyAppProps extends AppProps<{ dehydratedState?: unknown }> {
+  Component: NextPageWithLayout;
   emotionCache?: EmotionCache;
 }
 
 export default function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps: { dehydratedState, ...pageProps },
+  } = props;
+  const getLayout = Component.getLayout ?? ((page) => <>{page}</>);
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -44,7 +54,7 @@ export default function MyApp(props: MyAppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <Hydrate state={pageProps.dehydratedState}>
+      <Hydrate state={dehydratedState}>
         <Provider store={store}>
           <CacheProvider value={emotionCache}>
             <AuthProvider>
@@ -63,9 +73,7 @@ export default function MyApp(props: MyAppProps) {
               <AppThemeProvider>
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
-                <AppLayout>
-                  <Component {...pageProps} />
-                </AppLayout>
+                {getLayout(<Component {...pageProps} />)}
               </AppThemeProvider>
             </AuthProvider>
           </CacheProvider>

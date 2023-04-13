@@ -9,6 +9,7 @@ import {
 import { Scalar } from '@libs/constants/interfaces/scalar';
 import { BaseEntityWithUuidPrimaryKey } from '@libs/entities/entities/BaseEntityWithUuidPrimaryKey';
 import { User } from './User';
+import { Topic } from './Topic';
 
 @Entity({ tableName: 'stored_files' })
 export class StoredFile extends BaseEntityWithUuidPrimaryKey<StoredFile, 'id'> {
@@ -46,6 +47,12 @@ export class StoredFile extends BaseEntityWithUuidPrimaryKey<StoredFile, 'id'> {
     mappedBy: (user) => user.avatar,
   })
   user_avatar = new Collection<User>(this);
+
+  @OneToMany({
+    entity: () => Topic,
+    mappedBy: (topic) => topic.cover,
+  })
+  topic_cover = new Collection<Topic>(this);
 
   @ManyToOne({
     entity: () => User,

@@ -7,12 +7,15 @@ import { User } from '@libs/entities/entities/User';
 import { Role } from '@libs/entities/entities/Role';
 import { StoredFile } from '@libs/entities/entities/StoredFile';
 import * as dotenv from 'dotenv';
+import { Topic } from '@libs/entities/entities/Topic';
+import { Category } from '@libs/entities/entities/Category';
+import { CategoryTopic } from '@libs/entities/entities/CategoryTopic';
 
 dotenv.config();
 
 const logger = new Logger('MikroORM');
 const config: Options = {
-  entities: [User, Role, StoredFile],
+  entities: [User, Role, StoredFile, Topic, Category, CategoryTopic],
   dbName: process.env.DB_NAME,
   type: process.env.DB_TYPE as keyof typeof Configuration.PLATFORMS,
   host: process.env.DB_HOST,

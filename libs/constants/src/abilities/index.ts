@@ -13,4 +13,6 @@ export enum IdSubject {
   Users = 'users',
   Roles = 'roles',
   StoredFiles = 'stored_files',
+  Categories = 'categories',
+  Topics = 'topics',
 }

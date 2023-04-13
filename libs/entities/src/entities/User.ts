@@ -1,3 +1,4 @@
+import { Category } from './Category';
 import {
   Collection,
   Entity,
@@ -9,6 +10,7 @@ import { BaseEntityWithSerialPrimaryKey } from './BaseEntityWithSerialPrimaryKey
 import { Maybe, Scalar } from '@libs/constants/interfaces/scalar';
 import { StoredFile } from '@libs/entities/entities/StoredFile';
 import { Role } from './Role';
+import { Topic } from './Topic';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -111,4 +113,28 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (User) => User.updater,
   })
   updated_users = new Collection<User>(this);
+
+  @OneToMany({
+    entity: () => Category,
+    mappedBy: (category) => category.creator,
+  })
+  created_categories = new Collection<Category>(this);
+
+  @OneToMany({
+    entity: () => Category,
+    mappedBy: (category) => category.updater,
+  })
+  updated_categories = new Collection<Category>(this);
+
+  @OneToMany({
+    entity: () => Topic,
+    mappedBy: (topic) => topic.creator,
+  })
+  created_topics = new Collection<Topic>(this);
+
+  @OneToMany({
+    entity: () => Topic,
+    mappedBy: (topic) => topic.updater,
+  })
+  updated_topics = new Collection<Topic>(this);
 }

@@ -19,6 +19,12 @@ export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
           '"Segoe UI Symbol"',
         ].join(','),
       },
+      palette: {
+        text: {
+          primary: '#FFF',
+          secondary: '#000',
+        },
+      },
     });
   }, []);
 

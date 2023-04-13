@@ -1,3 +1,4 @@
+import { CategoryModule } from './../categories/category.module';
 import { UploadModule } from './../upload/upload.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -11,6 +12,7 @@ import { UserModule } from '../users/user.module';
 
 @Module({
   imports: [
+    CategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MikroOrmModule,
     UserModule,

@@ -7,6 +7,7 @@ import { Avatar, Stack, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import { UserDrawer } from '@client/components/drawer/UserDrawer';
 
 interface Props {
   hasMenu: boolean;
@@ -113,9 +114,7 @@ export const Header = ({ hasMenu }: Props) => {
           </Tabs>
         </Stack>
       )}
-      <Stack>
-        {!user ? <GoogleSignInButton /> : <Avatar src={user?.avatar.path} />}
-      </Stack>
+      <Stack>{!user ? <GoogleSignInButton /> : <UserDrawer />}</Stack>
     </Stack>
   );
 };

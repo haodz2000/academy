@@ -24,6 +24,7 @@ export const Index = () => {
                   }
                   fill
                   style={{ borderRadius: '20px' }}
+                  unoptimized
                 />
               </Stack>
               <Stack width={'90%'} margin={'0 auto'}>

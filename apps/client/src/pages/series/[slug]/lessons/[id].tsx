@@ -5,7 +5,6 @@ import { Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
 import React, { ReactElement, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Discuss } from '@client/components/courses/course/lessons/Discuss';
 import { Discusstion } from '@client/components/courses/course/lessons/Discusstion';
 import { Assigment } from '@client/components/courses/course/lessons/Assigment';
 
@@ -27,12 +26,7 @@ const Index = () => {
         </Stack>
         <Stack width={'100%'} height={800} bgcolor={'#010101'}>
           {loading && (
-            <ReactPlayer
-              width={'100%'}
-              height={'100%'}
-              controls
-              url="https://www.youtube.com/watch?v=kWnk6j-XoH4"
-            />
+            <ReactPlayer width={'100%'} height={'100%'} controls url="" />
           )}
         </Stack>
         <Stack

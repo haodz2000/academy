@@ -83,7 +83,7 @@ export const Footer = () => {
           </Stack>
         </Stack>
         <Stack mb={10} flexDirection={'row'}>
-          <Grid container xs={12}>
+          <Grid container>
             <Grid item xs={6} padding={1}>
               <Stack width={'65%'} gap={3}>
                 <Typography variant="h1" fontSize={44} fontWeight={700}>

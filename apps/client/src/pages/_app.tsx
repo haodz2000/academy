@@ -15,7 +15,6 @@ import { store } from '@client/stores/store';
 import Script from 'next/script';
 import { NextPage } from 'next';
 import { AuthProvider } from '@client/providers/AuthProvider';
-import { AppLayout } from '@client/components/layouts/AppLayout';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppThemeProvider } from '@client/providers/ThemeProvider';
 

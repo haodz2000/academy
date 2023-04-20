@@ -17,8 +17,7 @@ interface Props extends PropsWithChildren {
 
 export const AppLayout: FC<Props> = ({ children, hasMenu, custom }) => {
   return (
-    <Grid
-      container
+    <Stack
       width={'100%'}
       height={'100vh'}
       sx={{
@@ -43,7 +42,7 @@ export const AppLayout: FC<Props> = ({ children, hasMenu, custom }) => {
             maxWidth={'1350px'}
             width={'100%'}
             padding={2}
-            margin={'80px auto'}
+            margin={'0px auto'}
           >
             {children}
           </Stack>
@@ -55,6 +54,6 @@ export const AppLayout: FC<Props> = ({ children, hasMenu, custom }) => {
         </Stack>
       )}
       <NotificationGroup />
-    </Grid>
+    </Stack>
   );
 };

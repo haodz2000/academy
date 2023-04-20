@@ -31,6 +31,7 @@ export const Products = () => {
               alt=""
               src="https://laracasts.com/images/sale/2022/large-prism.svg"
               fill
+              unoptimized
             />
           </Stack>
         </Stack>

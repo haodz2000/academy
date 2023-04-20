@@ -41,8 +41,8 @@ const menu: IMenu[] = [
   },
   {
     id: 4,
-    name: 'Forum',
-    href: '/discuss',
+    name: 'Quản lý',
+    href: '/manage',
   },
   {
     id: 5,

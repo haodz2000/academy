@@ -20,11 +20,11 @@ export class CategoryTopic extends BaseEntityWithCompositeKeys<
     ];
   }
 
-  @Property({ type: 'uuid', nullable: true })
-  topic_id!: Scalar['uuid'];
+  @Property({ type: 'integer', nullable: true })
+  topic_id!: Scalar['integer'];
 
-  @Property({ type: 'uuid', nullable: true })
-  category_id!: Scalar['uuid'];
+  @Property({ type: 'integer', nullable: true })
+  category_id!: Scalar['integer'];
 
   [PrimaryKeyType]?: [number, number];
 

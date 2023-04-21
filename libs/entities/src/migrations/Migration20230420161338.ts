@@ -10,7 +10,7 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
       tableBuilder.text('description').nullable();
       tableBuilder.smallint('status').defaultTo(0).notNullable();
       tableBuilder
-        .integer('adminstrator_id')
+        .integer('administrator_id')
         .notNullable()
         .index()
         .references('id')
@@ -31,7 +31,7 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
     await knex.schema.createTable('sections', (tableBuilder) => {
       this.addSerialPrimaryColumn(tableBuilder);
       tableBuilder.string('title', 255).notNullable();
-      tableBuilder.string('desctiption').nullable();
+      tableBuilder.string('description').nullable();
       tableBuilder
         .integer('course_id')
         .notNullable()
@@ -54,6 +54,7 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
         .inTable('sections')
         .onUpdate('CASCADE');
       tableBuilder.string('title', 255).notNullable();
+      tableBuilder.string('description').nullable();
       tableBuilder.string('link', 255).notNullable();
       tableBuilder.integer('time').notNullable();
       this.addActorColumns(tableBuilder);
@@ -111,6 +112,7 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
   async down(): Promise<void> {
     const knex = this.getKnexBuilder();
     await knex.schema.dropTable('course_requests');
+    await knex.schema.dropTable('course_topics');
     await knex.schema.dropTable('lessons');
     await knex.schema.dropTable('sections');
     await knex.schema.dropTable('courses');

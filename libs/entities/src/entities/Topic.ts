@@ -13,6 +13,8 @@ import { BaseEntityWithSerialPrimaryKey } from '@libs/entities/entities/BaseEnti
 import { User } from './User';
 import { StoredFile } from './StoredFile';
 import { Category } from './Category';
+import { CourseTopic } from './CourseTopic';
+import { Course } from './Course';
 
 @Entity({ tableName: 'topics' })
 export class Topic extends BaseEntityWithSerialPrimaryKey<Topic, 'id'> {
@@ -74,4 +76,17 @@ export class Topic extends BaseEntityWithSerialPrimaryKey<Topic, 'id'> {
     pivotEntity: () => CategoryTopic,
   })
   categories = new Collection<Category>(this);
+
+  @OneToMany({
+    entity: () => CourseTopic,
+    mappedBy: (courseTopic) => courseTopic.topic,
+  })
+  course_topics = new Collection<CourseTopic>(this);
+
+  @ManyToMany({
+    entity: () => Course,
+    mappedBy: 'topics',
+    pivotEntity: () => CourseTopic,
+  })
+  courses = new Collection<Course>(this);
 }

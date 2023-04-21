@@ -11,6 +11,10 @@ import { Maybe, Scalar } from '@libs/constants/interfaces/scalar';
 import { StoredFile } from '@libs/entities/entities/StoredFile';
 import { Role } from './Role';
 import { Topic } from './Topic';
+import { Course } from './Course';
+import { Section } from './Section';
+import { Lesson } from './Lesson';
+import { CourseTopic } from './CourseTopic';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -137,4 +141,58 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (topic) => topic.updater,
   })
   updated_topics = new Collection<Topic>(this);
+
+  @OneToMany({
+    entity: () => Course,
+    mappedBy: (course) => course.administrator,
+  })
+  administrator_courses = new Collection<Course>(this);
+
+  @OneToMany({
+    entity: () => Course,
+    mappedBy: (course) => course.creator,
+  })
+  created_courses = new Collection<Course>(this);
+
+  @OneToMany({
+    entity: () => Course,
+    mappedBy: (course) => course.updater,
+  })
+  updated_courses = new Collection<Course>(this);
+
+  @OneToMany({
+    entity: () => Section,
+    mappedBy: (section) => section.creator,
+  })
+  created_sections = new Collection<Section>(this);
+
+  @OneToMany({
+    entity: () => Section,
+    mappedBy: (section) => section.updater,
+  })
+  updated_sections = new Collection<Section>(this);
+
+  @OneToMany({
+    entity: () => Lesson,
+    mappedBy: (lesson) => lesson.creator,
+  })
+  created_lessons = new Collection<Lesson>(this);
+
+  @OneToMany({
+    entity: () => Lesson,
+    mappedBy: (lesson) => lesson.updater,
+  })
+  updated_lessons = new Collection<Lesson>(this);
+
+  @OneToMany({
+    entity: () => CourseTopic,
+    mappedBy: (courseTopic) => courseTopic.creator,
+  })
+  created_course_topics = new Collection<CourseTopic>(this);
+
+  @OneToMany({
+    entity: () => CourseTopic,
+    mappedBy: (courseTopic) => courseTopic.updater,
+  })
+  updated_course_topics = new Collection<CourseTopic>(this);
 }

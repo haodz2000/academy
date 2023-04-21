@@ -1,30 +1,31 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { v4 } from 'uuid';
+import { ValidationExceptionResponse } from '@libs/utils/responses/validation-exception.responses';
 
 class ApiError {
   constructor(error: Partial<ApiError>) {
     this.error = error.error ?? null;
     this.traceId = error.traceId = v4();
-    this.code = error.code || 'InternalServerError';
+    this.code = error.code || 500;
     this.message = error.message || 'Internal Server Error';
     this.validationErrors = error.validationErrors ?? [];
     this.timestamp = error.timestamp ?? new Date().toISOString();
   }
 
   @ApiProperty({ required: false, nullable: true })
-  error: object | null = null;
+  error: unknown | null = null;
 
   @ApiProperty()
   traceId: string;
 
   @ApiProperty()
-  code: string;
+  code: number;
 
   @ApiProperty()
   message: string;
 
-  @ApiProperty({ isArray: true, type: 'object' })
-  validationErrors: object[];
+  @ApiProperty({ isArray: true, type: ValidationExceptionResponse })
+  validationErrors: ValidationExceptionResponse[];
 
   @ApiProperty()
   timestamp: string;

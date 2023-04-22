@@ -15,4 +15,8 @@ export enum IdSubject {
   StoredFiles = 'stored_files',
   Categories = 'categories',
   Topics = 'topics',
+  Courses = 'courses',
+  Sections = 'sections',
+  Lessons = 'lessons',
+  CourseSubscribes = 'course_subscribes',
 }

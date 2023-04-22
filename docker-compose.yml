@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: project-postgres
+    container_name: academy-postgres
     image: postgres:14
     restart: always
     volumes:
-      - project_postgres_data:/var/lib/postgresql/data
+      - academy_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: $DB_NAME
       POSTGRES_USER: $DB_USER
@@ -14,14 +14,14 @@ services:
     ports:
       - '${DB_PORT}:5432'
     networks:
-      - project-network
+      - academy-network
 
   minio:
-    container_name: project-minio
+    container_name: academy-minio
     image: quay.io/minio/minio
     restart: always
     volumes:
-      - project_minio_data:/data
+      - academy_minio_data:/data
     ports:
       - '${MINIO_API_PORT}:9000'
       - '${MINIO_CONSOLE_PORT}:9001'
@@ -31,8 +31,8 @@ services:
     command: 'server /data --console-address ":9001"'
 
 networks:
-  project-network:
+  academy-network:
 
 volumes:
-  project_postgres_data:
-  project_minio_data:
+  academy_postgres_data:
+  academy_minio_data:

@@ -1,3 +1,4 @@
+import { CourseModule } from './../courses/course.module';
 import { CategoryModule } from './../categories/category.module';
 import { UploadModule } from './../upload/upload.module';
 import { Module } from '@nestjs/common';
@@ -16,6 +17,8 @@ import { ValidationException } from '@server/exceptions';
 
 @Module({
   imports: [
+    CourseModule,
+    AbilityModule,
     CategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MikroOrmModule,

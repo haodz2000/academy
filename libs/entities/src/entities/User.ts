@@ -15,6 +15,8 @@ import { Course } from './Course';
 import { Section } from './Section';
 import { Lesson } from './Lesson';
 import { CourseTopic } from './CourseTopic';
+import { CategoryTopic } from './CategoryTopic';
+import { CourseSubscribe } from './CourseSubscribe';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -143,6 +145,18 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
   updated_topics = new Collection<Topic>(this);
 
   @OneToMany({
+    entity: () => CategoryTopic,
+    mappedBy: (category) => category.creator,
+  })
+  created_category_topics = new Collection<CategoryTopic>(this);
+
+  @OneToMany({
+    entity: () => CategoryTopic,
+    mappedBy: (category) => category.updater,
+  })
+  updated_category_topics = new Collection<CategoryTopic>(this);
+
+  @OneToMany({
     entity: () => Course,
     mappedBy: (course) => course.administrator,
   })
@@ -195,4 +209,22 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (courseTopic) => courseTopic.updater,
   })
   updated_course_topics = new Collection<CourseTopic>(this);
+
+  @OneToMany({
+    entity: () => CourseSubscribe,
+    mappedBy: (courseSubscribe) => courseSubscribe.subscriber,
+  })
+  subscribed_courses = new Collection<CourseSubscribe>(this);
+
+  @OneToMany({
+    entity: () => CourseSubscribe,
+    mappedBy: (courseSubscribe) => courseSubscribe.creator,
+  })
+  created_course_subscribes = new Collection<CourseSubscribe>(this);
+
+  @OneToMany({
+    entity: () => CourseSubscribe,
+    mappedBy: (courseSubscribe) => courseSubscribe.updater,
+  })
+  updated_course_subscribes = new Collection<CourseSubscribe>(this);
 }

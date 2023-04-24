@@ -1,3 +1,4 @@
+import { TopicModule } from './../topics/topic.module';
 import { CourseModule } from './../courses/course.module';
 import { CategoryModule } from './../categories/category.module';
 import { UploadModule } from './../upload/upload.module';
@@ -17,6 +18,7 @@ import { ValidationException } from '@server/exceptions';
 
 @Module({
   imports: [
+    TopicModule,
     CourseModule,
     AbilityModule,
     CategoryModule,

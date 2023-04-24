@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -31,6 +33,8 @@ import { CourseCreateDto } from './dtos/course-create.dto';
 import { AbilitiesGuard } from '../auth/ability/abilities.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseUpdateDto } from './dtos/course-update.dto';
+import { DeleteResponse } from './responses/delete.response';
+import { CourseDetailResponse } from './responses/course-detail.response';
 
 @UseGuards(AbilitiesGuard)
 @Controller('courses')
@@ -47,6 +51,20 @@ export class CourseController {
     return AppApiPaginatedResponse.create(
       (await this.courseSerive.list()).map((i) =>
         CourseTransformer.toCourseResponse(i)
+      )
+    );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.Courses] })
+  @UseInterceptors()
+  @ApiSuccessResponse(CourseDetailResponse)
+  @ApiErrorResponse()
+  @InjectUserToQuery()
+  @Get('/:slug')
+  async findOne(@Param('slug') slug: string) {
+    return AppApiSuccessResponse.create(
+      CourseTransformer.toCourseDetailResponse(
+        await this.courseSerive.findOne(slug)
       )
     );
   }
@@ -82,5 +100,19 @@ export class CourseController {
     return AppApiSuccessResponse.create(
       await this.courseSerive.update(id, { ...data, cover })
     );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.Courses] })
+  @ApiSuccessResponse(DeleteResponse)
+  @ApiErrorResponse()
+  @Delete('/:id')
+  async delete(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })
+    )
+    id: number
+  ) {
+    return AppApiSuccessResponse.create(await this.courseSerive.delete(id));
   }
 }

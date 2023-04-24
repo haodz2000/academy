@@ -15,6 +15,7 @@ import { CourseUpdateDto } from './dtos/course-update.dto';
 import { ForbiddenError } from '@casl/ability';
 import { IdAction } from '@libs/constants/abilities';
 import { wrap } from '@mikro-orm/core';
+import { DeleteResponse } from './responses/delete.response';
 
 @Injectable()
 export class CourseService {
@@ -35,8 +36,23 @@ export class CourseService {
     });
   }
 
+  async findOne(slug: Course['slug']): Promise<Course> {
+    return await this.courseRepository.findOneOrFail(
+      { slug: slug },
+      {
+        populate: [
+          'cover',
+          'administrator.avatar',
+          'sections.lessons',
+          'topics',
+          'subscribers',
+        ],
+      }
+    );
+  }
+
   async create(data: CourseCreateDto): Promise<Course> {
-    console.log(data);
+    console.log(data.topicIds);
     await this.em.begin();
     try {
       const coverStoredFile = await this.uploadService.uploadFile(data.cover, {
@@ -65,35 +81,60 @@ export class CourseService {
       await this.em.commit();
       return course;
     } catch (error) {
-      console.log(error);
       await this.em.rollback();
     }
   }
 
   async update(id: Course['id'], data: CourseUpdateDto): Promise<Course> {
-    const course = await this.courseRepository.findOneOrFail(id, {
-      populate: ['cover', 'administrator'],
-    });
-    const ability = this.ability.defineAbility(this.request.user);
-    ForbiddenError.from(ability)
-      .setMessage('Unauthorize update this course')
-      .throwUnlessCan(IdAction.Update, course);
-    const { cover, ...updateData } = data;
-    wrap(course).assign({
-      ...updateData,
-    });
-    await this.courseRepository.persistAndFlush(course);
-    if (cover) {
-      const oldCover = course.cover;
-      const newCover = await this.uploadService.uploadFile(cover, {
-        folderPath: 'courses',
+    this.em.begin();
+    try {
+      const course = await this.courseRepository.findOneOrFail(id, {
+        populate: ['cover', 'administrator'],
       });
-      course.cover_id = newCover.id;
+      const ability = this.ability.defineAbility(this.request.user);
+      ForbiddenError.from(ability)
+        .setMessage('Unauthorize update this course')
+        .throwUnlessCan(IdAction.Update, course);
+      const { cover, ...updateData } = data;
+      wrap(course).assign({
+        ...updateData,
+      });
       await this.courseRepository.persistAndFlush(course);
-      await this.uploadService.removeFile(oldCover);
+      if (cover) {
+        const oldCover = course.cover;
+        const newCover = await this.uploadService.uploadFile(cover, {
+          folderPath: 'courses',
+        });
+        course.cover_id = newCover.id;
+        await this.courseRepository.persistAndFlush(course);
+        await this.uploadService.removeFile(oldCover);
+      }
+      this.em.commit();
+      return await this.courseRepository.findOne(id, {
+        populate: ['cover', 'administrator'],
+      });
+    } catch (error) {
+      this.em.rollback();
     }
-    return await this.courseRepository.findOne(id, {
-      populate: ['cover', 'administrator'],
-    });
+  }
+
+  async delete(id: Course['id']): Promise<DeleteResponse> {
+    await this.em.begin();
+    try {
+      const course = await this.courseRepository.findOneOrFail(id, {
+        populate: ['cover'],
+      });
+      const ability = this.ability.defineAbility(this.request.user);
+      ForbiddenError.from(ability)
+        .setMessage('Unauthorize delete this course')
+        .throwUnlessCan(IdAction.Delete, course);
+      const cover = course.cover;
+      await this.courseRepository.removeAndFlush(course);
+      await this.uploadService.removeFile(cover);
+      this.em.commit();
+      return { id };
+    } catch (error) {
+      this.em.rollback();
+    }
   }
 }

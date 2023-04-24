@@ -5,14 +5,30 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Lesson } from './Lesson';
+import {
+  LessonResponse,
+  SectionFullResponse,
+} from '@libs/openapi-generator/generated';
 
-export const Section = () => {
-  const [open, setOpen] = React.useState(true);
-
+interface Props {
+  section: SectionFullResponse;
+  order: number;
+  lessonCurrent: LessonResponse;
+}
+export const Section = ({ section, order, lessonCurrent }: Props) => {
+  const [open, setOpen] = React.useState(false);
+  useEffect(() => {
+    if (section && lessonCurrent) {
+      const lessonIds = section.lessons.map((i) => i.id);
+      if (lessonIds.includes(lessonCurrent.id)) {
+        setOpen(true);
+      }
+    }
+  }, [section, lessonCurrent]);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -30,11 +46,11 @@ export const Section = () => {
       >
         <Stack gap={2} height={1} flexDirection={'row'} alignItems="center">
           <Typography variant="subtitle2" fontWeight={500}>
-            Section 1
+            Section {order}
           </Typography>
           <Divider color="#9b9b9b" orientation="vertical" />
           <Typography variant="subtitle2" fontWeight={500}>
-            Content
+            {section.title}
           </Typography>
         </Stack>
         <Stack>
@@ -49,8 +65,9 @@ export const Section = () => {
       </Stack>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Stack gap={0.5}>
-          <Lesson />
-          <Lesson />
+          {section.lessons?.map((lesson, index) => (
+            <Lesson currentId={lessonCurrent.id} key={index} lesson={lesson} />
+          ))}
         </Stack>
       </Collapse>
     </Stack>

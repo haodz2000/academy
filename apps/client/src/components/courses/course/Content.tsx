@@ -4,8 +4,12 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { SectionItem } from '@client/components/courses/SectionItem';
+import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 
-export const Content = () => {
+interface Props {
+  course: CourseDetailResponse;
+}
+export const Content = ({ course }: Props) => {
   return (
     <Stack gap={3}>
       <Stack
@@ -27,7 +31,7 @@ export const Content = () => {
         >
           <Stack flexDirection={'row'} gap={1} alignItems={'center'}>
             <AutoStoriesIcon />
-            <Typography>10 sections</Typography>
+            <Typography>{course.sections?.length || 0} sections</Typography>
           </Stack>
           <Divider color="#9b9b9b" orientation="vertical" />
           <Stack flexDirection={'row'} gap={1} alignItems={'center'}>
@@ -41,8 +45,10 @@ export const Content = () => {
           </IconButton>
         </Stack>
       </Stack>
-      <Stack>
-        <SectionItem />
+      <Stack gap={2}>
+        {course.sections?.map((section, index) => (
+          <SectionItem order={index} key={section.id} section={section} />
+        ))}
       </Stack>
     </Stack>
   );

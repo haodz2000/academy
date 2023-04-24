@@ -1,45 +1,16 @@
 import Link from '@client/components/ui/Link';
-import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
-import React from 'react';
+import {
+  Box,
+  CircularProgress,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
+import React, { useMemo } from 'react';
 import { TopicItem } from './TopicItem';
-
-interface ICategory {
-  id: number;
-  name: string;
-  href: string;
-}
-const categories: ICategory[] = [
-  {
-    id: 1,
-    name: 'DepOpps',
-    href: '/category/depopps',
-  },
-  {
-    id: 2,
-    name: 'Frameworks',
-    href: '/category/frameworks',
-  },
-  {
-    id: 3,
-    name: 'Languages',
-    href: '/category/languages',
-  },
-  {
-    id: 4,
-    name: 'Techniques',
-    href: '/category/techniques',
-  },
-  {
-    id: 5,
-    name: 'Testing',
-    href: '/category/testing',
-  },
-  {
-    id: 6,
-    name: 'Tooling',
-    href: '/category/tooling',
-  },
-];
+import { useTopicsQuery } from '@client/hooks/apis/topics/useTopicsQuery';
+import { useCategoriesQuery } from '@client/hooks/apis/categories/useCategoriesQuery';
 
 export const Topics = () => {
   const [value, setValue] = React.useState(0);
@@ -47,6 +18,22 @@ export const Topics = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const topicsQuery = useTopicsQuery({ c: value });
+  const categoriesQuery = useCategoriesQuery();
+  const topics = useMemo(() => {
+    return topicsQuery.data?.data ?? [];
+  }, [topicsQuery.data?.data]);
+  const categories = useMemo(() => {
+    return categoriesQuery.data?.data ?? [];
+  }, [categoriesQuery.data?.data]);
+
+  if (topicsQuery.isLoading) {
+    return (
+      <Stack position="absolute" top={0} right={0} left={0} bottom={0}>
+        <CircularProgress />
+      </Stack>
+    );
+  }
   return (
     <Stack gap={3}>
       <Stack
@@ -116,15 +103,9 @@ export const Topics = () => {
         gap={2}
         justifyContent="center"
       >
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
-        <TopicItem />
+        {topics.map((topic) => (
+          <TopicItem key={topic.id} topic={topic} />
+        ))}
       </Stack>
     </Stack>
   );

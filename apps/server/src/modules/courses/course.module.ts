@@ -1,3 +1,5 @@
+import { LessonController } from './lessons/lesson.controller';
+import { LessonService } from './lessons/lesson.service';
 import { SectionService } from './sections/section.service';
 import { CourseService } from './course.service';
 import { CourseController } from './course.controller';
@@ -29,7 +31,7 @@ import { SectionController } from './sections/section.controller';
     UploadModule,
     AbilityModule,
   ],
-  controllers: [CourseController, SectionController],
-  providers: [CourseService, SectionService],
+  controllers: [CourseController, SectionController, LessonController],
+  providers: [CourseService, SectionService, LessonService],
 })
 export class CourseModule {}

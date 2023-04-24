@@ -3,6 +3,7 @@ export enum AppSwaggerTag {
   AuthGoogle = 'authGoogle',
   Auth = 'auth',
   Categories = 'categories',
+  Topics = 'topics',
   Courses = 'courses',
   Sections = 'sections',
   Lessons = 'lessons',

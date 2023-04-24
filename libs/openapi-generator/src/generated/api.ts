@@ -61,10 +61,10 @@ export interface ApiError {
   traceId: string;
   /**
    *
-   * @type {string}
+   * @type {number}
    * @memberof ApiError
    */
-  code: string;
+  code: number;
   /**
    *
    * @type {string}
@@ -73,10 +73,10 @@ export interface ApiError {
   message: string;
   /**
    *
-   * @type {Array<object>}
+   * @type {Array<ValidationExceptionResponse>}
    * @memberof ApiError
    */
-  validationErrors: Array<object>;
+  validationErrors: Array<ValidationExceptionResponse>;
   /**
    *
    * @type {string}
@@ -100,6 +100,31 @@ export interface AppApiErrorResponse {
    *
    * @type {string}
    * @memberof AppApiErrorResponse
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface AppApiPaginatedResponse
+ */
+export interface AppApiPaginatedResponse {
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof AppApiPaginatedResponse
+   */
+  data: Array<string>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof AppApiPaginatedResponse
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof AppApiPaginatedResponse
    */
   message: string;
 }
@@ -147,6 +172,529 @@ export interface AuthMe200ResponseAllOf {
    * @memberof AuthMe200ResponseAllOf
    */
   data?: UserResponse;
+}
+/**
+ *
+ * @export
+ * @interface CategoryList200Response
+ */
+export interface CategoryList200Response {
+  /**
+   *
+   * @type {Array<CategoryResponse>}
+   * @memberof CategoryList200Response
+   */
+  data: Array<CategoryResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof CategoryList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof CategoryList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface CategoryList200ResponseAllOf
+ */
+export interface CategoryList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<CategoryResponse>}
+   * @memberof CategoryList200ResponseAllOf
+   */
+  data?: Array<CategoryResponse>;
+}
+/**
+ *
+ * @export
+ * @interface CategoryResponse
+ */
+export interface CategoryResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof CategoryResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CategoryResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CategoryResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CategoryResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof CategoryResponse
+   */
+  __typename?: CategoryResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof CategoryResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CategoryResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CategoryResponse
+   */
+  slug: string;
+}
+
+export const CategoryResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type CategoryResponseTypenameEnum =
+  (typeof CategoryResponseTypenameEnum)[keyof typeof CategoryResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface CourseCreate200Response
+ */
+export interface CourseCreate200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof CourseCreate200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {CourseResponse}
+   * @memberof CourseCreate200Response
+   */
+  data: CourseResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseCreate200ResponseAllOf
+ */
+export interface CourseCreate200ResponseAllOf {
+  /**
+   *
+   * @type {CourseResponse}
+   * @memberof CourseCreate200ResponseAllOf
+   */
+  data?: CourseResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseDelete200Response
+ */
+export interface CourseDelete200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDelete200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {DeleteResponse}
+   * @memberof CourseDelete200Response
+   */
+  data: DeleteResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseDelete200ResponseAllOf
+ */
+export interface CourseDelete200ResponseAllOf {
+  /**
+   *
+   * @type {DeleteResponse}
+   * @memberof CourseDelete200ResponseAllOf
+   */
+  data?: DeleteResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseDetailResponse
+ */
+export interface CourseDetailResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDetailResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDetailResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CourseDetailResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CourseDetailResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDetailResponse
+   */
+  __typename?: CourseDetailResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseDetailResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDetailResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDetailResponse
+   */
+  slug: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseDetailResponse
+   */
+  description: string;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseDetailResponse
+   */
+  status: number;
+  /**
+   *
+   * @type {StoredFileResponse}
+   * @memberof CourseDetailResponse
+   */
+  cover: StoredFileResponse;
+  /**
+   *
+   * @type {UserResponse}
+   * @memberof CourseDetailResponse
+   */
+  administrator: UserResponse;
+  /**
+   *
+   * @type {Array<SectionFullResponse>}
+   * @memberof CourseDetailResponse
+   */
+  sections: Array<SectionFullResponse> | null;
+  /**
+   *
+   * @type {Array<TopicResponse>}
+   * @memberof CourseDetailResponse
+   */
+  topics: Array<TopicResponse> | null;
+}
+
+export const CourseDetailResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type CourseDetailResponseTypenameEnum =
+  (typeof CourseDetailResponseTypenameEnum)[keyof typeof CourseDetailResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface CourseFindOne200Response
+ */
+export interface CourseFindOne200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof CourseFindOne200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {CourseDetailResponse}
+   * @memberof CourseFindOne200Response
+   */
+  data: CourseDetailResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseFindOne200ResponseAllOf
+ */
+export interface CourseFindOne200ResponseAllOf {
+  /**
+   *
+   * @type {CourseDetailResponse}
+   * @memberof CourseFindOne200ResponseAllOf
+   */
+  data?: CourseDetailResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseList200Response
+ */
+export interface CourseList200Response {
+  /**
+   *
+   * @type {Array<CourseResponse>}
+   * @memberof CourseList200Response
+   */
+  data: Array<CourseResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof CourseList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface CourseList200ResponseAllOf
+ */
+export interface CourseList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<CourseResponse>}
+   * @memberof CourseList200ResponseAllOf
+   */
+  data?: Array<CourseResponse>;
+}
+/**
+ *
+ * @export
+ * @interface CourseResponse
+ */
+export interface CourseResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof CourseResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CourseResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CourseResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseResponse
+   */
+  __typename?: CourseResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseResponse
+   */
+  slug: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseResponse
+   */
+  description: string;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseResponse
+   */
+  status: number;
+  /**
+   *
+   * @type {StoredFileResponse}
+   * @memberof CourseResponse
+   */
+  cover: StoredFileResponse;
+  /**
+   *
+   * @type {UserResponse}
+   * @memberof CourseResponse
+   */
+  administrator: UserResponse;
+}
+
+export const CourseResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type CourseResponseTypenameEnum =
+  (typeof CourseResponseTypenameEnum)[keyof typeof CourseResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface CreateLessonDto
+ */
+export interface CreateLessonDto {
+  /**
+   *
+   * @type {number}
+   * @memberof CreateLessonDto
+   */
+  section_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateLessonDto
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateLessonDto
+   */
+  description: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateLessonDto
+   */
+  link: string;
+  /**
+   *
+   * @type {number}
+   * @memberof CreateLessonDto
+   */
+  time: number;
+}
+/**
+ *
+ * @export
+ * @interface CreateSectionDto
+ */
+export interface CreateSectionDto {
+  /**
+   *
+   * @type {number}
+   * @memberof CreateSectionDto
+   */
+  course_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateSectionDto
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateSectionDto
+   */
+  description: string;
+}
+/**
+ *
+ * @export
+ * @interface DeleteResponse
+ */
+export interface DeleteResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof DeleteResponse
+   */
+  id: number;
 }
 /**
  *
@@ -209,6 +757,127 @@ export interface GoogleLoginResponse {
 /**
  *
  * @export
+ * @interface LessonResponse
+ */
+export interface LessonResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof LessonResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof LessonResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof LessonResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof LessonResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LessonResponse
+   */
+  __typename?: LessonResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof LessonResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof LessonResponse
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof LessonResponse
+   */
+  description: string;
+  /**
+   *
+   * @type {string}
+   * @memberof LessonResponse
+   */
+  link: string;
+  /**
+   *
+   * @type {number}
+   * @memberof LessonResponse
+   */
+  time: number;
+  /**
+   *
+   * @type {number}
+   * @memberof LessonResponse
+   */
+  section_id: number;
+}
+
+export const LessonResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type LessonResponseTypenameEnum =
+  (typeof LessonResponseTypenameEnum)[keyof typeof LessonResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface Pagination
+ */
+export interface Pagination {
+  /**
+   *
+   * @type {number}
+   * @memberof Pagination
+   */
+  total: number;
+  /**
+   *
+   * @type {number}
+   * @memberof Pagination
+   */
+  page: number;
+  /**
+   *
+   * @type {number}
+   * @memberof Pagination
+   */
+  limit: number;
+  /**
+   *
+   * @type {number}
+   * @memberof Pagination
+   */
+  lastPage: number;
+}
+/**
+ *
+ * @export
  * @interface RoleResponse
  */
 export interface RoleResponse {
@@ -267,6 +936,12 @@ export const RoleResponseTypenameEnum = {
   Users: 'users',
   Roles: 'roles',
   StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
 } as const;
 
 export type RoleResponseTypenameEnum =
@@ -278,6 +953,122 @@ export const RoleResponseTypeEnum = {
 
 export type RoleResponseTypeEnum =
   (typeof RoleResponseTypeEnum)[keyof typeof RoleResponseTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface SectionCreate200Response
+ */
+export interface SectionCreate200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof SectionCreate200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {LessonResponse}
+   * @memberof SectionCreate200Response
+   */
+  data: LessonResponse;
+}
+/**
+ *
+ * @export
+ * @interface SectionCreate200ResponseAllOf
+ */
+export interface SectionCreate200ResponseAllOf {
+  /**
+   *
+   * @type {LessonResponse}
+   * @memberof SectionCreate200ResponseAllOf
+   */
+  data?: LessonResponse;
+}
+/**
+ *
+ * @export
+ * @interface SectionFullResponse
+ */
+export interface SectionFullResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof SectionFullResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof SectionFullResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof SectionFullResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof SectionFullResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof SectionFullResponse
+   */
+  __typename?: SectionFullResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof SectionFullResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof SectionFullResponse
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof SectionFullResponse
+   */
+  description: string;
+  /**
+   *
+   * @type {number}
+   * @memberof SectionFullResponse
+   */
+  course_id: number;
+  /**
+   *
+   * @type {Array<LessonResponse>}
+   * @memberof SectionFullResponse
+   */
+  lessons: Array<LessonResponse> | null;
+}
+
+export const SectionFullResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type SectionFullResponseTypenameEnum =
+  (typeof SectionFullResponseTypenameEnum)[keyof typeof SectionFullResponseTypenameEnum];
 
 /**
  *
@@ -352,10 +1143,446 @@ export const StoredFileResponseTypenameEnum = {
   Users: 'users',
   Roles: 'roles',
   StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
 } as const;
 
 export type StoredFileResponseTypenameEnum =
   (typeof StoredFileResponseTypenameEnum)[keyof typeof StoredFileResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface TopicFindAll200Response
+ */
+export interface TopicFindAll200Response {
+  /**
+   *
+   * @type {Array<TopicStatResponse>}
+   * @memberof TopicFindAll200Response
+   */
+  data: Array<TopicStatResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof TopicFindAll200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFindAll200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface TopicFindAll200ResponseAllOf
+ */
+export interface TopicFindAll200ResponseAllOf {
+  /**
+   *
+   * @type {Array<TopicStatResponse>}
+   * @memberof TopicFindAll200ResponseAllOf
+   */
+  data?: Array<TopicStatResponse>;
+}
+/**
+ *
+ * @export
+ * @interface TopicFindOne200Response
+ */
+export interface TopicFindOne200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFindOne200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {TopicFullResponse}
+   * @memberof TopicFindOne200Response
+   */
+  data: TopicFullResponse;
+}
+/**
+ *
+ * @export
+ * @interface TopicFindOne200ResponseAllOf
+ */
+export interface TopicFindOne200ResponseAllOf {
+  /**
+   *
+   * @type {TopicFullResponse}
+   * @memberof TopicFindOne200ResponseAllOf
+   */
+  data?: TopicFullResponse;
+}
+/**
+ *
+ * @export
+ * @interface TopicFullResponse
+ */
+export interface TopicFullResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFullResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFullResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicFullResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicFullResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFullResponse
+   */
+  __typename?: TopicFullResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof TopicFullResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFullResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFullResponse
+   */
+  slug: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicFullResponse
+   */
+  cover_id: string;
+  /**
+   *
+   * @type {TopicStatResponseCover}
+   * @memberof TopicFullResponse
+   */
+  cover: TopicStatResponseCover | null;
+  /**
+   *
+   * @type {Array<CategoryResponse>}
+   * @memberof TopicFullResponse
+   */
+  categories: Array<CategoryResponse>;
+  /**
+   *
+   * @type {Array<CourseResponse>}
+   * @memberof TopicFullResponse
+   */
+  courses: Array<CourseResponse>;
+}
+
+export const TopicFullResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type TopicFullResponseTypenameEnum =
+  (typeof TopicFullResponseTypenameEnum)[keyof typeof TopicFullResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface TopicResponse
+ */
+export interface TopicResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof TopicResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicResponse
+   */
+  __typename?: TopicResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof TopicResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicResponse
+   */
+  slug: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicResponse
+   */
+  cover_id: string;
+  /**
+   *
+   * @type {TopicStatResponseCover}
+   * @memberof TopicResponse
+   */
+  cover: TopicStatResponseCover | null;
+}
+
+export const TopicResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type TopicResponseTypenameEnum =
+  (typeof TopicResponseTypenameEnum)[keyof typeof TopicResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface TopicStatResponse
+ */
+export interface TopicStatResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicStatResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicStatResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponse
+   */
+  __typename?: TopicStatResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof TopicStatResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponse
+   */
+  slug: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponse
+   */
+  cover_id: string;
+  /**
+   *
+   * @type {TopicStatResponseCover}
+   * @memberof TopicStatResponse
+   */
+  cover: TopicStatResponseCover | null;
+  /**
+   *
+   * @type {number}
+   * @memberof TopicStatResponse
+   */
+  totalCourses: number;
+  /**
+   *
+   * @type {number}
+   * @memberof TopicStatResponse
+   */
+  totalVideos: number;
+}
+
+export const TopicStatResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type TopicStatResponseTypenameEnum =
+  (typeof TopicStatResponseTypenameEnum)[keyof typeof TopicStatResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface TopicStatResponseCover
+ */
+export interface TopicStatResponseCover {
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicStatResponseCover
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TopicStatResponseCover
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  __typename?: TopicStatResponseCoverTypenameEnum;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  id: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  hash: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  key: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TopicStatResponseCover
+   */
+  path: string;
+}
+
+export const TopicStatResponseCoverTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+} as const;
+
+export type TopicStatResponseCoverTypenameEnum =
+  (typeof TopicStatResponseCoverTypenameEnum)[keyof typeof TopicStatResponseCoverTypenameEnum];
 
 /**
  *
@@ -436,6 +1663,12 @@ export const UserBasicResponseTypenameEnum = {
   Users: 'users',
   Roles: 'roles',
   StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
 } as const;
 
 export type UserBasicResponseTypenameEnum =
@@ -520,6 +1753,12 @@ export const UserBasicResponseCreatorTypenameEnum = {
   Users: 'users',
   Roles: 'roles',
   StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
 } as const;
 
 export type UserBasicResponseCreatorTypenameEnum =
@@ -616,10 +1855,55 @@ export const UserResponseTypenameEnum = {
   Users: 'users',
   Roles: 'roles',
   StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
 } as const;
 
 export type UserResponseTypenameEnum =
   (typeof UserResponseTypenameEnum)[keyof typeof UserResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface ValidationExceptionErrorResponse
+ */
+export interface ValidationExceptionErrorResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof ValidationExceptionErrorResponse
+   */
+  type: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ValidationExceptionErrorResponse
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface ValidationExceptionResponse
+ */
+export interface ValidationExceptionResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof ValidationExceptionResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {Array<ValidationExceptionErrorResponse>}
+   * @memberof ValidationExceptionResponse
+   */
+  errors: Array<ValidationExceptionErrorResponse>;
+}
 
 /**
  * AppApi - axios parameter creator
@@ -1033,6 +2317,1506 @@ export class AuthGoogleApi extends BaseAPI {
   ) {
     return AuthGoogleApiFp(this.configuration)
       .login(requestParameters.googleLoginDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * CategoriesApi - axios parameter creator
+ * @export
+ */
+export const CategoriesApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/categories`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * CategoriesApi - functional programming interface
+ * @export
+ */
+export const CategoriesApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    CategoriesApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CategoryList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * CategoriesApi - factory interface
+ * @export
+ */
+export const CategoriesApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = CategoriesApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(options?: any): AxiosPromise<CategoryList200Response> {
+      return localVarFp
+        .list(options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * CategoriesApi - object-oriented interface
+ * @export
+ * @class CategoriesApi
+ * @extends {BaseAPI}
+ */
+export class CategoriesApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CategoriesApi
+   */
+  public list(options?: AxiosRequestConfig) {
+    return CategoriesApiFp(this.configuration)
+      .list(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * CoursesApi - axios parameter creator
+ * @export
+ */
+export const CoursesApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete: async (
+      id: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('_delete', 'id', id);
+      const localVarPath = `/api/courses/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'DELETE',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {string} name
+     * @param {string} description
+     * @param {File} cover
+     * @param {Array<number>} topicIds
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      name: string,
+      description: string,
+      cover: File,
+      topicIds: Array<number>,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'name' is not null or undefined
+      assertParamExists('create', 'name', name);
+      // verify required parameter 'description' is not null or undefined
+      assertParamExists('create', 'description', description);
+      // verify required parameter 'cover' is not null or undefined
+      assertParamExists('create', 'cover', cover);
+      // verify required parameter 'topicIds' is not null or undefined
+      assertParamExists('create', 'topicIds', topicIds);
+      const localVarPath = `/api/courses`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+      const localVarFormParams = new ((configuration &&
+        configuration.formDataCtor) ||
+        FormData)();
+
+      if (name !== undefined) {
+        localVarFormParams.append('name', name as any);
+      }
+
+      if (description !== undefined) {
+        localVarFormParams.append('description', description as any);
+      }
+
+      if (cover !== undefined) {
+        localVarFormParams.append('cover', cover as any);
+      }
+      if (topicIds) {
+        localVarFormParams.append(
+          'topicIds[]',
+          topicIds.join(COLLECTION_FORMATS.csv)
+        );
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = localVarFormParams;
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {string} slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne: async (
+      slug: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'slug' is not null or undefined
+      assertParamExists('findOne', 'slug', slug);
+      const localVarPath = `/api/courses/{slug}`.replace(
+        `{${'slug'}}`,
+        encodeURIComponent(String(slug))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/courses`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {string} name
+     * @param {string} description
+     * @param {Array<number>} topicIds
+     * @param {File} [cover]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update: async (
+      id: number,
+      name: string,
+      description: string,
+      topicIds: Array<number>,
+      cover?: File,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('update', 'id', id);
+      // verify required parameter 'name' is not null or undefined
+      assertParamExists('update', 'name', name);
+      // verify required parameter 'description' is not null or undefined
+      assertParamExists('update', 'description', description);
+      // verify required parameter 'topicIds' is not null or undefined
+      assertParamExists('update', 'topicIds', topicIds);
+      const localVarPath = `/api/courses/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+      const localVarFormParams = new ((configuration &&
+        configuration.formDataCtor) ||
+        FormData)();
+
+      if (name !== undefined) {
+        localVarFormParams.append('name', name as any);
+      }
+
+      if (description !== undefined) {
+        localVarFormParams.append('description', description as any);
+      }
+
+      if (cover !== undefined) {
+        localVarFormParams.append('cover', cover as any);
+      }
+      if (topicIds) {
+        localVarFormParams.append(
+          'topicIds[]',
+          topicIds.join(COLLECTION_FORMATS.csv)
+        );
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = localVarFormParams;
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * CoursesApi - functional programming interface
+ * @export
+ */
+export const CoursesApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = CoursesApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async _delete(
+      id: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseDelete200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator._delete(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {string} name
+     * @param {string} description
+     * @param {File} cover
+     * @param {Array<number>} topicIds
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      name: string,
+      description: string,
+      cover: File,
+      topicIds: Array<number>,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(
+        name,
+        description,
+        cover,
+        topicIds,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {string} slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async findOne(
+      slug: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseFindOne200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.findOne(
+        slug,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {string} name
+     * @param {string} description
+     * @param {Array<number>} topicIds
+     * @param {File} [cover]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async update(
+      id: number,
+      name: string,
+      description: string,
+      topicIds: Array<number>,
+      cover?: File,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.update(
+        id,
+        name,
+        description,
+        topicIds,
+        cover,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * CoursesApi - factory interface
+ * @export
+ */
+export const CoursesApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = CoursesApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete(id: number, options?: any): AxiosPromise<CourseDelete200Response> {
+      return localVarFp
+        ._delete(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {string} name
+     * @param {string} description
+     * @param {File} cover
+     * @param {Array<number>} topicIds
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      name: string,
+      description: string,
+      cover: File,
+      topicIds: Array<number>,
+      options?: any
+    ): AxiosPromise<CourseCreate200Response> {
+      return localVarFp
+        .create(name, description, cover, topicIds, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {string} slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne(
+      slug: string,
+      options?: any
+    ): AxiosPromise<CourseFindOne200Response> {
+      return localVarFp
+        .findOne(slug, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(options?: any): AxiosPromise<CourseList200Response> {
+      return localVarFp
+        .list(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {string} name
+     * @param {string} description
+     * @param {Array<number>} topicIds
+     * @param {File} [cover]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update(
+      id: number,
+      name: string,
+      description: string,
+      topicIds: Array<number>,
+      cover?: File,
+      options?: any
+    ): AxiosPromise<CourseCreate200Response> {
+      return localVarFp
+        .update(id, name, description, topicIds, cover, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for _delete operation in CoursesApi.
+ * @export
+ * @interface CoursesApiDeleteRequest
+ */
+export interface CoursesApiDeleteRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiDelete
+   */
+  readonly id: number;
+}
+
+/**
+ * Request parameters for create operation in CoursesApi.
+ * @export
+ * @interface CoursesApiCreateRequest
+ */
+export interface CoursesApiCreateRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof CoursesApiCreate
+   */
+  readonly name: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof CoursesApiCreate
+   */
+  readonly description: string;
+
+  /**
+   *
+   * @type {File}
+   * @memberof CoursesApiCreate
+   */
+  readonly cover: File;
+
+  /**
+   *
+   * @type {Array<number>}
+   * @memberof CoursesApiCreate
+   */
+  readonly topicIds: Array<number>;
+}
+
+/**
+ * Request parameters for findOne operation in CoursesApi.
+ * @export
+ * @interface CoursesApiFindOneRequest
+ */
+export interface CoursesApiFindOneRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof CoursesApiFindOne
+   */
+  readonly slug: string;
+}
+
+/**
+ * Request parameters for update operation in CoursesApi.
+ * @export
+ * @interface CoursesApiUpdateRequest
+ */
+export interface CoursesApiUpdateRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiUpdate
+   */
+  readonly id: number;
+
+  /**
+   *
+   * @type {string}
+   * @memberof CoursesApiUpdate
+   */
+  readonly name: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof CoursesApiUpdate
+   */
+  readonly description: string;
+
+  /**
+   *
+   * @type {Array<number>}
+   * @memberof CoursesApiUpdate
+   */
+  readonly topicIds: Array<number>;
+
+  /**
+   *
+   * @type {File}
+   * @memberof CoursesApiUpdate
+   */
+  readonly cover?: File;
+}
+
+/**
+ * CoursesApi - object-oriented interface
+ * @export
+ * @class CoursesApi
+ * @extends {BaseAPI}
+ */
+export class CoursesApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {CoursesApiDeleteRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public _delete(
+    requestParameters: CoursesApiDeleteRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return CoursesApiFp(this.configuration)
+      ._delete(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {CoursesApiCreateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public create(
+    requestParameters: CoursesApiCreateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return CoursesApiFp(this.configuration)
+      .create(
+        requestParameters.name,
+        requestParameters.description,
+        requestParameters.cover,
+        requestParameters.topicIds,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {CoursesApiFindOneRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public findOne(
+    requestParameters: CoursesApiFindOneRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return CoursesApiFp(this.configuration)
+      .findOne(requestParameters.slug, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public list(options?: AxiosRequestConfig) {
+    return CoursesApiFp(this.configuration)
+      .list(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {CoursesApiUpdateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public update(
+    requestParameters: CoursesApiUpdateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return CoursesApiFp(this.configuration)
+      .update(
+        requestParameters.id,
+        requestParameters.name,
+        requestParameters.description,
+        requestParameters.topicIds,
+        requestParameters.cover,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * LessonsApi - axios parameter creator
+ * @export
+ */
+export const LessonsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateLessonDto} createLessonDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      createLessonDto: CreateLessonDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createLessonDto' is not null or undefined
+      assertParamExists('create', 'createLessonDto', createLessonDto);
+      const localVarPath = `/api/lesson`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createLessonDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * LessonsApi - functional programming interface
+ * @export
+ */
+export const LessonsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = LessonsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateLessonDto} createLessonDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      createLessonDto: CreateLessonDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(
+        createLessonDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * LessonsApi - factory interface
+ * @export
+ */
+export const LessonsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = LessonsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateLessonDto} createLessonDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      createLessonDto: CreateLessonDto,
+      options?: any
+    ): AxiosPromise<void> {
+      return localVarFp
+        .create(createLessonDto, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for create operation in LessonsApi.
+ * @export
+ * @interface LessonsApiCreateRequest
+ */
+export interface LessonsApiCreateRequest {
+  /**
+   *
+   * @type {CreateLessonDto}
+   * @memberof LessonsApiCreate
+   */
+  readonly createLessonDto: CreateLessonDto;
+}
+
+/**
+ * LessonsApi - object-oriented interface
+ * @export
+ * @class LessonsApi
+ * @extends {BaseAPI}
+ */
+export class LessonsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {LessonsApiCreateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LessonsApi
+   */
+  public create(
+    requestParameters: LessonsApiCreateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return LessonsApiFp(this.configuration)
+      .create(requestParameters.createLessonDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * SectionsApi - axios parameter creator
+ * @export
+ */
+export const SectionsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateSectionDto} createSectionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      createSectionDto: CreateSectionDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createSectionDto' is not null or undefined
+      assertParamExists('create', 'createSectionDto', createSectionDto);
+      const localVarPath = `/api/sections`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createSectionDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * SectionsApi - functional programming interface
+ * @export
+ */
+export const SectionsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = SectionsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateSectionDto} createSectionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      createSectionDto: CreateSectionDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<SectionCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(
+        createSectionDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * SectionsApi - factory interface
+ * @export
+ */
+export const SectionsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = SectionsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateSectionDto} createSectionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      createSectionDto: CreateSectionDto,
+      options?: any
+    ): AxiosPromise<SectionCreate200Response> {
+      return localVarFp
+        .create(createSectionDto, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for create operation in SectionsApi.
+ * @export
+ * @interface SectionsApiCreateRequest
+ */
+export interface SectionsApiCreateRequest {
+  /**
+   *
+   * @type {CreateSectionDto}
+   * @memberof SectionsApiCreate
+   */
+  readonly createSectionDto: CreateSectionDto;
+}
+
+/**
+ * SectionsApi - object-oriented interface
+ * @export
+ * @class SectionsApi
+ * @extends {BaseAPI}
+ */
+export class SectionsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {SectionsApiCreateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SectionsApi
+   */
+  public create(
+    requestParameters: SectionsApiCreateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return SectionsApiFp(this.configuration)
+      .create(requestParameters.createSectionDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * TopicsApi - axios parameter creator
+ * @export
+ */
+export const TopicsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} [c]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findAll: async (
+      c?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/topics`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (c !== undefined) {
+        localVarQueryParameter['c'] = c;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {string} slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne: async (
+      slug: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'slug' is not null or undefined
+      assertParamExists('findOne', 'slug', slug);
+      const localVarPath = `/api/topics/{slug}`.replace(
+        `{${'slug'}}`,
+        encodeURIComponent(String(slug))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * TopicsApi - functional programming interface
+ * @export
+ */
+export const TopicsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = TopicsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} [c]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async findAll(
+      c?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<TopicFindAll200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.findAll(
+        c,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {string} slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async findOne(
+      slug: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<TopicFindOne200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.findOne(
+        slug,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * TopicsApi - factory interface
+ * @export
+ */
+export const TopicsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = TopicsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} [c]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findAll(c?: number, options?: any): AxiosPromise<TopicFindAll200Response> {
+      return localVarFp
+        .findAll(c, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {string} slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne(
+      slug: string,
+      options?: any
+    ): AxiosPromise<TopicFindOne200Response> {
+      return localVarFp
+        .findOne(slug, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for findAll operation in TopicsApi.
+ * @export
+ * @interface TopicsApiFindAllRequest
+ */
+export interface TopicsApiFindAllRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof TopicsApiFindAll
+   */
+  readonly c?: number;
+}
+
+/**
+ * Request parameters for findOne operation in TopicsApi.
+ * @export
+ * @interface TopicsApiFindOneRequest
+ */
+export interface TopicsApiFindOneRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof TopicsApiFindOne
+   */
+  readonly slug: string;
+}
+
+/**
+ * TopicsApi - object-oriented interface
+ * @export
+ * @class TopicsApi
+ * @extends {BaseAPI}
+ */
+export class TopicsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {TopicsApiFindAllRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TopicsApi
+   */
+  public findAll(
+    requestParameters: TopicsApiFindAllRequest = {},
+    options?: AxiosRequestConfig
+  ) {
+    return TopicsApiFp(this.configuration)
+      .findAll(requestParameters.c, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {TopicsApiFindOneRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TopicsApi
+   */
+  public findOne(
+    requestParameters: TopicsApiFindOneRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return TopicsApiFp(this.configuration)
+      .findOne(requestParameters.slug, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

@@ -1,8 +1,8 @@
+import { UserResponse } from '@libs/openapi-generator/generated';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { UserResponse } from '@libs/openapi-generator/generated';
 
 interface UserInterface {
-  user: any | null;
+  user: UserResponse | null;
 }
 
 const initialUser: UserInterface = {
@@ -13,7 +13,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: initialUser,
   reducers: {
-    setUser: (state, action: PayloadAction<any>) => {
+    setUser: (state, action: PayloadAction<UserResponse>) => {
       state.user = action.payload;
     },
   },

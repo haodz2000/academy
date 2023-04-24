@@ -115,10 +115,10 @@ export class DatabaseSeeder extends Seeder {
           categories: [{ id: frameworks.id }],
         },
         storedFile: {
-          hash: 'nuxtjs-logo_hrqyd8',
-          key: 'topics/nuxtjs-logo_hrqyd8',
+          hash: 'nuxtjs-logo_msnmog',
+          key: 'topics/nuxtjs-logo_msnmog',
           name: 'nuxtjs',
-          path: BaseURL + 'topics/nuxtjs-logo_hrqyd8',
+          path: BaseURL + 'topics/nuxtjs-logo_msnmog',
         },
       },
       {
@@ -129,9 +129,9 @@ export class DatabaseSeeder extends Seeder {
         },
         storedFile: {
           hash: 'react-logo_dwjlpo',
-          key: 'topics/react-logo_izvd4i',
+          key: 'topics/react-logo_dwjlpo',
           name: 'react',
-          path: BaseURL + 'topics/react-logo_izvd4i',
+          path: BaseURL + 'topics/react-logo_dwjlpo',
         },
       },
       {
@@ -271,10 +271,10 @@ export class DatabaseSeeder extends Seeder {
           categories: [{ id: techniques.id }],
         },
         storedFile: {
-          hash: 'security-logo_m4wjpy',
-          key: 'topics/security-logo_m4wjpy',
+          hash: 'security-logo_qmrwxn',
+          key: 'topics/security-logo_qmrwxn',
           name: 'security',
-          path: BaseURL + 'topics/security-logo_m4wjpy',
+          path: BaseURL + 'topics/security-logo_qmrwxn',
         },
       },
       {

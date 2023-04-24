@@ -9,8 +9,13 @@ import React from 'react';
 import { LessonItem } from './LessonItem';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { SectionFullResponse } from '@libs/openapi-generator/generated';
 
-export const SectionItem = () => {
+interface Props {
+  section: SectionFullResponse;
+  order: number;
+}
+export const SectionItem = ({ section, order }: Props) => {
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
@@ -30,11 +35,11 @@ export const SectionItem = () => {
       >
         <Stack gap={2} height={1} flexDirection={'row'} alignItems="center">
           <Typography variant="subtitle1" fontWeight={600}>
-            Section 1
+            Section {order + 1}
           </Typography>
           <Divider color="#9b9b9b" orientation="vertical" />
           <Typography variant="subtitle1" fontWeight={600}>
-            Content
+            {section.title}
           </Typography>
         </Stack>
         <Stack>
@@ -49,8 +54,9 @@ export const SectionItem = () => {
       </Stack>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Stack gap={2}>
-          <LessonItem />
-          <LessonItem />
+          {section.lessons?.map((lesson, index) => (
+            <LessonItem key={index} order={index} lesson={lesson} />
+          ))}
         </Stack>
       </Collapse>
     </Stack>

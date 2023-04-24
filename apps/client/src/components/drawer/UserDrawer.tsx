@@ -19,7 +19,7 @@ export const UserDrawer = () => {
     <div>
       <React.Fragment>
         <IconButton onClick={toggleDrawer}>
-          <Avatar src={user.avatar.path}></Avatar>
+          <Avatar src={user.avatar?.path || ''}></Avatar>
         </IconButton>
         <Drawer anchor={'right'} open={state} onClose={toggleDrawer}>
           <Stack
@@ -34,7 +34,7 @@ export const UserDrawer = () => {
                 <Stack alignItems="center" gap={2}>
                   <Avatar
                     sx={{ height: 80, width: 80 }}
-                    src={user.avatar.path}
+                    src={user.avatar?.path}
                   />
                   <Typography variant="h3" fontSize={26} fontWeight={600}>
                     {user.name}

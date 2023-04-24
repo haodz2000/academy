@@ -1,8 +1,13 @@
 import Link from '@client/components/ui/Link';
+import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
 
-export const Lesson = () => {
+interface Props {
+  lesson: LessonResponse;
+  currentId: number;
+}
+export const Lesson = ({ lesson, currentId }: Props) => {
   return (
     <Stack
       component={Link}
@@ -11,7 +16,7 @@ export const Lesson = () => {
       href={'#'}
       borderRadius={2}
       padding={1}
-      bgcolor={'#328AF112'}
+      bgcolor={lesson.id == currentId ? '#253D63' : '#328AF112'}
       sx={{
         ':hover': {
           bgcolor: '#253D63',
@@ -28,7 +33,7 @@ export const Lesson = () => {
       >
         <Avatar sx={{ height: 32, width: 32, bgcolor: '#328af11A' }}>01</Avatar>
         <Typography variant="h1" fontSize={14} fontWeight={600}>
-          Intro and Basics
+          {lesson?.title}
         </Typography>
       </Stack>
     </Stack>

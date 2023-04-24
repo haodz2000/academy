@@ -4,8 +4,12 @@ import { RoundedButton } from '@client/components/ui/buttons';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 
-export const Information = () => {
+interface Props {
+  course: CourseDetailResponse;
+}
+export const Information = ({ course }: Props) => {
   return (
     <Stack gap={1}>
       <Box>
@@ -20,20 +24,23 @@ export const Information = () => {
         <Stack width={'70%'} gap={2} justifyContent={'space-between'}>
           <Stack gap={2}>
             <Typography variant="h1" fontSize={33} fontWeight={600}>
-              Laravel Beginner
+              {course.name}
             </Typography>
             <Stack flexDirection={'row'} gap={1}>
-              <RoundedButton sx={{ bgcolor: '#328AF11A' }}>
-                Frameworks
-              </RoundedButton>
+              {course.topics?.map((topic) => (
+                <RoundedButton
+                  key={topic.id}
+                  sx={{
+                    bgcolor: '#328AF11A',
+                    ':hover': { bgcolor: '#328AF11A' },
+                  }}
+                >
+                  {topic.name}
+                </RoundedButton>
+              ))}
             </Stack>
             <Stack>
-              <Typography>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi ut
-                temporibus obcaecati, sit, dolorem tempore ex ea at deleniti
-                odio praesentium, nihil harum laboriosam culpa libero.
-                Perferendis nemo soluta tempore.
-              </Typography>
+              <Typography>{course.description}</Typography>
             </Stack>
           </Stack>
           <Stack flexDirection="row" gap={3}>
@@ -53,11 +60,8 @@ export const Information = () => {
             </RoundedButton>
           </Stack>
         </Stack>
-        <Stack justifyContent={'center'} width={'30%'}>
-          <Avatar
-            src="https://ik.imagekit.io/laracasts/series/thumbnails/laravel-cookbook.png?tr=w-432"
-            sx={{ height: 216, width: 216 }}
-          />
+        <Stack justifyContent={'flex-start'} width={'30%'}>
+          <Avatar src={course.cover?.path} sx={{ height: 216, width: 216 }} />
         </Stack>
       </Stack>
     </Stack>

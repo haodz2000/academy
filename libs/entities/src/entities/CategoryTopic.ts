@@ -3,6 +3,7 @@ import { Category } from './Category';
 import { Topic } from './Topic';
 import { BaseEntityWithCompositeKeys } from '@libs/entities/entities/BaseEntityWithCompositeKeys';
 import { Scalar } from '@libs/constants/interfaces/scalar';
+import { User } from './User';
 
 @Entity({ tableName: 'category_topics' })
 export class CategoryTopic extends BaseEntityWithCompositeKeys<
@@ -20,13 +21,29 @@ export class CategoryTopic extends BaseEntityWithCompositeKeys<
     ];
   }
 
-  @Property({ type: 'uuid', nullable: true })
-  topic_id!: Scalar['uuid'];
+  @Property({ type: 'integer', nullable: true })
+  topic_id!: Scalar['integer'];
 
-  @Property({ type: 'uuid', nullable: true })
-  category_id!: Scalar['uuid'];
+  @Property({ type: 'integer', nullable: true })
+  category_id!: Scalar['integer'];
 
   [PrimaryKeyType]?: [number, number];
+
+  @ManyToOne({
+    entity: () => User,
+    nullable: true,
+    inversedBy: (user) => user.created_category_topics,
+    joinColumn: 'created_by',
+  })
+  creator!: User;
+
+  @ManyToOne({
+    entity: () => User,
+    nullable: true,
+    inversedBy: (user) => user.updated_category_topics,
+    joinColumn: 'updated_by',
+  })
+  updater!: User;
 
   @ManyToOne({
     primary: true,

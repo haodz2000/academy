@@ -10,12 +10,29 @@ import * as dotenv from 'dotenv';
 import { Topic } from '@libs/entities/entities/Topic';
 import { Category } from '@libs/entities/entities/Category';
 import { CategoryTopic } from '@libs/entities/entities/CategoryTopic';
+import { Course } from '@libs/entities/entities/Course';
+import { Section } from '@libs/entities/entities/Section';
+import { Lesson } from '@libs/entities/entities/Lesson';
+import { CourseTopic } from '@libs/entities/entities/CourseTopic';
+import { CourseSubscribe } from '@libs/entities/entities/CourseSubscribe';
 
 dotenv.config();
 
 const logger = new Logger('MikroORM');
 const config: Options = {
-  entities: [User, Role, StoredFile, Topic, Category, CategoryTopic],
+  entities: [
+    User,
+    Role,
+    StoredFile,
+    Topic,
+    Category,
+    CategoryTopic,
+    Course,
+    Section,
+    Lesson,
+    CourseTopic,
+    CourseSubscribe,
+  ],
   dbName: process.env.DB_NAME,
   type: process.env.DB_TYPE as keyof typeof Configuration.PLATFORMS,
   host: process.env.DB_HOST,

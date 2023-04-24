@@ -10,6 +10,7 @@ import { Scalar } from '@libs/constants/interfaces/scalar';
 import { BaseEntityWithUuidPrimaryKey } from '@libs/entities/entities/BaseEntityWithUuidPrimaryKey';
 import { User } from './User';
 import { Topic } from './Topic';
+import { Course } from './Course';
 
 @Entity({ tableName: 'stored_files' })
 export class StoredFile extends BaseEntityWithUuidPrimaryKey<StoredFile, 'id'> {
@@ -53,6 +54,12 @@ export class StoredFile extends BaseEntityWithUuidPrimaryKey<StoredFile, 'id'> {
     mappedBy: (topic) => topic.cover,
   })
   topic_cover = new Collection<Topic>(this);
+
+  @OneToMany({
+    entity: () => Course,
+    mappedBy: (course) => course.cover,
+  })
+  course_cover = new Collection<Course>(this);
 
   @ManyToOne({
     entity: () => User,

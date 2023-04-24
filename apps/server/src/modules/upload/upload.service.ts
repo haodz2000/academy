@@ -55,7 +55,7 @@ export class UploadService {
 
   async removeFile(storedFile: StoredFile): Promise<void> {
     const client = this.getClient();
-    await client.removeObject(storedFile.key, storedFile.hash);
+    await client.removeObject(process.env.MINIO_BUCKET, storedFile.key);
     await this.storedFileRepository.removeAndFlush(storedFile);
   }
 

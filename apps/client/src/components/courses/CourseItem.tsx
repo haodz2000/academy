@@ -6,11 +6,18 @@ import Image from 'next/image';
 import React from 'react';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { CourseResponse } from '@libs/openapi-generator/generated';
 
-export const CourseItem = () => {
+interface Props {
+  course: CourseResponse;
+}
+export const CourseItem = ({ course }: Props) => {
   return (
     <Stack paddingX={6} zIndex={1} width={'100%'}>
       <Paper
+        component={Link}
+        href={'/courses/' + course.slug}
+        underline="none"
         sx={{
           minHeight: '420px',
           bgcolor: '#18273f',
@@ -26,7 +33,7 @@ export const CourseItem = () => {
           height={1}
         >
           <Stack
-            width={350}
+            width={250}
             position={'relative'}
             sx={{
               borderRadius: '16px',
@@ -47,10 +54,8 @@ export const CourseItem = () => {
               >
                 <Image
                   loader={({ src }) => src}
-                  alt=""
-                  src={
-                    'https://ik.imagekit.io/laracasts/instructors/34923.jpeg?tr=w-560,q-70'
-                  }
+                  alt={course.name}
+                  src={course.cover.path}
                   fill
                   unoptimized
                 />
@@ -58,18 +63,17 @@ export const CourseItem = () => {
             </Stack>
           </Stack>
           <Stack
-            maxWidth={'50%'}
+            width={'50%'}
             padding={2}
             justifyContent={'space-between'}
             gap={1}
           >
             <Stack gap={6}>
               <Typography variant="h1" fontWeight={700} fontSize={30}>
-                Automated Laravel Upgrades
+                {course.name}
               </Typography>
               <Typography variant="subtitle1" fontSize={13}>
-                {`Hi! I'm Jason McCreary. I'm the founder of Laravel Shift, a popular service that provides automatic upgrades for your Laravel applications.
-              In this CreatorSeries, using all of the knowledge I've acquired over the years of building and maintaining Shift, I'll show you how to automate many of your every-day development tasks.`}
+                {course.description}
               </Typography>
             </Stack>
             <Stack gap={2}>
@@ -103,11 +107,11 @@ export const CourseItem = () => {
           </Stack>
           <Stack paddingY={1} paddingX={2} height={1}>
             <Stack
-              justifyContent={'flex-end'}
-              underline="none"
-              color={'inherit'}
               component={Link}
-              href={'#'}
+              href={'/user/' + course.administrator.email.split('@')[0]}
+              underline="none"
+              justifyContent={'flex-end'}
+              color={'inherit'}
               width={280}
               position={'relative'}
               height={1}
@@ -115,7 +119,7 @@ export const CourseItem = () => {
               <Image
                 loader={({ src }) => src}
                 alt=""
-                src="https://ik.imagekit.io/laracasts/instructors/34923.jpeg?tr=w-560,q-70"
+                src={course.administrator.avatar.path}
                 fill
                 style={{
                   borderRadius: '25px',
@@ -132,7 +136,7 @@ export const CourseItem = () => {
                 zIndex={1}
               >
                 <Typography variant="body1" fontWeight={600} fontSize={15}>
-                  Ta Huu Hao
+                  {course.administrator.name}
                 </Typography>
                 <Stack
                   width={'100%'}

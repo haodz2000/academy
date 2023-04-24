@@ -4,6 +4,7 @@ import { Products } from '@client/components/home/products';
 import { Teachers } from '@client/components/home/teachers';
 import { Topics } from '@client/components/home/topics';
 import { AppLayout } from '@client/components/layouts/AppLayout';
+import { withUnAuth } from '@client/hocs/withUnAuth';
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Image from 'next/image';
@@ -63,10 +64,6 @@ Index.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export const getServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};
+export const getServerSideProps = withUnAuth();
 
 export default Index;

@@ -13,6 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { GoogleService } from './google/google.service';
 import { HttpModule } from '@nestjs/axios';
 import { PassportModule } from '@nestjs/passport';
+import { AbilityModule } from './ability/ability.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PassportModule } from '@nestjs/passport';
     HttpModule,
     PassportModule,
     UploadModule,
+    AbilityModule,
   ],
   controllers: [AuthController, GoogleController],
   providers: [AuthService, UserService, GoogleService, JwtStrategy],

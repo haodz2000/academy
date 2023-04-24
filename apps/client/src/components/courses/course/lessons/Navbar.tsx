@@ -5,8 +5,16 @@ import { RoundedButton } from '@client/components/ui/buttons';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Section } from './Section';
+import {
+  CourseDetailResponse,
+  LessonResponse,
+} from '@libs/openapi-generator/generated';
 
-export const Navbar = () => {
+interface Props {
+  course: CourseDetailResponse;
+  lesson: LessonResponse;
+}
+export const Navbar = ({ course, lesson }: Props) => {
   return (
     <Stack
       width={330}
@@ -36,12 +44,14 @@ export const Navbar = () => {
           <Avatar sx={{ height: 59, width: 59 }} />
           <Stack gap={1}>
             <Typography variant="h3" fontSize={18} fontWeight={600}>
-              Laravel beginer
+              {course.name}
             </Typography>
             <Stack height={15} flexDirection="row" alignItems="center" gap={2}>
               <Stack gap={1} flexDirection="row" alignItems="center">
                 <AutoStoriesIcon fontSize="small" />
-                <Typography fontSize={12}>05 lessons</Typography>
+                <Typography fontSize={12}>
+                  {course.sections?.length} lessons
+                </Typography>
               </Stack>
               <Divider color="#FFF" orientation="vertical" />
               <Stack gap={1} flexDirection="row" alignItems="center">
@@ -53,6 +63,7 @@ export const Navbar = () => {
         </Stack>
         <Stack
           paddingRight={1}
+          gap={2}
           sx={{
             overflowY: 'scroll',
             height: 'calc(100vh - 120px)',
@@ -68,13 +79,14 @@ export const Navbar = () => {
             },
           }}
         >
-          <Section />
-          <Section />
-          <Section />
-          <Section />
-          <Section />
-          <Section />
-          <Section />
+          {course.sections?.map((section, index) => (
+            <Section
+              lessonCurrent={lesson}
+              order={index + 1}
+              section={section}
+              key={section.id}
+            />
+          ))}
         </Stack>
       </Stack>
     </Stack>

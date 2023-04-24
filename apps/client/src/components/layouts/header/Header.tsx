@@ -2,10 +2,8 @@ import { GoogleSignInButton } from '@client/components/google/GoogleSignInButton
 import { useRenderGoogleSignIn } from '@client/components/google/hook';
 import Link from '@client/components/ui/Link';
 import { useAppSelector } from '@client/stores';
-import styled from '@emotion/styled';
-import { Avatar, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Stack, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
-import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { UserDrawer } from '@client/components/drawer/UserDrawer';
 
@@ -22,12 +20,12 @@ const menu: IMenu[] = [
   {
     id: 0,
     name: 'Topics',
-    href: '/categories',
+    href: '/topics',
   },
   {
     id: 1,
     name: 'Series',
-    href: '/series',
+    href: '/courses',
   },
   {
     id: 2,
@@ -42,7 +40,7 @@ const menu: IMenu[] = [
   {
     id: 4,
     name: 'Quản lý',
-    href: '/manage',
+    href: '/manage/courses',
   },
   {
     id: 5,

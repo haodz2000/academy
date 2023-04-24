@@ -1,8 +1,12 @@
 import Link from '@client/components/ui/Link';
+import { TopicStatResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
 
-export const TopicItem = () => {
+interface Props {
+  topic: TopicStatResponse;
+}
+export const TopicItem = ({ topic }: Props) => {
   return (
     <Paper
       sx={{
@@ -20,16 +24,16 @@ export const TopicItem = () => {
         component={Link}
         underline="none"
         color="inherit"
-        href={'#'}
+        href={'/topics/' + topic.slug}
         gap={2}
         padding={1}
         flexDirection={'row'}
         alignItems="center"
       >
-        <Avatar src="https://res.cloudinary.com/dhjrftwo1/image/upload/v1680934014/topics/webpack-logo_gmidfo" />
+        <Avatar src={topic.cover.path} />
         <Stack>
           <Typography variant="subtitle1" fontSize={15} fontWeight={600}>
-            Authentication
+            {topic.name}
           </Typography>
           <Stack flexDirection={'row'} alignItems={'center'} gap={1}>
             <Typography
@@ -38,7 +42,7 @@ export const TopicItem = () => {
               fontWeight={600}
               color="#bad9fc7f"
             >
-              2 courses
+              {topic.totalCourses} courses
             </Typography>
             <Typography>&diams;</Typography>
             <Typography
@@ -47,7 +51,7 @@ export const TopicItem = () => {
               fontWeight={600}
               color="#bad9fc7f"
             >
-              108 videos
+              {topic.totalVideos} videos
             </Typography>
           </Stack>
         </Stack>

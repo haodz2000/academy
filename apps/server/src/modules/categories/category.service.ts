@@ -17,8 +17,6 @@ export class CategoryService {
   ) {}
 
   async list() {
-    return await this.categoryRepository.findAll({
-      populate: ['topics'],
-    });
+    return await this.categoryRepository.findAll();
   }
 }

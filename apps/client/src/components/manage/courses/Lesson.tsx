@@ -1,8 +1,12 @@
 import Link from '@client/components/ui/Link';
+import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
 
-export const Lesson = () => {
+interface Props {
+  lesson: LessonResponse;
+}
+export const Lesson = ({ lesson }: Props) => {
   return (
     <Stack
       component={Link}
@@ -26,17 +30,12 @@ export const Lesson = () => {
       </Stack>
       <Stack gap={1} justifyContent="space-between">
         <Typography variant="h1" fontSize={20} fontWeight={600}>
-          Intro and Basics
+          {lesson.title}
         </Typography>
-        <Typography variant="body2">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium
-          at maxime rerum eaque repellat dolores ipsam amet ducimus veniam
-          quibusdam delectus quasi et consectetur beatae odit, eligendi atque,
-          necessitatibus natus?
-        </Typography>
+        <Typography variant="body2">{lesson.description}</Typography>
         <Stack flexDirection="row">
           <Typography fontSize={10} variant="body2">
-            Lesson 1
+            Time: {lesson.time}
           </Typography>
         </Stack>
       </Stack>

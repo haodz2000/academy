@@ -1,6 +1,7 @@
 import Link from '@client/components/ui/Link';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 interface Props {
@@ -8,12 +9,14 @@ interface Props {
   currentId: number;
 }
 export const Lesson = ({ lesson, currentId }: Props) => {
+  const router = useRouter();
+  const slug = router.query.slug as string;
   return (
     <Stack
       component={Link}
       underline="none"
       color={'inherit'}
-      href={'#'}
+      href={'/courses/' + slug + '/lessons/' + lesson.id}
       borderRadius={2}
       padding={1}
       bgcolor={lesson.id == currentId ? '#253D63' : '#328AF112'}

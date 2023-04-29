@@ -1,14 +1,68 @@
 import { RoundedButton } from '@client/components/ui/buttons';
+import {
+  CourseDetailResponse,
+  CreateSectionDto,
+} from '@libs/openapi-generator/generated';
 import { FormControl, Stack, TextField, Typography } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import React from 'react';
+import { useNotify } from '@client/components/notification/hook';
+import { isError } from '@tanstack/react-query';
+import { useCreateSectionMutation } from '@client/hooks/apis/courses/useCreateSectionMutation';
 
-export const FormCreateSection = () => {
+const schema = yup
+  .object({
+    title: yup.string().required('Trường này không thể bỏ trống.'),
+    description: yup.string().required('Trường này không thể bỏ trống.'),
+  })
+  .required();
+interface Props {
+  course: CourseDetailResponse;
+}
+export const FormCreateSection = ({ course }: Props) => {
+  const { notify, notifyError } = useNotify();
+  const createSectionMutation = useCreateSectionMutation();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<CreateSectionDto>({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+    defaultValues: {
+      course_id: course.id,
+      title: '',
+      description: '',
+    },
+  });
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await createSectionMutation.mutateAsync({
+        createSectionDto: { ...data },
+      });
+      reset();
+      notify();
+    } catch (error) {
+      notifyError({ error });
+    } finally {
+      reset({
+        course_id: course.id,
+        title: '',
+        description: '',
+      });
+    }
+  });
   return (
     <Stack
       position="relative"
       gap={2}
       component="form"
       sx={{ bgcolor: '#328AF11A', p: 3 }}
+      onSubmit={onSubmit}
     >
       <Stack>
         <Typography variant="h3" fontSize={22} fontWeight={700}>
@@ -20,7 +74,7 @@ export const FormCreateSection = () => {
           <Typography> Title *</Typography>
           <FormControl>
             <TextField
-              name="name"
+              {...register('title')}
               size="small"
               sx={{
                 bgcolor: '#9494941a',
@@ -29,6 +83,8 @@ export const FormCreateSection = () => {
                 },
               }}
               placeholder="Name course ..."
+              error={!!errors.title}
+              helperText={errors.title?.message}
             />
           </FormControl>
         </Stack>
@@ -36,7 +92,7 @@ export const FormCreateSection = () => {
           <Typography>Descripton</Typography>
           <FormControl>
             <TextField
-              name="description"
+              {...register('description')}
               size="small"
               multiline
               minRows={4}
@@ -46,13 +102,17 @@ export const FormCreateSection = () => {
                   border: 'none',
                 },
               }}
-              placeholder="Name course ..."
+              placeholder="Description ..."
+              error={!!errors.description}
+              helperText={errors.description?.message}
             />
           </FormControl>
         </Stack>
         <Stack gap={1} justifyContent="flex-end" flexDirection={'row'}>
           <RoundedButton color="secondary">Reset</RoundedButton>
-          <RoundedButton>Save</RoundedButton>
+          <RoundedButton type="submit" disabled={!isValid}>
+            Save
+          </RoundedButton>
         </Stack>
       </Stack>
     </Stack>

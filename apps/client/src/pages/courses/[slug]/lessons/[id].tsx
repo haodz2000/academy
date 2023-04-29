@@ -28,9 +28,6 @@ const Index = () => {
     : 0;
   const courseQuery = useCourseQuery({ slug: query.slug as string });
   const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   setLoading(true);
-  // }, []);
   const course = useMemo(() => {
     return courseQuery.data?.data ?? null;
   }, [courseQuery.data?.data]);

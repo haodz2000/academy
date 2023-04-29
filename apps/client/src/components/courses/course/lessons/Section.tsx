@@ -66,7 +66,7 @@ export const Section = ({ section, order, lessonCurrent }: Props) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Stack gap={0.5}>
           {section.lessons?.map((lesson, index) => (
-            <Lesson currentId={lessonCurrent.id} key={index} lesson={lesson} />
+            <Lesson currentId={lessonCurrent?.id} key={index} lesson={lesson} />
           ))}
         </Stack>
       </Collapse>

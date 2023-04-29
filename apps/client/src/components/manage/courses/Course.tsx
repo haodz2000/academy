@@ -2,8 +2,13 @@ import { Avatar, IconButton, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from '@client/components/ui/Link';
+import { CourseResponse } from '@libs/openapi-generator/generated';
+import AddIcon from '@mui/icons-material/Add';
 
-export const Course = () => {
+interface Props {
+  course: CourseResponse;
+}
+export const Course = ({ course }: Props) => {
   return (
     <Paper
       sx={{
@@ -23,7 +28,7 @@ export const Course = () => {
               <EditIcon htmlColor="#FFF" />
             </IconButton>
           </Stack>
-          <Stack gap={1}>
+          <Stack width={'100%'} gap={1}>
             <Stack
               flexDirection={'row'}
               alignItems={'center'}
@@ -35,21 +40,20 @@ export const Course = () => {
                 color="#FFFFFFE8"
                 fontWeight={600}
               >
-                Course
+                {course.name}
               </Typography>
               <Stack flexDirection="row">
-                <Avatar>H</Avatar>
-                <Avatar>H</Avatar>
-                <Avatar>H</Avatar>
-                <Avatar>+4</Avatar>
+                <IconButton
+                  LinkComponent={Link}
+                  href={`/manage/courses/${course.slug}`}
+                >
+                  <AddIcon fontSize="large" sx={{ color: '#FFF' }} />
+                </IconButton>
               </Stack>
             </Stack>
             <Stack gap={2}>
               <Typography color={'#D8E3EE'} variant="subtitle1">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                sequi id ipsa odio ad doloribus vero vel at! Quasi harum enim
-                voluptatibus officia asperiores modi dolorum, doloremque
-                voluptates aliquam temporibus?
+                {course.description}
               </Typography>
               <Stack flexDirection="row" gap={1} alignItems="center">
                 <Typography
@@ -57,8 +61,11 @@ export const Course = () => {
                   variant="body2"
                   fontWeight={600}
                   color="#328AF1"
+                  component={Link}
+                  underline="hover"
+                  href={'profile/' + course.creator.email.split('@')[0]}
                 >
-                  Hao
+                  {course.creator.name}
                 </Typography>
                 <Typography fontSize={10} color={'#D8E3EE'} variant="body2">
                   cập nhật lúc {new Date().toLocaleDateString()}

@@ -1,11 +1,25 @@
 import { AppLayout } from '@client/components/layouts/AppLayout';
+import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { Course } from '@client/components/manage/courses/Course';
 import { RoundedButton } from '@client/components/ui/buttons';
-import { Stack } from '@mui/material';
-import React, { ReactElement } from 'react';
+import { useCoursesQuery } from '@client/hooks/apis/courses/useCoursesQuery';
+import { Stack, Typography } from '@mui/material';
+import React, { ReactElement, useMemo } from 'react';
 
 const Index = () => {
+  const coursesQuery = useCoursesQuery();
+  const courses = useMemo(() => {
+    return coursesQuery.data?.data ?? [];
+  }, [coursesQuery.data?.data]);
+
+  if (coursesQuery.isLoading) {
+    return <Typography>...Loading</Typography>;
+  }
+  if (coursesQuery.isError) {
+    return <ErrorPage />;
+  }
+
   return (
     <Stack width={'100%'} paddingX={2} flexDirection={'row'} gap={2}>
       <Stack width={'30%'}>
@@ -18,11 +32,9 @@ const Index = () => {
       <Stack width={'70%'}>
         <Stack paddingX={2} gap={2}>
           <Stack gap={2}>
-            <Course />
-            <Course />
-            <Course />
-            <Course />
-            <Course />
+            {courses.map((course) => (
+              <Course course={course} key={course.id} />
+            ))}
           </Stack>
         </Stack>
       </Stack>

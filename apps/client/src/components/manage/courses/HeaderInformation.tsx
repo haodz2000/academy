@@ -2,8 +2,13 @@ import { Avatar, Box, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { RoundedButton } from '@client/components/ui/buttons';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { CourseDetailResponse } from '@libs/openapi-generator/generated';
+import Link from '@client/components/ui/Link';
 
-export const HeaderInformation = () => {
+interface Props {
+  course: CourseDetailResponse;
+}
+export const HeaderInformation = ({ course }: Props) => {
   return (
     <Stack gap={1}>
       <Box>
@@ -18,28 +23,33 @@ export const HeaderInformation = () => {
         <Stack width={'70%'} gap={2} justifyContent={'space-between'}>
           <Stack gap={2}>
             <Typography variant="h1" fontSize={33} fontWeight={600}>
-              Laravel Beginner
+              {course.name}
             </Typography>
             <Stack flexDirection={'row'} gap={1}>
-              <RoundedButton sx={{ bgcolor: '#328AF11A' }}>
-                Frameworks
-              </RoundedButton>
+              {course.topics?.map((topic) => (
+                <RoundedButton key={topic.id} sx={{ bgcolor: '#328AF11A' }}>
+                  {topic.name}
+                </RoundedButton>
+              ))}
             </Stack>
             <Stack>
-              <Typography>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi ut
-                temporibus obcaecati, sit, dolorem tempore ex ea at deleniti
-                odio praesentium, nihil harum laboriosam culpa libero.
-                Perferendis nemo soluta tempore.
+              <Typography>{course.description}</Typography>
+            </Stack>
+            <Stack flexDirection={'row'} gap={1}>
+              <Typography>Administrator:</Typography>
+              <Typography
+                fontWeight={600}
+                underline="hover"
+                component={Link}
+                href={'/profile/' + course.administrator.email.split('@')[0]}
+              >
+                {course.administrator.name}
               </Typography>
             </Stack>
           </Stack>
         </Stack>
         <Stack justifyContent={'flex-start'} width={'30%'}>
-          <Avatar
-            src="https://ik.imagekit.io/laracasts/series/thumbnails/laravel-cookbook.png?tr=w-432"
-            sx={{ height: 216, width: 216 }}
-          />
+          <Avatar src={course.cover.path} sx={{ height: 216, width: 216 }} />
         </Stack>
       </Stack>
     </Stack>

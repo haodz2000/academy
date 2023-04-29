@@ -8,9 +8,7 @@ export const ListSection = () => {
       <Typography variant="h6" fontWeight={600}>
         List Section
       </Typography>
-      <Stack gap={1}>
-        <Section />
-      </Stack>
+      <Stack gap={1}>{/* <Section /> */}</Stack>
     </Stack>
   );
 };

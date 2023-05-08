@@ -4,6 +4,8 @@ import { RoundedButton } from '@client/components/ui/buttons';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 import Link from '@client/components/ui/Link';
+import { Back } from '@client/components/ui/Back';
+import { StatusCourse } from '@libs/constants/entities/Course';
 
 interface Props {
   course: CourseDetailResponse;
@@ -11,14 +13,7 @@ interface Props {
 export const HeaderInformation = ({ course }: Props) => {
   return (
     <Stack gap={1}>
-      <Box>
-        <RoundedButton
-          sx={{ bgcolor: '#328AF11A' }}
-          startIcon={<ArrowBackIcon />}
-        >
-          Back
-        </RoundedButton>
-      </Box>
+      <Back />
       <Stack flexDirection={'row'} gap={2}>
         <Stack width={'70%'} gap={2} justifyContent={'space-between'}>
           <Stack gap={2}>
@@ -45,6 +40,11 @@ export const HeaderInformation = ({ course }: Props) => {
               >
                 {course.administrator.name}
               </Typography>
+            </Stack>
+            <Stack>
+              <RoundedButton sx={{ background: '#328AF11A' }}>
+                {course.status == StatusCourse.Pending && 'Đăng kí dạy học'}
+              </RoundedButton>
             </Stack>
           </Stack>
         </Stack>

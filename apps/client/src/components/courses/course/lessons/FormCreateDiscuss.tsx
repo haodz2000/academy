@@ -1,8 +1,12 @@
 import { RoundedButton } from '@client/components/ui/buttons';
+import { LessonResponse } from '@libs/openapi-generator/generated';
 import { FormControl, Stack, TextField } from '@mui/material';
 import React from 'react';
 
-export const FormCreateDiscuss = () => {
+interface Props {
+  lesson: LessonResponse;
+}
+export const FormCreateDiscuss = ({ lesson }: Props) => {
   return (
     <Stack gap={1}>
       <FormControl>

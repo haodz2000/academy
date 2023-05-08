@@ -16,7 +16,7 @@ export const LessonItem = ({ lesson, order }: Props) => {
       component={Link}
       underline="none"
       color={'inherit'}
-      href={'/courses/' + slug + '/lessons/' + lesson.id}
+      href={'/series/' + slug + '/lessons/' + lesson.id}
       height={145}
       borderRadius={5}
       padding={2}

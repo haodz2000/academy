@@ -18,6 +18,6 @@ export class CourseUpdateDto extends BaseDto {
   cover: Express.Multer.File;
 
   @IsOptional()
-  @ApiProperty({ isArray: true, name: 'topicIds[]', type: 'number' })
+  @ApiProperty({ isArray: true, name: 'topicIds', type: 'number' })
   topicIds: number[];
 }

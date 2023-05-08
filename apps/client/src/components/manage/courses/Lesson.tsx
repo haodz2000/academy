@@ -2,17 +2,16 @@ import Link from '@client/components/ui/Link';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
+import { FormUpdateLesson } from './FormUpdateLesson';
 
 interface Props {
   lesson: LessonResponse;
+  onCreated: () => void;
 }
-export const Lesson = ({ lesson }: Props) => {
+export const Lesson = ({ lesson, onCreated }: Props) => {
   return (
     <Stack
-      component={Link}
-      underline="none"
       color={'inherit'}
-      href={'#'}
       height={145}
       borderRadius={5}
       padding={2}
@@ -24,6 +23,7 @@ export const Lesson = ({ lesson }: Props) => {
       bgcolor={'#18273F'}
       flexDirection={'row'}
       gap={2}
+      position={'relative'}
     >
       <Stack justifyContent={'center'} alignItems={'center'}>
         <Avatar sx={{ height: 62, width: 62, bgcolor: '#328af11A' }}>01</Avatar>
@@ -38,6 +38,16 @@ export const Lesson = ({ lesson }: Props) => {
             Time: {lesson.time}
           </Typography>
         </Stack>
+      </Stack>
+      <Stack
+        position={'absolute'}
+        sx={{
+          top: '50%',
+          right: 15,
+          transform: 'translateY(-50%)',
+        }}
+      >
+        <FormUpdateLesson lesson={lesson} onCreated={onCreated} />
       </Stack>
     </Stack>
   );

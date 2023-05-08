@@ -25,7 +25,7 @@ const menu: IMenu[] = [
   {
     id: 1,
     name: 'Series',
-    href: '/courses',
+    href: '/series',
   },
   {
     id: 2,

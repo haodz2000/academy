@@ -2,8 +2,12 @@ import React from 'react';
 import { Discuss } from './Discuss';
 import { FormCreateDiscuss } from './FormCreateDiscuss';
 import { Paper, Stack, Typography } from '@mui/material';
+import { LessonResponse } from '@libs/openapi-generator/generated';
 
-export const Discusstion = () => {
+interface Props {
+  lesson: LessonResponse;
+}
+export const Discusstion = ({ lesson }: Props) => {
   return (
     <Paper sx={{ padding: 3, bgcolor: '#18273F', borderRadius: 3 }}>
       <Stack gap={2}>
@@ -33,7 +37,7 @@ export const Discusstion = () => {
           <Discuss />
         </Stack>
         <Stack>
-          <FormCreateDiscuss />
+          <FormCreateDiscuss lesson={lesson} />
         </Stack>
       </Stack>
     </Paper>

@@ -16,7 +16,7 @@ export const CourseItem = ({ course }: Props) => {
     <Stack paddingX={6} zIndex={1} width={'100%'}>
       <Paper
         component={Link}
-        href={'/courses/' + course.slug}
+        href={'/series/' + course.slug}
         underline="none"
         sx={{
           minHeight: '420px',

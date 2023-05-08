@@ -1,14 +1,7 @@
 import { Navbar } from '@client/components/courses/course/lessons/Navbar';
 import { AppLayout } from '@client/components/layouts/AppLayout';
 import { Header } from '@client/components/layouts/header/Header';
-import {
-  CircularProgress,
-  Divider,
-  IconButton,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import ReactPlayer from 'react-player';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -18,6 +11,8 @@ import { useRouter } from 'next/router';
 import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
+import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
+import AddIcon from '@mui/icons-material/Add';
 
 const Index = () => {
   const [lesson, setLesson] = useState<LessonResponse>(null);
@@ -38,11 +33,7 @@ const Index = () => {
     }
   }, [course, id]);
   if (courseQuery.isLoading) {
-    return (
-      <Stack position="absolute" top={0} right={0} left={0} bottom={0}>
-        <CircularProgress />
-      </Stack>
-    );
+    return <LoadingPage />;
   }
   if (courseQuery.isError) {
     return <ErrorPage />;
@@ -126,7 +117,7 @@ const Index = () => {
         </Stack>
         <Stack flexDirection={'row'} width={'100%'} gap={1}>
           <Stack width={'60%'}>
-            <Discusstion />
+            <Discusstion lesson={lesson} />
           </Stack>
           <Stack width={'40%'}>
             <Paper
@@ -138,9 +129,14 @@ const Index = () => {
               }}
             >
               <Stack gap={4}>
-                <Typography variant="h3" fontSize={22} fontWeight={700}>
-                  Bài tập
-                </Typography>
+                <Stack flexDirection={'row'} gap={1} alignItems="center">
+                  <Typography variant="h3" fontSize={22} fontWeight={700}>
+                    Bài tập
+                  </Typography>
+                  <IconButton>
+                    <AddIcon htmlColor="#FFF" fontSize="large" />
+                  </IconButton>
+                </Stack>
                 <Stack gap={3}>
                   <Assigment />
                   <Assigment />

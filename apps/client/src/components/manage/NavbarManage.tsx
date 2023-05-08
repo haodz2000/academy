@@ -29,7 +29,6 @@ const menu: Menu[] = [
 
 export const NavbarManage = ({ children }: PropsWithChildren) => {
   const path = useRouter().asPath;
-  console.log(path);
   return (
     <Stack width={1} gap={2}>
       <Stack width={1}>{children}</Stack>

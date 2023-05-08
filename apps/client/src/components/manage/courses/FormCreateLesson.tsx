@@ -22,8 +22,9 @@ const schema = yup
 
 interface Props {
   section: SectionFullResponse;
+  onCreated: () => void;
 }
-export const FormCreateLesson = ({ section }: Props) => {
+export const FormCreateLesson = ({ section, onCreated }: Props) => {
   const { notify, notifyError } = useNotify();
   const createLessonMutation = useCreateLessonMutation();
   const {
@@ -45,11 +46,12 @@ export const FormCreateLesson = ({ section }: Props) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const respone = await createLessonMutation.mutateAsync({
+      const response = await createLessonMutation.mutateAsync({
         createLessonDto: { ...data },
       });
       reset();
       notify();
+      onCreated();
     } catch (error) {
       notifyError({ error });
     } finally {

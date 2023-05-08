@@ -23,8 +23,11 @@ export const Course = ({ course }: Props) => {
       <Stack gap={2}>
         <Stack flexDirection="row" gap={2} justifyContent="flex-start">
           <Stack gap={1}>
-            <Avatar>H</Avatar>
-            <IconButton>
+            <Avatar src={course.cover.path}></Avatar>
+            <IconButton
+              href={'/manage/courses/' + course.slug + '/setting'}
+              LinkComponent={Link}
+            >
               <EditIcon htmlColor="#FFF" />
             </IconButton>
           </Stack>
@@ -39,6 +42,9 @@ export const Course = ({ course }: Props) => {
                 fontSize={20}
                 color="#FFFFFFE8"
                 fontWeight={600}
+                component={Link}
+                underline="none"
+                href={'/manage/courses/' + course.slug}
               >
                 {course.name}
               </Typography>

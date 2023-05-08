@@ -1,8 +1,16 @@
-import { Entity, ManyToOne, Property } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  Property,
+} from '@mikro-orm/core';
 import { Scalar } from '@libs/constants/interfaces/scalar';
 import { BaseEntityWithSerialPrimaryKey } from '@libs/entities/entities/BaseEntityWithSerialPrimaryKey';
 import { User } from './User';
 import { Section } from './Section';
+import { Assignment } from './Assignment';
+import { Discuss } from './Discuss';
 
 @Entity({ tableName: 'lessons' })
 export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
@@ -58,4 +66,16 @@ export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
     nullable: true,
   })
   section!: Section;
+
+  @OneToMany({
+    entity: () => Assignment,
+    mappedBy: (assignment) => assignment.lesson,
+  })
+  assignments = new Collection<Assignment>(this);
+
+  @OneToMany({
+    entity: () => Discuss,
+    mappedBy: (discuss) => discuss.lesson,
+  })
+  discusses = new Collection<Discuss>(this);
 }

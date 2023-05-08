@@ -13,11 +13,13 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 import { FormCreateLesson } from './FormCreateLesson';
 import { SectionFullResponse } from '@libs/openapi-generator/generated';
+import { FormUpdateSection } from './FormUpdateSection';
 
 interface Props {
   section: SectionFullResponse;
+  onCreated: () => void;
 }
-export const Section = ({ section }: Props) => {
+export const Section = ({ section, onCreated }: Props) => {
   const [open, setOpen] = React.useState(false);
   const [openForm, setOpenForm] = React.useState(false);
 
@@ -45,7 +47,8 @@ export const Section = ({ section }: Props) => {
             {section.title}
           </Typography>
         </Stack>
-        <Stack flexDirection={'row'}>
+        <Stack flexDirection={'row'} alignItems={'center'}>
+          <FormUpdateSection section={section} onCreated={onCreated} />
           <Tooltip title={'New Lesson'}>
             <IconButton onClick={() => setOpenForm(!openForm)}>
               <AddIcon fontSize="large" htmlColor="#FFF" />
@@ -61,12 +64,12 @@ export const Section = ({ section }: Props) => {
         </Stack>
       </Stack>
       <Collapse in={openForm} timeout="auto" unmountOnExit>
-        <FormCreateLesson section={section} />
+        <FormCreateLesson onCreated={onCreated} section={section} />
       </Collapse>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Stack gap={2}>
           {section.lessons?.map((lesson) => (
-            <Lesson lesson={lesson} key={lesson.id} />
+            <Lesson lesson={lesson} key={lesson.id} onCreated={onCreated} />
           ))}
         </Stack>
       </Collapse>

@@ -1,5 +1,5 @@
 import { AbilityFactory } from './../auth/ability/ability.factory';
-import { StatusCourseSubscribe } from './../../../../../libs/constants/src/entities/CourseSubscribe';
+import { StatusCourseSubscribe } from '@libs/constants/entities/CourseSubscribe';
 import { CourseSubscribe } from '@libs/entities/entities/CourseSubscribe';
 import { UploadService } from './../upload/upload.service';
 import { Course } from '@libs/entities/entities/Course';
@@ -52,7 +52,6 @@ export class CourseService {
   }
 
   async create(data: CourseCreateDto): Promise<Course> {
-    console.log(data.topicIds);
     await this.em.begin();
     try {
       const coverStoredFile = await this.uploadService.uploadFile(data.cover, {
@@ -101,13 +100,11 @@ export class CourseService {
       });
       await this.courseRepository.persistAndFlush(course);
       if (cover) {
-        const oldCover = course.cover;
         const newCover = await this.uploadService.uploadFile(cover, {
           folderPath: 'courses',
         });
         course.cover_id = newCover.id;
         await this.courseRepository.persistAndFlush(course);
-        await this.uploadService.removeFile(oldCover);
       }
       this.em.commit();
       return await this.courseRepository.findOne(id, {

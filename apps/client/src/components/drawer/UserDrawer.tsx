@@ -24,7 +24,6 @@ export const UserDrawer = () => {
         <Drawer anchor={'right'} open={state} onClose={toggleDrawer}>
           <Stack
             sx={{ width: 400, bgcolor: '#151f32' }}
-            // role="presentation"
             onClick={toggleDrawer}
             onKeyDown={toggleDrawer}
             height={1}

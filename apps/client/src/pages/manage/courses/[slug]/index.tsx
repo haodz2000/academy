@@ -1,11 +1,12 @@
 import { AppLayout } from '@client/components/layouts/AppLayout';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
+import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { FormCreateSection } from '@client/components/manage/courses/FormCreateSection';
 import { HeaderInformation } from '@client/components/manage/courses/HeaderInformation';
-import { ListSection } from '@client/components/manage/courses/ListSection';
 import { Section } from '@client/components/manage/courses/Section';
 import { RoundedButton } from '@client/components/ui/buttons';
+import { withAuth } from '@client/hocs/withAuth';
 import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
 import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -19,11 +20,14 @@ const Index = () => {
     return courseQuery.data?.data ?? null;
   }, [courseQuery.data?.data]);
   if (courseQuery.isLoading) {
-    return <Typography>...Loading</Typography>;
+    return <LoadingPage />;
   }
   if (courseQuery.isError) {
     return <ErrorPage />;
   }
+  const onRefresh = () => {
+    courseQuery.refetch();
+  };
   return (
     <Stack width={'100%'} paddingX={2} flexDirection={'row'} gap={2}>
       <Stack width={'30%'}>
@@ -36,14 +40,18 @@ const Index = () => {
       <Stack width={'70%'}>
         <Stack paddingX={2} gap={1}>
           <HeaderInformation course={course} />
-          <FormCreateSection course={course} />
+          <FormCreateSection onCreated={onRefresh} course={course} />
           <Stack gap={2}>
             <Typography variant="h6" fontWeight={600}>
               List Section
             </Typography>
             <Stack gap={1}>
               {course.sections?.map((section) => (
-                <Section section={section} key={section.id} />
+                <Section
+                  onCreated={onRefresh}
+                  section={section}
+                  key={section.id}
+                />
               ))}
             </Stack>
           </Stack>
@@ -61,9 +69,5 @@ Index.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export const getServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};
+export const getServerSideProps = withAuth();
 export default Index;

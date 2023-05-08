@@ -1587,6 +1587,56 @@ export type TopicStatResponseCoverTypenameEnum =
 /**
  *
  * @export
+ * @interface UpdateLessonDto
+ */
+export interface UpdateLessonDto {
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateLessonDto
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateLessonDto
+   */
+  description: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateLessonDto
+   */
+  link: string;
+  /**
+   *
+   * @type {number}
+   * @memberof UpdateLessonDto
+   */
+  time: number;
+}
+/**
+ *
+ * @export
+ * @interface UpdateSectionDto
+ */
+export interface UpdateSectionDto {
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateSectionDto
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateSectionDto
+   */
+  description: string;
+}
+/**
+ *
+ * @export
  * @interface UserBasicResponse
  */
 export interface UserBasicResponse {
@@ -2559,7 +2609,7 @@ export const CoursesApiAxiosParamCreator = function (
       }
       if (topicIds) {
         localVarFormParams.append(
-          'topicIds[]',
+          'topicIds',
           topicIds.join(COLLECTION_FORMATS.csv)
         );
       }
@@ -2726,7 +2776,7 @@ export const CoursesApiAxiosParamCreator = function (
       }
       if (topicIds) {
         localVarFormParams.append(
-          'topicIds[]',
+          'topicIds',
           topicIds.join(COLLECTION_FORMATS.csv)
         );
       }
@@ -3226,6 +3276,52 @@ export const LessonsApiAxiosParamCreator = function (
     /**
      *
      * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete: async (
+      id: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('_delete', 'id', id);
+      const localVarPath = `/api/lesson/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'DELETE',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
      * @param {CreateLessonDto} createLessonDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3273,6 +3369,63 @@ export const LessonsApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {UpdateLessonDto} updateLessonDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update: async (
+      id: number,
+      updateLessonDto: UpdateLessonDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('update', 'id', id);
+      // verify required parameter 'updateLessonDto' is not null or undefined
+      assertParamExists('update', 'updateLessonDto', updateLessonDto);
+      const localVarPath = `/api/lesson/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        updateLessonDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -3286,6 +3439,33 @@ export const LessonsApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async _delete(
+      id: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseDelete200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator._delete(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
      * @param {CreateLessonDto} createLessonDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3294,10 +3474,43 @@ export const LessonsApiFp = function (configuration?: Configuration) {
       createLessonDto: CreateLessonDto,
       options?: AxiosRequestConfig
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<SectionCreate200Response>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.create(
         createLessonDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {UpdateLessonDto} updateLessonDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async update(
+      id: number,
+      updateLessonDto: UpdateLessonDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<SectionCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.update(
+        id,
+        updateLessonDto,
         options
       );
       return createRequestFunction(
@@ -3324,6 +3537,18 @@ export const LessonsApiFactory = function (
     /**
      *
      * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete(id: number, options?: any): AxiosPromise<CourseDelete200Response> {
+      return localVarFp
+        ._delete(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
      * @param {CreateLessonDto} createLessonDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3331,13 +3556,44 @@ export const LessonsApiFactory = function (
     create(
       createLessonDto: CreateLessonDto,
       options?: any
-    ): AxiosPromise<void> {
+    ): AxiosPromise<SectionCreate200Response> {
       return localVarFp
         .create(createLessonDto, options)
         .then((request) => request(axios, basePath));
     },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {UpdateLessonDto} updateLessonDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update(
+      id: number,
+      updateLessonDto: UpdateLessonDto,
+      options?: any
+    ): AxiosPromise<SectionCreate200Response> {
+      return localVarFp
+        .update(id, updateLessonDto, options)
+        .then((request) => request(axios, basePath));
+    },
   };
 };
+
+/**
+ * Request parameters for _delete operation in LessonsApi.
+ * @export
+ * @interface LessonsApiDeleteRequest
+ */
+export interface LessonsApiDeleteRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof LessonsApiDelete
+   */
+  readonly id: number;
+}
 
 /**
  * Request parameters for create operation in LessonsApi.
@@ -3354,12 +3610,50 @@ export interface LessonsApiCreateRequest {
 }
 
 /**
+ * Request parameters for update operation in LessonsApi.
+ * @export
+ * @interface LessonsApiUpdateRequest
+ */
+export interface LessonsApiUpdateRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof LessonsApiUpdate
+   */
+  readonly id: number;
+
+  /**
+   *
+   * @type {UpdateLessonDto}
+   * @memberof LessonsApiUpdate
+   */
+  readonly updateLessonDto: UpdateLessonDto;
+}
+
+/**
  * LessonsApi - object-oriented interface
  * @export
  * @class LessonsApi
  * @extends {BaseAPI}
  */
 export class LessonsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {LessonsApiDeleteRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LessonsApi
+   */
+  public _delete(
+    requestParameters: LessonsApiDeleteRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return LessonsApiFp(this.configuration)
+      ._delete(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
   /**
    *
    * @summary
@@ -3376,6 +3670,23 @@ export class LessonsApi extends BaseAPI {
       .create(requestParameters.createLessonDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
+
+  /**
+   *
+   * @summary
+   * @param {LessonsApiUpdateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LessonsApi
+   */
+  public update(
+    requestParameters: LessonsApiUpdateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return LessonsApiFp(this.configuration)
+      .update(requestParameters.id, requestParameters.updateLessonDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
 }
 
 /**
@@ -3386,6 +3697,52 @@ export const SectionsApiAxiosParamCreator = function (
   configuration?: Configuration
 ) {
   return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete: async (
+      id: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('_delete', 'id', id);
+      const localVarPath = `/api/sections/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'DELETE',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
     /**
      *
      * @summary
@@ -3436,6 +3793,63 @@ export const SectionsApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {UpdateSectionDto} updateSectionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update: async (
+      id: number,
+      updateSectionDto: UpdateSectionDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('update', 'id', id);
+      // verify required parameter 'updateSectionDto' is not null or undefined
+      assertParamExists('update', 'updateSectionDto', updateSectionDto);
+      const localVarPath = `/api/sections/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        updateSectionDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -3446,6 +3860,33 @@ export const SectionsApiAxiosParamCreator = function (
 export const SectionsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = SectionsApiAxiosParamCreator(configuration);
   return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async _delete(
+      id: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseDelete200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator._delete(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
     /**
      *
      * @summary
@@ -3473,6 +3914,36 @@ export const SectionsApiFp = function (configuration?: Configuration) {
         configuration
       );
     },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {UpdateSectionDto} updateSectionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async update(
+      id: number,
+      updateSectionDto: UpdateSectionDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<SectionCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.update(
+        id,
+        updateSectionDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
   };
 };
 
@@ -3490,6 +3961,18 @@ export const SectionsApiFactory = function (
     /**
      *
      * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete(id: number, options?: any): AxiosPromise<CourseDelete200Response> {
+      return localVarFp
+        ._delete(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
      * @param {CreateSectionDto} createSectionDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3502,8 +3985,39 @@ export const SectionsApiFactory = function (
         .create(createSectionDto, options)
         .then((request) => request(axios, basePath));
     },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {UpdateSectionDto} updateSectionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update(
+      id: number,
+      updateSectionDto: UpdateSectionDto,
+      options?: any
+    ): AxiosPromise<SectionCreate200Response> {
+      return localVarFp
+        .update(id, updateSectionDto, options)
+        .then((request) => request(axios, basePath));
+    },
   };
 };
+
+/**
+ * Request parameters for _delete operation in SectionsApi.
+ * @export
+ * @interface SectionsApiDeleteRequest
+ */
+export interface SectionsApiDeleteRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof SectionsApiDelete
+   */
+  readonly id: number;
+}
 
 /**
  * Request parameters for create operation in SectionsApi.
@@ -3520,12 +4034,50 @@ export interface SectionsApiCreateRequest {
 }
 
 /**
+ * Request parameters for update operation in SectionsApi.
+ * @export
+ * @interface SectionsApiUpdateRequest
+ */
+export interface SectionsApiUpdateRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof SectionsApiUpdate
+   */
+  readonly id: number;
+
+  /**
+   *
+   * @type {UpdateSectionDto}
+   * @memberof SectionsApiUpdate
+   */
+  readonly updateSectionDto: UpdateSectionDto;
+}
+
+/**
  * SectionsApi - object-oriented interface
  * @export
  * @class SectionsApi
  * @extends {BaseAPI}
  */
 export class SectionsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {SectionsApiDeleteRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SectionsApi
+   */
+  public _delete(
+    requestParameters: SectionsApiDeleteRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return SectionsApiFp(this.configuration)
+      ._delete(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
   /**
    *
    * @summary
@@ -3540,6 +4092,23 @@ export class SectionsApi extends BaseAPI {
   ) {
     return SectionsApiFp(this.configuration)
       .create(requestParameters.createSectionDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {SectionsApiUpdateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SectionsApi
+   */
+  public update(
+    requestParameters: SectionsApiUpdateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return SectionsApiFp(this.configuration)
+      .update(requestParameters.id, requestParameters.updateSectionDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

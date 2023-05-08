@@ -10,6 +10,8 @@ import { Request } from 'express';
 import { IdAction } from '@libs/constants/abilities';
 import { Course } from '@libs/entities/entities/Course';
 import { DeleteResponse } from '../responses/delete.response';
+import { UpdateSectionDto } from './dtos/update-section.dto';
+import { wrap } from '@mikro-orm/core';
 
 @Injectable()
 export class SectionService {
@@ -21,7 +23,7 @@ export class SectionService {
     private readonly ability: AbilityFactory
   ) {}
 
-  async create(data: CreateSectionDto) {
+  async create(data: CreateSectionDto): Promise<Section> {
     const course = await this.em
       .getRepository(Course)
       .findOneOrFail({ id: data.course_id });
@@ -35,6 +37,22 @@ export class SectionService {
       description: data.description,
       created_by: this.request.user.id,
       updated_by: this.request.user.id,
+    });
+    await this.sectionRepository.persistAndFlush(section);
+    return section;
+  }
+
+  async update(id: number, data: UpdateSectionDto): Promise<Section> {
+    const section = await this.sectionRepository.findOneOrFail({
+      id,
+      created_by: this.request.user.id,
+    });
+    const ability = this.ability.defineAbility(this.request.user);
+    ForbiddenError.from(ability)
+      .setMessage('Unauthorize update section this course')
+      .throwUnlessCan(IdAction.Insert, section);
+    wrap(section).assign({
+      ...data,
     });
     await this.sectionRepository.persistAndFlush(section);
     return section;

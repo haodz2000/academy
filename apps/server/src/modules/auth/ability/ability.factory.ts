@@ -49,6 +49,9 @@ export class AbilityFactory {
         can(IdAction.Delete, IdSubject.Lessons, {
           created_by: user.id,
         });
+        can(IdAction.Update, IdSubject.Lessons, {
+          created_by: user.id,
+        });
         cannot(IdAction.Update, IdSubject.Courses, ['status']);
         break;
       }

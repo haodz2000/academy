@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
 import Link from '@client/components/ui/Link';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
+import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 
 export const Index = () => {
   const router = useRouter();
@@ -26,11 +27,7 @@ export const Index = () => {
     return courseQuery.data?.data ?? null;
   }, [courseQuery.data?.data]);
   if (courseQuery.isLoading) {
-    return (
-      <Stack position="absolute" top={0} right={0} left={0} bottom={0}>
-        <CircularProgress />
-      </Stack>
-    );
+    return <LoadingPage />;
   }
   if (courseQuery.isError) {
     return <ErrorPage />;
@@ -90,10 +87,12 @@ export const Index = () => {
                     </IconButton>
                   </Stack>
                   <Typography variant="subtitle2" color={''}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Dolorem esse sed corporis, eum quo eligendi eveniet corrupti
-                    fuga ullam illum quos perferendis, placeat libero?
-                    Inventore, consequuntur. Autem nihil veritatis esse!
+                    <Link
+                      underline="none"
+                      href={'mailto:' + course.administrator?.email}
+                    >
+                      {course.administrator?.email}
+                    </Link>
                   </Typography>
                 </Stack>
               </Stack>

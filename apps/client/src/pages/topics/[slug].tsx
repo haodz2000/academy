@@ -2,6 +2,7 @@ import { CourseItem } from '@client/components/courses/CourseItem';
 import { Topics } from '@client/components/home/topics';
 import { AppLayout } from '@client/components/layouts/AppLayout';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
+import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { Empty } from '@client/components/ui/Empty';
 import { withUnAuth } from '@client/hocs/withUnAuth';
 import { useTopicQuery } from '@client/hooks/apis/topics/useTopicQuery';
@@ -17,7 +18,7 @@ const Index = () => {
     return topicQuery.data?.data ?? null;
   }, [topicQuery.data?.data]);
   if (topicQuery.isLoading) {
-    return <Typography>...Loading</Typography>;
+    return <LoadingPage />;
   }
   if (topicQuery.isError) {
     return <ErrorPage />;

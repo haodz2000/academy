@@ -10,26 +10,26 @@ export interface IMenu {
 }
 const menu: IMenu[] = [
   {
-    url: '/',
+    url: '/series',
     subtitle: 'Series',
     title: 'categories',
     topic: '// depp dives',
   },
   {
-    url: '/',
+    url: '/topics',
     subtitle: 'Topics',
     title: 'find',
     topic: '// pick a category',
   },
   {
-    url: '/',
+    url: '/path',
     subtitle: 'Path',
     title: 'follow',
     topic: '// engine a community',
   },
   {
-    url: '/',
-    subtitle: 'Commercial',
+    url: '/discuss',
+    subtitle: 'Discuss',
     title: 'play',
     topic: '// watch our ad',
   },

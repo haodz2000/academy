@@ -20,8 +20,9 @@ const schema = yup
   .required();
 interface Props {
   course: CourseDetailResponse;
+  onCreated: () => void;
 }
-export const FormCreateSection = ({ course }: Props) => {
+export const FormCreateSection = ({ course, onCreated }: Props) => {
   const { notify, notifyError } = useNotify();
   const createSectionMutation = useCreateSectionMutation();
   const {
@@ -46,6 +47,7 @@ export const FormCreateSection = ({ course }: Props) => {
       });
       reset();
       notify();
+      onCreated();
     } catch (error) {
       notifyError({ error });
     } finally {

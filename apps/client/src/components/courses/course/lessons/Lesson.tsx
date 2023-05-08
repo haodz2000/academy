@@ -16,7 +16,7 @@ export const Lesson = ({ lesson, currentId }: Props) => {
       component={Link}
       underline="none"
       color={'inherit'}
-      href={'/courses/' + slug + '/lessons/' + lesson.id}
+      href={'/series/' + slug + '/lessons/' + lesson.id}
       borderRadius={2}
       padding={1}
       bgcolor={lesson.id == currentId ? '#253D63' : '#328AF112'}

@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { FC, PropsWithChildren } from 'react';
 import { Header } from './header/Header';

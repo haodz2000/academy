@@ -14,7 +14,7 @@ export const fetchCourse = async (
 
 export const useCourseQuery = (requestParameters: CoursesApiFindOneRequest) => {
   return useQuery({
-    queryKey: [QueryKeys.courses, requestParameters],
+    queryKey: [QueryKeys.course, requestParameters],
     queryFn: () => fetchCourse(requestParameters),
   });
 };

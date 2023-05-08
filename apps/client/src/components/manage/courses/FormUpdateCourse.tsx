@@ -10,69 +10,66 @@ import { RoundedButton } from '@client/components/ui/buttons';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { CoursesApiCreateRequest } from '@libs/openapi-generator/generated';
+import {
+  CourseDetailResponse,
+  CoursesApiUpdateRequest,
+} from '@libs/openapi-generator/generated';
 import { UploadSingleImage } from '@client/components/ui/UploadSingleImage';
 import { TopicSelect } from '@client/components/ui/TopicSelect';
 import { useNotify } from '@client/components/notification/hook';
-import { useCreateCourseMutation } from '@client/hooks/apis/courses/useCreateCourseMutation';
+import { useUpdateCourseMutation } from '@client/hooks/apis/courses/useUpdateCourseMutation';
 import { useRouter } from 'next/router';
 
 const schema = yup
   .object({
-    cover: yup.mixed().required('Trường này không thể bỏ trống.'),
     name: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
   })
   .required();
 
-export const FormCreateCourse = () => {
+interface Props {
+  course: CourseDetailResponse;
+}
+export const FormUpdateCourse = ({ course }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const { notify, notifyError } = useNotify();
-  const courseCreateMutation = useCreateCourseMutation();
+  const courseUpdateMutation = useUpdateCourseMutation();
   const {
     register,
     handleSubmit,
     reset,
     control,
     formState: { errors, isValid },
-  } = useForm<CoursesApiCreateRequest>({
+  } = useForm<CoursesApiUpdateRequest>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      name: '',
-      description: '',
-      topicIds: [],
-      cover: undefined,
+      id: course.id,
+      name: course.name,
+      description: course.description,
+      topicIds: course.topics.map((i) => i.id),
     },
   });
   const onReset = () => {
     reset({
-      name: '',
-      description: '',
+      name: course.name,
+      description: course.description,
       topicIds: [],
-      cover: undefined,
     });
   };
 
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
     try {
-      const response = await courseCreateMutation.mutateAsync({
+      await courseUpdateMutation.mutateAsync({
         ...data,
       });
-      reset({
-        name: '',
-        description: '',
-        topicIds: [],
-        cover: undefined,
-      });
       notify();
-      router.push('/manage/courses/' + response.data.slug);
+      setLoading(false);
+      router.push('/manage/courses');
     } catch (error) {
       notifyError({ error });
-    } finally {
-      setLoading(false);
     }
   });
   return (
@@ -85,7 +82,7 @@ export const FormCreateCourse = () => {
     >
       <Stack>
         <Typography variant="h3" fontSize={22} fontWeight={700}>
-          New Course
+          Update Course
         </Typography>
       </Stack>
       <Stack gap={2}>
@@ -94,7 +91,7 @@ export const FormCreateCourse = () => {
           control={control}
           render={({ field }) => (
             <UploadSingleImage
-              defaultImage={null}
+              defaultImage={course.cover}
               file={field.value}
               setFile={(file) => field.onChange(file)}
               sx={{ width: '100px', height: '100px' }}
@@ -114,6 +111,8 @@ export const FormCreateCourse = () => {
                 },
               }}
               placeholder="Name course ..."
+              error={!!errors.name}
+              helperText={errors.name?.message}
             />
           </FormControl>
         </Stack>
@@ -155,7 +154,9 @@ export const FormCreateCourse = () => {
                   border: 'none',
                 },
               }}
-              placeholder="Name course ..."
+              placeholder="Description ..."
+              error={!!errors.description}
+              helperText={errors.description?.message}
             />
           </FormControl>
         </Stack>

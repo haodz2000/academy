@@ -2,6 +2,7 @@ import { AppLayout } from '@client/components/layouts/AppLayout';
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { FormCreateCourse } from '@client/components/manage/courses/FormCreateCourse';
 import { RoundedButton } from '@client/components/ui/buttons';
+import { withAuth } from '@client/hocs/withAuth';
 import { Stack } from '@mui/material';
 import React, { ReactElement } from 'react';
 
@@ -32,10 +33,6 @@ Index.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export const getServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};
+export const getServerSideProps = withAuth();
 
 export default Index;

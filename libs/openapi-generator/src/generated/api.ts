@@ -144,6 +144,156 @@ export interface AppApiSuccessResponse {
 /**
  *
  * @export
+ * @interface AssignmentCreate200Response
+ */
+export interface AssignmentCreate200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentCreate200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {AssignmentResponse}
+   * @memberof AssignmentCreate200Response
+   */
+  data: AssignmentResponse;
+}
+/**
+ *
+ * @export
+ * @interface AssignmentCreate200ResponseAllOf
+ */
+export interface AssignmentCreate200ResponseAllOf {
+  /**
+   *
+   * @type {AssignmentResponse}
+   * @memberof AssignmentCreate200ResponseAllOf
+   */
+  data?: AssignmentResponse;
+}
+/**
+ *
+ * @export
+ * @interface AssignmentList200Response
+ */
+export interface AssignmentList200Response {
+  /**
+   *
+   * @type {Array<AssignmentResponse>}
+   * @memberof AssignmentList200Response
+   */
+  data: Array<AssignmentResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof AssignmentList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface AssignmentList200ResponseAllOf
+ */
+export interface AssignmentList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<AssignmentResponse>}
+   * @memberof AssignmentList200ResponseAllOf
+   */
+  data?: Array<AssignmentResponse>;
+}
+/**
+ *
+ * @export
+ * @interface AssignmentResponse
+ */
+export interface AssignmentResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof AssignmentResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof AssignmentResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentResponse
+   */
+  __typename?: AssignmentResponseTypenameEnum;
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentResponse
+   */
+  id: string;
+  /**
+   *
+   * @type {number}
+   * @memberof AssignmentResponse
+   */
+  lesson_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentResponse
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof AssignmentResponse
+   */
+  description: string;
+}
+
+export const AssignmentResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+} as const;
+
+export type AssignmentResponseTypenameEnum =
+  (typeof AssignmentResponseTypenameEnum)[keyof typeof AssignmentResponseTypenameEnum];
+
+/**
+ *
+ * @export
  * @interface AuthMe200Response
  */
 export interface AuthMe200Response {
@@ -278,6 +428,8 @@ export const CategoryResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type CategoryResponseTypenameEnum =
@@ -450,6 +602,8 @@ export const CourseDetailResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type CourseDetailResponseTypenameEnum =
@@ -616,11 +770,57 @@ export const CourseResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type CourseResponseTypenameEnum =
   (typeof CourseResponseTypenameEnum)[keyof typeof CourseResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface CreateAssignmentDto
+ */
+export interface CreateAssignmentDto {
+  /**
+   *
+   * @type {number}
+   * @memberof CreateAssignmentDto
+   */
+  lesson_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateAssignmentDto
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateAssignmentDto
+   */
+  description: string;
+}
+/**
+ *
+ * @export
+ * @interface CreateDiscussionDto
+ */
+export interface CreateDiscussionDto {
+  /**
+   *
+   * @type {number}
+   * @memberof CreateDiscussionDto
+   */
+  lesson_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateDiscussionDto
+   */
+  description: string;
+}
 /**
  *
  * @export
@@ -696,6 +896,254 @@ export interface DeleteResponse {
    */
   id: number;
 }
+/**
+ *
+ * @export
+ * @interface DiscussionCreate200Response
+ */
+export interface DiscussionCreate200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionCreate200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {DiscussionResponse}
+   * @memberof DiscussionCreate200Response
+   */
+  data: DiscussionResponse;
+}
+/**
+ *
+ * @export
+ * @interface DiscussionCreate200ResponseAllOf
+ */
+export interface DiscussionCreate200ResponseAllOf {
+  /**
+   *
+   * @type {DiscussionResponse}
+   * @memberof DiscussionCreate200ResponseAllOf
+   */
+  data?: DiscussionResponse;
+}
+/**
+ *
+ * @export
+ * @interface DiscussionList200Response
+ */
+export interface DiscussionList200Response {
+  /**
+   *
+   * @type {Array<DiscussionResponse>}
+   * @memberof DiscussionList200Response
+   */
+  data: Array<DiscussionResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof DiscussionList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface DiscussionList200ResponseAllOf
+ */
+export interface DiscussionList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<DiscussionResponse>}
+   * @memberof DiscussionList200ResponseAllOf
+   */
+  data?: Array<DiscussionResponse>;
+}
+/**
+ *
+ * @export
+ * @interface DiscussionResponse
+ */
+export interface DiscussionResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {DiscussionResponseCreator}
+   * @memberof DiscussionResponse
+   */
+  creator: DiscussionResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof DiscussionResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponse
+   */
+  __typename?: DiscussionResponseTypenameEnum;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponse
+   */
+  id: string;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponse
+   */
+  description: string;
+  /**
+   *
+   * @type {number}
+   * @memberof DiscussionResponse
+   */
+  lesson_id: number;
+}
+
+export const DiscussionResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+} as const;
+
+export type DiscussionResponseTypenameEnum =
+  (typeof DiscussionResponseTypenameEnum)[keyof typeof DiscussionResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface DiscussionResponseCreator
+ */
+export interface DiscussionResponseCreator {
+  /**
+   *
+   * @type {number}
+   * @memberof DiscussionResponseCreator
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  google_id: string | null;
+  /**
+   *
+   * @type {number}
+   * @memberof DiscussionResponseCreator
+   */
+  role_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  avatar_id: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof DiscussionResponseCreator
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof DiscussionResponseCreator
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof DiscussionResponseCreator
+   */
+  __typename?: DiscussionResponseCreatorTypenameEnum;
+  /**
+   *
+   * @type {StoredFileResponse}
+   * @memberof DiscussionResponseCreator
+   */
+  avatar: StoredFileResponse;
+  /**
+   *
+   * @type {RoleResponse}
+   * @memberof DiscussionResponseCreator
+   */
+  role: RoleResponse;
+}
+
+export const DiscussionResponseCreatorTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+} as const;
+
+export type DiscussionResponseCreatorTypenameEnum =
+  (typeof DiscussionResponseCreatorTypenameEnum)[keyof typeof DiscussionResponseCreatorTypenameEnum];
+
 /**
  *
  * @export
@@ -839,6 +1287,8 @@ export const LessonResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type LessonResponseTypenameEnum =
@@ -942,6 +1392,8 @@ export const RoleResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type RoleResponseTypenameEnum =
@@ -1065,6 +1517,8 @@ export const SectionFullResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type SectionFullResponseTypenameEnum =
@@ -1149,6 +1603,8 @@ export const StoredFileResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type StoredFileResponseTypenameEnum =
@@ -1315,6 +1771,8 @@ export const TopicFullResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type TopicFullResponseTypenameEnum =
@@ -1399,6 +1857,8 @@ export const TopicResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type TopicResponseTypenameEnum =
@@ -1495,6 +1955,8 @@ export const TopicStatResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type TopicStatResponseTypenameEnum =
@@ -1579,6 +2041,8 @@ export const TopicStatResponseCoverTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type TopicStatResponseCoverTypenameEnum =
@@ -1719,6 +2183,8 @@ export const UserBasicResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type UserBasicResponseTypenameEnum =
@@ -1809,6 +2275,8 @@ export const UserBasicResponseCreatorTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type UserBasicResponseCreatorTypenameEnum =
@@ -1911,6 +2379,8 @@ export const UserResponseTypenameEnum = {
   Sections: 'sections',
   Lessons: 'lessons',
   CourseSubscribes: 'course_subscribes',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
 } as const;
 
 export type UserResponseTypenameEnum =
@@ -2076,6 +2546,311 @@ export class AppApi extends BaseAPI {
   public getData(options?: AxiosRequestConfig) {
     return AppApiFp(this.configuration)
       .getData(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * AssignmentsApi - axios parameter creator
+ * @export
+ */
+export const AssignmentsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateAssignmentDto} createAssignmentDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      createAssignmentDto: CreateAssignmentDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createAssignmentDto' is not null or undefined
+      assertParamExists('create', 'createAssignmentDto', createAssignmentDto);
+      const localVarPath = `/api/assignments`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createAssignmentDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {number} lessonId
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (
+      lessonId: number,
+      page?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'lessonId' is not null or undefined
+      assertParamExists('list', 'lessonId', lessonId);
+      const localVarPath = `/api/assignments`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (lessonId !== undefined) {
+        localVarQueryParameter['lesson_id'] = lessonId;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * AssignmentsApi - functional programming interface
+ * @export
+ */
+export const AssignmentsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    AssignmentsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateAssignmentDto} createAssignmentDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      createAssignmentDto: CreateAssignmentDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<AssignmentCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(
+        createAssignmentDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} lessonId
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      lessonId: number,
+      page?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<AssignmentList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(
+        lessonId,
+        page,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * AssignmentsApi - factory interface
+ * @export
+ */
+export const AssignmentsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = AssignmentsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateAssignmentDto} createAssignmentDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      createAssignmentDto: CreateAssignmentDto,
+      options?: any
+    ): AxiosPromise<AssignmentCreate200Response> {
+      return localVarFp
+        .create(createAssignmentDto, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {number} lessonId
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(
+      lessonId: number,
+      page?: number,
+      options?: any
+    ): AxiosPromise<AssignmentList200Response> {
+      return localVarFp
+        .list(lessonId, page, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for create operation in AssignmentsApi.
+ * @export
+ * @interface AssignmentsApiCreateRequest
+ */
+export interface AssignmentsApiCreateRequest {
+  /**
+   *
+   * @type {CreateAssignmentDto}
+   * @memberof AssignmentsApiCreate
+   */
+  readonly createAssignmentDto: CreateAssignmentDto;
+}
+
+/**
+ * Request parameters for list operation in AssignmentsApi.
+ * @export
+ * @interface AssignmentsApiListRequest
+ */
+export interface AssignmentsApiListRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof AssignmentsApiList
+   */
+  readonly lessonId: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof AssignmentsApiList
+   */
+  readonly page?: number;
+}
+
+/**
+ * AssignmentsApi - object-oriented interface
+ * @export
+ * @class AssignmentsApi
+ * @extends {BaseAPI}
+ */
+export class AssignmentsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {AssignmentsApiCreateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AssignmentsApi
+   */
+  public create(
+    requestParameters: AssignmentsApiCreateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return AssignmentsApiFp(this.configuration)
+      .create(requestParameters.createAssignmentDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {AssignmentsApiListRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AssignmentsApi
+   */
+  public list(
+    requestParameters: AssignmentsApiListRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return AssignmentsApiFp(this.configuration)
+      .list(requestParameters.lessonId, requestParameters.page, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -3261,6 +4036,311 @@ export class CoursesApi extends BaseAPI {
         requestParameters.cover,
         options
       )
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * DiscussionsApi - axios parameter creator
+ * @export
+ */
+export const DiscussionsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateDiscussionDto} createDiscussionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      createDiscussionDto: CreateDiscussionDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createDiscussionDto' is not null or undefined
+      assertParamExists('create', 'createDiscussionDto', createDiscussionDto);
+      const localVarPath = `/api/discussions`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createDiscussionDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {number} lessonId
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (
+      lessonId: number,
+      page?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'lessonId' is not null or undefined
+      assertParamExists('list', 'lessonId', lessonId);
+      const localVarPath = `/api/discussions`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (lessonId !== undefined) {
+        localVarQueryParameter['lesson_id'] = lessonId;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * DiscussionsApi - functional programming interface
+ * @export
+ */
+export const DiscussionsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    DiscussionsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateDiscussionDto} createDiscussionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      createDiscussionDto: CreateDiscussionDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<DiscussionCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(
+        createDiscussionDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} lessonId
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      lessonId: number,
+      page?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<DiscussionList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(
+        lessonId,
+        page,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * DiscussionsApi - factory interface
+ * @export
+ */
+export const DiscussionsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = DiscussionsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {CreateDiscussionDto} createDiscussionDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      createDiscussionDto: CreateDiscussionDto,
+      options?: any
+    ): AxiosPromise<DiscussionCreate200Response> {
+      return localVarFp
+        .create(createDiscussionDto, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {number} lessonId
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(
+      lessonId: number,
+      page?: number,
+      options?: any
+    ): AxiosPromise<DiscussionList200Response> {
+      return localVarFp
+        .list(lessonId, page, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for create operation in DiscussionsApi.
+ * @export
+ * @interface DiscussionsApiCreateRequest
+ */
+export interface DiscussionsApiCreateRequest {
+  /**
+   *
+   * @type {CreateDiscussionDto}
+   * @memberof DiscussionsApiCreate
+   */
+  readonly createDiscussionDto: CreateDiscussionDto;
+}
+
+/**
+ * Request parameters for list operation in DiscussionsApi.
+ * @export
+ * @interface DiscussionsApiListRequest
+ */
+export interface DiscussionsApiListRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof DiscussionsApiList
+   */
+  readonly lessonId: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof DiscussionsApiList
+   */
+  readonly page?: number;
+}
+
+/**
+ * DiscussionsApi - object-oriented interface
+ * @export
+ * @class DiscussionsApi
+ * @extends {BaseAPI}
+ */
+export class DiscussionsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {DiscussionsApiCreateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DiscussionsApi
+   */
+  public create(
+    requestParameters: DiscussionsApiCreateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return DiscussionsApiFp(this.configuration)
+      .create(requestParameters.createDiscussionDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {DiscussionsApiListRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DiscussionsApi
+   */
+  public list(
+    requestParameters: DiscussionsApiListRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return DiscussionsApiFp(this.configuration)
+      .list(requestParameters.lessonId, requestParameters.page, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

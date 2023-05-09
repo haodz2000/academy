@@ -6,13 +6,12 @@ import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import ReactPlayer from 'react-player';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Discusstion } from '@client/components/courses/course/lessons/Discusstion';
-import { Assigment } from '@client/components/courses/course/lessons/Assigment';
 import { useRouter } from 'next/router';
 import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
-import AddIcon from '@mui/icons-material/Add';
+import { ListAssignments } from '@client/components/courses/course/lessons/ListAssignments';
 
 const Index = () => {
   const [lesson, setLesson] = useState<LessonResponse>(null);
@@ -22,7 +21,7 @@ const Index = () => {
     ? Number(router.query.id)
     : 0;
   const courseQuery = useCourseQuery({ slug: query.slug as string });
-  const [loading, setLoading] = useState(true);
+  const [loading] = useState(true);
   const course = useMemo(() => {
     return courseQuery.data?.data ?? null;
   }, [courseQuery.data?.data]);
@@ -120,29 +119,7 @@ const Index = () => {
             <Discusstion lesson={lesson} />
           </Stack>
           <Stack width={'40%'}>
-            <Paper
-              sx={{
-                padding: 3,
-                bgcolor: '#18273F',
-                borderRadius: 3,
-                ':hover': { bgcolor: 'rgba(63, 74, 92, 0.1)' },
-              }}
-            >
-              <Stack gap={4}>
-                <Stack flexDirection={'row'} gap={1} alignItems="center">
-                  <Typography variant="h3" fontSize={22} fontWeight={700}>
-                    Bài tập
-                  </Typography>
-                  <IconButton>
-                    <AddIcon htmlColor="#FFF" fontSize="large" />
-                  </IconButton>
-                </Stack>
-                <Stack gap={3}>
-                  <Assigment />
-                  <Assigment />
-                </Stack>
-              </Stack>
-            </Paper>
+            <ListAssignments lesson={lesson} />
           </Stack>
         </Stack>
       </Stack>

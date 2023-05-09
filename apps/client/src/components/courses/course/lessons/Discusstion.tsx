@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Discuss } from './Discuss';
 import { FormCreateDiscuss } from './FormCreateDiscuss';
 import { Paper, Stack, Typography } from '@mui/material';
 import { LessonResponse } from '@libs/openapi-generator/generated';
+import { useDiscussionsQuery } from '@client/hooks/apis/discussions/useDiscussionsQuery';
+import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 
 interface Props {
   lesson: LessonResponse;
 }
 export const Discusstion = ({ lesson }: Props) => {
+  const [page, setPage] = useState<number>(1);
+  const discussionsQuery = useDiscussionsQuery({
+    lessonId: lesson?.id,
+    page: page,
+  });
+  const discussions = useMemo(() => {
+    return discussionsQuery.data?.data || [];
+  }, [discussionsQuery.data?.data]);
+  if (discussionsQuery.isLoading) {
+    return <LoadingPage />;
+  }
   return (
     <Paper sx={{ padding: 3, bgcolor: '#18273F', borderRadius: 3 }}>
       <Stack gap={2}>
@@ -31,10 +44,9 @@ export const Discusstion = ({ lesson }: Props) => {
             },
           }}
         >
-          <Discuss />
-          <Discuss />
-          <Discuss />
-          <Discuss />
+          {discussions.map((discussion, index) => (
+            <Discuss discussion={discussion} key={index} />
+          ))}
         </Stack>
         <Stack>
           <FormCreateDiscuss lesson={lesson} />

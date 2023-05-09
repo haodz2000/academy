@@ -7,4 +7,6 @@ export enum AppSwaggerTag {
   Courses = 'courses',
   Sections = 'sections',
   Lessons = 'lessons',
+  Discussions = 'discussions',
+  Assignments = 'assignments',
 }

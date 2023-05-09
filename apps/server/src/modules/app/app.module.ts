@@ -1,3 +1,5 @@
+import { DiscussionModule } from '../discussions/discussion.module';
+import { AssignmentModule } from './../assignments/assignment.module';
 import { TopicModule } from './../topics/topic.module';
 import { CourseModule } from './../courses/course.module';
 import { CategoryModule } from './../categories/category.module';
@@ -18,6 +20,8 @@ import { ValidationException } from '@server/exceptions';
 
 @Module({
   imports: [
+    DiscussionModule,
+    AssignmentModule,
     TopicModule,
     CourseModule,
     AbilityModule,

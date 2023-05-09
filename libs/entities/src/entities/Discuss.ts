@@ -1,11 +1,11 @@
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 import { Scalar } from '@libs/constants/interfaces/scalar';
-import { BaseEntityWithSerialPrimaryKey } from '@libs/entities/entities/BaseEntityWithSerialPrimaryKey';
 import { User } from './User';
 import { Lesson } from './Lesson';
+import { BaseEntityWithUuidPrimaryKey } from './BaseEntityWithUuidPrimaryKey';
 
-@Entity({ tableName: 'discusses' })
-export class Discuss extends BaseEntityWithSerialPrimaryKey<Discuss, 'id'> {
+@Entity({ tableName: 'discussions' })
+export class Discuss extends BaseEntityWithUuidPrimaryKey<Discuss, 'id'> {
   @Property({ persist: false })
   get __visible(): Array<keyof this> {
     return [

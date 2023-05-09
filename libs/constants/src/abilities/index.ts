@@ -19,4 +19,6 @@ export enum IdSubject {
   Sections = 'sections',
   Lessons = 'lessons',
   CourseSubscribes = 'course_subscribes',
+  Discussions = 'discussions',
+  Assignments = 'assignments',
 }

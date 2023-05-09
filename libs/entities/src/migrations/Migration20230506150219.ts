@@ -3,11 +3,11 @@ import { MigrationWithTimestamps } from '../config/migration-with-timestamps';
 export class Migration20230506150219 extends MigrationWithTimestamps {
   async up(): Promise<void> {
     const knex = this.getKnexBuilder();
-    await knex.schema.createTable('discusses', (tableBuilder) => {
-      this.addSerialPrimaryColumn(tableBuilder);
+    await knex.schema.createTable('discussions', (tableBuilder) => {
+      this.addUuidPrimaryColumn(tableBuilder);
       tableBuilder.text('description').nullable();
       tableBuilder
-        .integer('lessone_id')
+        .integer('lesson_id')
         .notNullable()
         .index()
         .references('id')
@@ -22,6 +22,6 @@ export class Migration20230506150219 extends MigrationWithTimestamps {
 
   async down(): Promise<void> {
     const knex = this.getKnexBuilder();
-    await knex.schema.dropTable('discusses');
+    await knex.schema.dropTable('discussions');
   }
 }

@@ -6,4 +6,6 @@ export enum QueryKeys {
   course = 'course',
   categories = 'categories',
   category = 'cateogry',
+  assignments = 'assignments',
+  discussions = 'discussions',
 }

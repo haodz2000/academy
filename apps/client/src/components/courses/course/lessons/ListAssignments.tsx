@@ -1,5 +1,4 @@
 import {
-  IconButton,
   Paper,
   Stack,
   Typography,
@@ -7,7 +6,6 @@ import {
 } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { Assigment } from './Assigment';
-import AddIcon from '@mui/icons-material/Add';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { useAssignmentsQuery } from '@client/hooks/apis/assignments/useAssignmentsQuery';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';

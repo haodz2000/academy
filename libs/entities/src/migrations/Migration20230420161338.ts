@@ -84,30 +84,6 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
       this.addTimestampColumns(tableBuilder);
       this.addSoftDeleteColumns(tableBuilder);
     });
-
-    await knex.schema.createTable('course_subscribes', (tableBuilder) => {
-      this.addUuidPrimaryColumn(tableBuilder);
-      tableBuilder
-        .integer('subscriber_id')
-        .notNullable()
-        .index()
-        .references('id')
-        .inTable('users')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
-      tableBuilder
-        .integer('course_id')
-        .notNullable()
-        .index()
-        .references('id')
-        .inTable('courses')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
-      tableBuilder.smallint('status').notNullable().defaultTo(1);
-      this.addActorColumns(tableBuilder);
-      this.addTimestampColumns(tableBuilder);
-      this.addSoftDeleteColumns(tableBuilder);
-    });
   }
 
   async down(): Promise<void> {

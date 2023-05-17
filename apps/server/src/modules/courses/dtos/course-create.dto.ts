@@ -17,7 +17,12 @@ export class CourseCreateDto extends BaseDto {
   @ApiProperty({ type: 'string', format: 'binary' })
   cover: Express.Multer.File;
 
+  @ApiProperty({
+    name: 'topics_ids[]',
+    type: 'number',
+    required: false,
+    isArray: true,
+  })
   @IsOptional()
-  @ApiProperty({ isArray: true, name: 'topicIds', type: 'number' })
-  topicIds: number[];
+  topics_ids?: number[];
 }

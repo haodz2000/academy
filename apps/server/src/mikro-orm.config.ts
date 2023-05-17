@@ -14,7 +14,10 @@ import { Course } from '@libs/entities/entities/Course';
 import { Section } from '@libs/entities/entities/Section';
 import { Lesson } from '@libs/entities/entities/Lesson';
 import { CourseTopic } from '@libs/entities/entities/CourseTopic';
-import { CourseSubscribe } from '@libs/entities/entities/CourseSubscribe';
+import { LearningRequest } from '@libs/entities/entities/LearningRequest';
+import { TeachingRequest } from '@libs/entities/entities/TeachingRequest';
+import { CourseStudent } from '@libs/entities/entities/CourseStudent';
+import { CourseTeacher } from '@libs/entities/entities/CourseTeacher';
 
 dotenv.config();
 
@@ -31,7 +34,10 @@ const config: Options = {
     Section,
     Lesson,
     CourseTopic,
-    CourseSubscribe,
+    LearningRequest,
+    TeachingRequest,
+    CourseStudent,
+    CourseTeacher,
   ],
   dbName: process.env.DB_NAME,
   type: process.env.DB_TYPE as keyof typeof Configuration.PLATFORMS,

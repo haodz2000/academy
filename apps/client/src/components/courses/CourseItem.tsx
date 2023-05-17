@@ -12,6 +12,7 @@ interface Props {
   course: CourseResponse;
 }
 export const CourseItem = ({ course }: Props) => {
+  console.log(course);
   return (
     <Stack paddingX={6} zIndex={1} width={'100%'}>
       <Paper

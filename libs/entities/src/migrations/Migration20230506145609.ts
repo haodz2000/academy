@@ -4,11 +4,11 @@ export class Migration20230506145609 extends MigrationWithTimestamps {
   async up(): Promise<void> {
     const knex = this.getKnexBuilder();
     await knex.schema.createTable('assignments', (tableBuilder) => {
-      this.addSerialPrimaryColumn(tableBuilder);
+      this.addUuidPrimaryColumn(tableBuilder);
       tableBuilder.string('title', 255).notNullable();
       tableBuilder.text('description').nullable();
       tableBuilder
-        .integer('lessone_id')
+        .integer('lesson_id')
         .notNullable()
         .index()
         .references('id')

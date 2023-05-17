@@ -42,7 +42,7 @@ export const FormCreateCourse = () => {
     defaultValues: {
       name: '',
       description: '',
-      topicIds: [],
+      topicsIds: [],
       cover: undefined,
     },
   });
@@ -50,7 +50,7 @@ export const FormCreateCourse = () => {
     reset({
       name: '',
       description: '',
-      topicIds: [],
+      topicsIds: [],
       cover: undefined,
     });
   };
@@ -59,12 +59,15 @@ export const FormCreateCourse = () => {
     setLoading(true);
     try {
       const response = await courseCreateMutation.mutateAsync({
-        ...data,
+        cover: data.cover,
+        description: data.description,
+        name: data.name,
+        topicsIds: [...data.topicsIds],
       });
       reset({
         name: '',
         description: '',
-        topicIds: [],
+        topicsIds: [],
         cover: undefined,
       });
       notify();
@@ -137,7 +140,7 @@ export const FormCreateCourse = () => {
                   </FormHelperText>
                 </FormControl>
               )}
-              name="topicIds"
+              name="topicsIds"
             />
           </FormControl>
         </Stack>

@@ -9,17 +9,11 @@ interface Props {
   order: number;
 }
 export const LessonItem = ({ lesson, order }: Props) => {
-  const router = useRouter();
-  const slug = (router.query.slug as string) ?? '';
   return (
     <Stack
-      component={Link}
-      underline="none"
-      color={'inherit'}
-      href={'/series/' + slug + '/lessons/' + lesson.id}
-      height={145}
       borderRadius={5}
-      padding={2}
+      paddingX={2}
+      paddingY={1}
       sx={{
         ':hover': {
           bgcolor: '#253D63',
@@ -27,6 +21,7 @@ export const LessonItem = ({ lesson, order }: Props) => {
       }}
       bgcolor={'#18273F'}
       flexDirection={'row'}
+      alignItems={'center'}
       gap={2}
     >
       <Stack justifyContent={'center'} alignItems={'center'}>
@@ -38,12 +33,6 @@ export const LessonItem = ({ lesson, order }: Props) => {
         <Typography variant="h1" fontSize={20} fontWeight={600}>
           {lesson.title}
         </Typography>
-        <Typography variant="body2">{lesson.description}</Typography>
-        <Stack flexDirection="row">
-          <Typography fontSize={10} variant="body2">
-            {lesson.time}
-          </Typography>
-        </Stack>
       </Stack>
     </Stack>
   );

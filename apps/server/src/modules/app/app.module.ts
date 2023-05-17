@@ -1,3 +1,7 @@
+import { TeachingRequestModule } from './../teaching-requests/teaching-request.module';
+import { LearningRequestModule } from '../learning-requests/learning-request.module';
+import { DiscussionModule } from '../discussions/discussion.module';
+import { AssignmentModule } from './../assignments/assignment.module';
 import { TopicModule } from './../topics/topic.module';
 import { CourseModule } from './../courses/course.module';
 import { CategoryModule } from './../categories/category.module';
@@ -18,6 +22,10 @@ import { ValidationException } from '@server/exceptions';
 
 @Module({
   imports: [
+    TeachingRequestModule,
+    LearningRequestModule,
+    DiscussionModule,
+    AssignmentModule,
     TopicModule,
     CourseModule,
     AbilityModule,

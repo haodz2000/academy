@@ -6,6 +6,7 @@ export enum IdAction {
   Update = 'update',
   Import = 'import',
   Delete = 'delete',
+  Request = 'request',
 }
 
 export enum IdSubject {
@@ -18,5 +19,10 @@ export enum IdSubject {
   Courses = 'courses',
   Sections = 'sections',
   Lessons = 'lessons',
-  CourseSubscribes = 'course_subscribes',
+  Discussions = 'discussions',
+  Assignments = 'assignments',
+  TeachingRequests = 'teaching_requests',
+  LearningRequest = 'learning_requests',
+  CourseTeacher = 'course_teachers',
+  CourseStudents = 'course_students',
 }

@@ -14,8 +14,8 @@ import { Topic } from '@libs/entities/entities/Topic';
 import { CourseTopic } from '@libs/entities/entities/CourseTopic';
 import { UploadModule } from '../upload/upload.module';
 import { AbilityModule } from '../auth/ability/ability.module';
-import { CourseSubscribe } from '@libs/entities/entities/CourseSubscribe';
 import { SectionController } from './sections/section.controller';
+import { IsArrayTopicIdsValidator } from '@server/validators/is-array-topic-ids.validator';
 
 @Module({
   imports: [
@@ -26,12 +26,16 @@ import { SectionController } from './sections/section.controller';
       Lesson,
       Topic,
       CourseTopic,
-      CourseSubscribe,
     ]),
     UploadModule,
     AbilityModule,
   ],
   controllers: [CourseController, SectionController, LessonController],
-  providers: [CourseService, SectionService, LessonService],
+  providers: [
+    CourseService,
+    SectionService,
+    LessonService,
+    IsArrayTopicIdsValidator,
+  ],
 })
 export class CourseModule {}

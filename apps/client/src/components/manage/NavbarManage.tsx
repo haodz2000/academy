@@ -1,7 +1,6 @@
-import { Stack, Typography, colors } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import React, { PropsWithChildren } from 'react';
 import Link from '@client/components/ui/Link';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 interface Menu {
@@ -19,11 +18,11 @@ const menu: Menu[] = [
   },
   {
     title: 'Yêu cầu dạy học',
-    href: '/manage/requset-teaching',
+    href: '/manage/teaching-requests',
   },
   {
     title: 'Yêu cầu tham gia học',
-    href: '/manage/request-learining',
+    href: '/manage/learning-requests',
   },
 ];
 

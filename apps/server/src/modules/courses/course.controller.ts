@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -35,6 +36,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseUpdateDto } from './dtos/course-update.dto';
 import { DeleteResponse } from './responses/delete.response';
 import { CourseDetailResponse } from './responses/course-detail.response';
+import { CourseFilterDto } from './dtos/course-filter.dto';
 
 @UseGuards(AbilitiesGuard)
 @Controller('courses')
@@ -47,11 +49,11 @@ export class CourseController {
   @ApiErrorResponse()
   @InjectUserToQuery()
   @Get()
-  async list() {
+  async list(@Query() option: CourseFilterDto) {
+    const result = await this.courseSerive.list(option);
     return AppApiPaginatedResponse.create(
-      (await this.courseSerive.list()).map((i) =>
-        CourseTransformer.toCourseResponse(i)
-      )
+      result.data.map((i) => CourseTransformer.toCourseResponse(i)),
+      result.pagination
     );
   }
 

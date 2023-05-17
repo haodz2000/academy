@@ -1,16 +1,29 @@
-import { Avatar, Box, Stack, Typography } from '@mui/material';
+import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { RoundedButton } from '@client/components/ui/buttons';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 import Link from '@client/components/ui/Link';
 import { Back } from '@client/components/ui/Back';
 import { StatusCourse } from '@libs/constants/entities/Course';
+import { useTeachingRequestMutation } from '@client/hooks/apis/teaching-requests/useTeachingRequestMutation';
+import { useNotify } from '@client/components/notification/hook';
 
 interface Props {
   course: CourseDetailResponse;
 }
 export const HeaderInformation = ({ course }: Props) => {
+  const { notify, notifyError } = useNotify();
+  const teachingRequestMutation = useTeachingRequestMutation();
+  const onSendRequest = async () => {
+    try {
+      await teachingRequestMutation.mutateAsync({
+        teachingRequestDto: { course_id: course.id },
+      });
+      notify({ content: 'Đăng kí khóa học thành công, chờ phê duyệt!' });
+    } catch (error) {
+      notifyError({ error });
+    }
+  };
   return (
     <Stack gap={1}>
       <Back />
@@ -41,11 +54,16 @@ export const HeaderInformation = ({ course }: Props) => {
                 {course.administrator.name}
               </Typography>
             </Stack>
-            <Stack>
-              <RoundedButton sx={{ background: '#328AF11A' }}>
-                {course.status == StatusCourse.Pending && 'Đăng kí dạy học'}
-              </RoundedButton>
-            </Stack>
+            {course.status == StatusCourse.Pending && (
+              <Stack>
+                <RoundedButton
+                  sx={{ background: '#328AF11A' }}
+                  onClick={onSendRequest}
+                >
+                  Đăng kí dạy học
+                </RoundedButton>
+              </Stack>
+            )}
           </Stack>
         </Stack>
         <Stack justifyContent={'flex-start'} width={'30%'}>

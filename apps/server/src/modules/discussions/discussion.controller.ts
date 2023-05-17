@@ -1,6 +1,5 @@
 import { ApiOperation } from '@nestjs/swagger';
 import { DiscussionService } from './../discussions/discussion.service';
-<<<<<<< HEAD
 import {
   Body,
   Controller,
@@ -12,9 +11,6 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-=======
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
->>>>>>> feat: api, show
 import { AppSwaggerTag } from '../app-swagger/app-swagger.constant';
 import { CreateDiscussionDto } from './dtos/create-discussion.dto';
 import { FilterDiscussionDto } from './dtos/filter-discussion.dto';

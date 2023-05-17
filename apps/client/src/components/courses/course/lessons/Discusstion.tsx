@@ -18,6 +18,9 @@ export const Discusstion = ({ lesson }: Props) => {
   const discussions = useMemo(() => {
     return discussionsQuery.data?.data || [];
   }, [discussionsQuery.data?.data]);
+  const onRefresh = () => {
+    discussionsQuery.refetch();
+  };
   if (discussionsQuery.isLoading) {
     return <LoadingPage />;
   }
@@ -49,7 +52,7 @@ export const Discusstion = ({ lesson }: Props) => {
           ))}
         </Stack>
         <Stack>
-          <FormCreateDiscuss lesson={lesson} />
+          <FormCreateDiscuss onCreated={onRefresh} lesson={lesson} />
         </Stack>
       </Stack>
     </Paper>

@@ -17,6 +17,7 @@ import { NextPage } from 'next';
 import { AuthProvider } from '@client/providers/AuthProvider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppThemeProvider } from '@client/providers/ThemeProvider';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -54,30 +55,50 @@ export default function MyApp(props: MyAppProps) {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <Hydrate state={dehydratedState}>
-        <Provider store={store}>
-          <CacheProvider value={emotionCache}>
-            <AuthProvider>
-              <Script
-                src="https://accounts.google.com/gsi/client"
-                strategy="lazyOnload"
-                async
-                defer
-              />
-              <Head>
-                <meta
-                  name="viewport"
-                  content="initial-scale=1, width=device-width"
+        <ConfirmProvider
+          defaultOptions={{
+            confirmationButtonProps: { autoFocus: true },
+          }}
+        >
+          <Provider store={store}>
+            <CacheProvider value={emotionCache}>
+              <AuthProvider>
+                <Script
+                  src="https://accounts.google.com/gsi/client"
+                  strategy="lazyOnload"
+                  async
+                  defer
                 />
-                <title>Academy</title>
-              </Head>
-              <AppThemeProvider>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                {getLayout(<Component {...pageProps} />)}
-              </AppThemeProvider>
-            </AuthProvider>
-          </CacheProvider>
-        </Provider>
+                <Script
+                  src="https://cdn.headwayapp.co/widget.js"
+                  strategy="beforeInteractive"
+                />
+                <Script
+                  strategy="afterInteractive"
+                  onReady={() => {
+                    const config = {
+                      selector: '.headway',
+                      account: process.env.NEXT_PUBLIC_ID_HEADWAY_ACCOUNT,
+                    };
+                    window.Headway?.init(config);
+                  }}
+                />
+                <Head>
+                  <meta
+                    name="viewport"
+                    content="initial-scale=1, width=device-width"
+                  />
+                  <title>Academy</title>
+                </Head>
+                <AppThemeProvider>
+                  {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                  <CssBaseline />
+                  {getLayout(<Component {...pageProps} />)}
+                </AppThemeProvider>
+              </AuthProvider>
+            </CacheProvider>
+          </Provider>
+        </ConfirmProvider>
       </Hydrate>
     </QueryClientProvider>
   );

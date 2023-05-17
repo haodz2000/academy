@@ -19,18 +19,18 @@ interface IMenu {
 const menu: IMenu[] = [
   {
     id: 0,
-    name: 'Topics',
-    href: '/topics',
+    name: 'Khóa học của tôi',
+    href: '/my-learning-path',
   },
   {
     id: 1,
-    name: 'Series',
-    href: '/series',
+    name: 'Chủ đề',
+    href: '/topics',
   },
   {
     id: 2,
-    name: 'Path',
-    href: '/path',
+    name: 'Khóa học',
+    href: '/series',
   },
   {
     id: 3,
@@ -40,12 +40,12 @@ const menu: IMenu[] = [
   {
     id: 4,
     name: 'Quản lý',
-    href: '/manage/courses',
+    href: '/manage',
   },
   {
     id: 5,
-    name: 'Postcast',
-    href: '/postcasts',
+    name: 'Blog',
+    href: '/blogs',
   },
 ];
 
@@ -74,8 +74,15 @@ export const Header = ({ hasMenu }: Props) => {
       bgcolor={'#151f32'}
     >
       <Stack>
-        <Typography fontSize={36} variant="h1" fontWeight={700}>
-          Academy
+        <Typography
+          component={Link}
+          href={'/'}
+          underline="none"
+          fontSize={36}
+          variant="h1"
+          fontWeight={700}
+        >
+          𝓩𝓮𝓻𝓸3𝔃
         </Typography>
       </Stack>
       {hasMenu && (

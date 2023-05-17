@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import React from 'react';
 import { useNotify } from '@client/components/notification/hook';
-import { isError } from '@tanstack/react-query';
 import { useCreateSectionMutation } from '@client/hooks/apis/courses/useCreateSectionMutation';
 
 const schema = yup

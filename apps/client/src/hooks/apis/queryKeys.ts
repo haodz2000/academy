@@ -8,4 +8,6 @@ export enum QueryKeys {
   category = 'cateogry',
   assignments = 'assignments',
   discussions = 'discussions',
+  teachingRequests = 'teaching-requests',
+  learningRequests = 'learning-requests',
 }

@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { useAssignmentsQuery } from '@client/hooks/apis/assignments/useAssignmentsQuery';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
+import { FormCreateAssignment } from './FormCreateAssignment';
 
 interface Props extends PaperProps {
   lesson: LessonResponse;
@@ -21,6 +22,9 @@ export const ListAssignments = ({ lesson, ...props }: Props) => {
   const assignments = useMemo(() => {
     return assignmentsQuery.data?.data ?? [];
   }, [assignmentsQuery.data?.data]);
+  const onRefresh = () => {
+    assignmentsQuery.refetch();
+  };
   if (assignmentsQuery.isLoading) {
     return <LoadingPage />;
   }
@@ -39,9 +43,7 @@ export const ListAssignments = ({ lesson, ...props }: Props) => {
           <Typography variant="h3" fontSize={22} fontWeight={700}>
             Bài tập
           </Typography>
-          <IconButton>
-            <AddIcon htmlColor="#FFF" fontSize="large" />
-          </IconButton>
+          <FormCreateAssignment onCreated={onRefresh} lesson={lesson} />
         </Stack>
         <Stack gap={3}>
           {assignments.map((assignment, index) => (

@@ -19,7 +19,9 @@ export class CourseTransformer extends BaseResponseTransformer {
       cover: course.cover
         ? StoredFileTransformer.toBasicStoredFileResponse(course.cover)
         : null,
-      administrator: UserTransformer.toUserResponse(course.administrator),
+      administrator: course.administrator
+        ? UserTransformer.toUserResponse(course.administrator)
+        : null,
       __typename: IdSubject.Courses,
     };
   }
@@ -33,6 +35,9 @@ export class CourseTransformer extends BaseResponseTransformer {
       topics: course.topics
         .getItems()
         .map((i) => TopicTransformer.toTopicResponse(i)),
+      students: course.students
+        .getItems()
+        .map((i) => UserTransformer.toUserResponse(i)),
     };
   }
 }

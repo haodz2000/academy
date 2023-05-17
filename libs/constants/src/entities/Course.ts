@@ -3,3 +3,8 @@ export enum StatusCourse {
   Approved = 2,
   Rejected = 3,
 }
+
+export enum TypeQueryCourse {
+  Manage = 'manage',
+  Show = 'show',
+}

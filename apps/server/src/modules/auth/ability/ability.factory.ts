@@ -31,6 +31,7 @@ export class AbilityFactory {
         can(IdAction.Insert, IdSubject.Courses, {
           administrator_id: user.id,
         });
+        can(IdAction.Request, IdSubject.Courses, { administrator_id: user.id });
         can(IdAction.Insert, IdSubject.Sections, {
           'course.administrator_id': user.id,
         });

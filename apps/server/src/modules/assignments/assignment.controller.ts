@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { AssignmentService } from './assignment.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { AppSwaggerTag } from '../app-swagger/app-swagger.constant';
@@ -16,6 +26,7 @@ import {
 import { AssignmentTransformer } from './transformers/assignment.transformer';
 import { InjectUserToBody } from '@server/decorators';
 import { CreateAssignmentDto } from './dtos/create-assignment.dto';
+import { DeleteUuidResponse } from '../discussions/responses/delelteuuid.response';
 
 @Controller('assignments')
 export class AssignmentController {
@@ -41,6 +52,22 @@ export class AssignmentController {
   async create(@Body() data: CreateAssignmentDto) {
     return AppApiSuccessResponse.create(
       await this.assignmentService.create(data)
+    );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.Assignments] })
+  @ApiSuccessResponse(DeleteUuidResponse)
+  @ApiErrorResponse()
+  @Delete('/:id')
+  async delete(
+    @Param(
+      'id',
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })
+    )
+    id: string
+  ) {
+    return AppApiSuccessResponse.create(
+      await this.assignmentService.delete(id)
     );
   }
 }

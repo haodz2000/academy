@@ -2,6 +2,7 @@ import { Category } from './Category';
 import {
   Collection,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   Property,
@@ -16,9 +17,12 @@ import { Section } from './Section';
 import { Lesson } from './Lesson';
 import { CourseTopic } from './CourseTopic';
 import { CategoryTopic } from './CategoryTopic';
-import { CourseSubscribe } from './CourseSubscribe';
 import { Assignment } from './Assignment';
 import { Discuss } from './Discuss';
+import { TeachingRequest } from './TeachingRequest';
+import { LearningRequest } from './LearningRequest';
+import { CourseTeacher } from './CourseTeacher';
+import { CourseStudent } from './CourseStudent';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -213,22 +217,22 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
   updated_course_topics = new Collection<CourseTopic>(this);
 
   @OneToMany({
-    entity: () => CourseSubscribe,
-    mappedBy: (courseSubscribe) => courseSubscribe.subscriber,
+    entity: () => TeachingRequest,
+    mappedBy: (data) => data.requester,
   })
-  subscribed_courses = new Collection<CourseSubscribe>(this);
+  teaching_requests = new Collection<TeachingRequest>(this);
 
   @OneToMany({
-    entity: () => CourseSubscribe,
-    mappedBy: (courseSubscribe) => courseSubscribe.creator,
+    entity: () => TeachingRequest,
+    mappedBy: (data) => data.creator,
   })
-  created_course_subscribes = new Collection<CourseSubscribe>(this);
+  created_teaching_requests = new Collection<TeachingRequest>(this);
 
   @OneToMany({
-    entity: () => CourseSubscribe,
-    mappedBy: (courseSubscribe) => courseSubscribe.updater,
+    entity: () => TeachingRequest,
+    mappedBy: (data) => data.updater,
   })
-  updated_course_subscribes = new Collection<CourseSubscribe>(this);
+  updated_teaching_requests = new Collection<TeachingRequest>(this);
 
   @OneToMany({
     entity: () => Assignment,
@@ -253,4 +257,72 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (discuss) => discuss.updater,
   })
   updated_discusses = new Collection<Discuss>(this);
+
+  @OneToMany({
+    entity: () => LearningRequest,
+    mappedBy: (data) => data.requester,
+  })
+  learning_requests = new Collection<LearningRequest>(this);
+
+  @OneToMany({
+    entity: () => LearningRequest,
+    mappedBy: (data) => data.creator,
+  })
+  created_learning_requests = new Collection<LearningRequest>(this);
+
+  @OneToMany({
+    entity: () => LearningRequest,
+    mappedBy: (data) => data.updater,
+  })
+  updated_learning_requests = new Collection<LearningRequest>(this);
+
+  @OneToMany({
+    entity: () => CourseTeacher,
+    mappedBy: (data) => data.teacher,
+  })
+  course_teachers = new Collection<CourseTeacher>(this);
+
+  @ManyToMany({
+    entity: () => Course,
+    inversedBy: 'teachers',
+    pivotEntity: () => CourseTeacher,
+  })
+  course_manages = new Collection<Course>(this);
+
+  @OneToMany({
+    entity: () => CourseTeacher,
+    mappedBy: (data) => data.creator,
+  })
+  created_course_teachers = new Collection<CourseTeacher>(this);
+
+  @OneToMany({
+    entity: () => CourseTeacher,
+    mappedBy: (data) => data.updater,
+  })
+  updated_course_teachers = new Collection<CourseTeacher>(this);
+
+  @OneToMany({
+    entity: () => CourseStudent,
+    mappedBy: (data) => data.student,
+  })
+  course_students = new Collection<CourseStudent>(this);
+
+  @ManyToMany({
+    entity: () => Course,
+    inversedBy: 'students',
+    pivotEntity: () => CourseStudent,
+  })
+  course_learnings = new Collection<Course>(this);
+
+  @OneToMany({
+    entity: () => CourseStudent,
+    mappedBy: (data) => data.creator,
+  })
+  created_course_students = new Collection<CourseStudent>(this);
+
+  @OneToMany({
+    entity: () => CourseStudent,
+    mappedBy: (data) => data.updater,
+  })
+  updated_course_students = new Collection<CourseStudent>(this);
 }

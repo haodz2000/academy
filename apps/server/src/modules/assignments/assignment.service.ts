@@ -9,6 +9,7 @@ import { CreateAssignmentDto } from './dtos/create-assignment.dto';
 import { FilterAssignmentDto } from './dtos/filter-assignemt.dto';
 import { FilterQuery } from '@mikro-orm/core';
 import { Pagination } from '@libs/utils/responses';
+import { DeleteUuidResponse } from '../discussions/responses/delelteuuid.response';
 
 @Injectable()
 export class AssignmentService {
@@ -59,7 +60,9 @@ export class AssignmentService {
     return assignment;
   }
 
-  async delete() {
-    //
+  async delete(id: Assignment['id']): Promise<DeleteUuidResponse> {
+    const discussion = this.assignmentRepository.findOneOrFail(id);
+    await this.assignmentRepository.removeAndFlush(discussion);
+    return { id };
   }
 }

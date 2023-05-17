@@ -48,14 +48,14 @@ export const FormUpdateCourse = ({ course }: Props) => {
       id: course.id,
       name: course.name,
       description: course.description,
-      topicIds: course.topics.map((i) => i.id),
+      topicsIds: course.topics.map((i) => i.id),
     },
   });
   const onReset = () => {
     reset({
       name: course.name,
       description: course.description,
-      topicIds: [],
+      topicsIds: [],
     });
   };
 
@@ -136,7 +136,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
                   </FormHelperText>
                 </FormControl>
               )}
-              name="topicIds"
+              name="topicsIds"
             />
           </FormControl>
         </Stack>

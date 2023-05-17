@@ -9,4 +9,6 @@ export enum AppSwaggerTag {
   Lessons = 'lessons',
   Discussions = 'discussions',
   Assignments = 'assignments',
+  TeachingRequests = 'teaching-requests',
+  LearningRequests = 'learining-requests',
 }

@@ -14,7 +14,10 @@ import { StoredFile } from './StoredFile';
 import { Topic } from './Topic';
 import { CourseTopic } from './CourseTopic';
 import { Section } from './Section';
-import { CourseSubscribe } from './CourseSubscribe';
+import { TeachingRequest } from './TeachingRequest';
+import { LearningRequest } from './LearningRequest';
+import { CourseTeacher } from './CourseTeacher';
+import { CourseStudent } from './CourseStudent';
 
 @Entity({ tableName: 'courses' })
 export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
@@ -103,8 +106,40 @@ export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
   sections = new Collection<Section>(this);
 
   @OneToMany({
-    entity: () => CourseSubscribe,
-    mappedBy: (section) => section.course,
+    entity: () => TeachingRequest,
+    mappedBy: (data) => data.course,
   })
-  subscribers = new Collection<CourseSubscribe>(this);
+  teaching_requests = new Collection<TeachingRequest>(this);
+
+  @OneToMany({
+    entity: () => LearningRequest,
+    mappedBy: (data) => data.course,
+  })
+  learning_requests = new Collection<LearningRequest>(this);
+
+  @OneToMany({
+    entity: () => CourseTeacher,
+    mappedBy: (data) => data.course,
+  })
+  course_teachers = new Collection<CourseTeacher>(this);
+
+  @ManyToMany({
+    entity: () => User,
+    mappedBy: 'course_manages',
+    pivotEntity: () => CourseTeacher,
+  })
+  teachers = new Collection<User>(this);
+
+  @OneToMany({
+    entity: () => CourseStudent,
+    mappedBy: (data) => data.course,
+  })
+  course_students = new Collection<CourseStudent>(this);
+
+  @ManyToMany({
+    entity: () => User,
+    mappedBy: 'course_learnings',
+    pivotEntity: () => CourseStudent,
+  })
+  students = new Collection<User>(this);
 }

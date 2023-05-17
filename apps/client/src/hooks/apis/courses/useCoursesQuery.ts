@@ -1,15 +1,20 @@
 import { createApiFactory } from '@client/libs/axios/functions';
-import { CoursesApi } from '@libs/openapi-generator/generated/api';
+import {
+  CoursesApi,
+  CoursesApiListRequest,
+} from '@libs/openapi-generator/generated/api';
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@client/hooks/apis/queryKeys';
 
-export const fetchCourses = async () => {
-  return (await createApiFactory(CoursesApi).list()).data;
+export const fetchCourses = async (
+  requestParameters: CoursesApiListRequest
+) => {
+  return (await createApiFactory(CoursesApi).list(requestParameters)).data;
 };
 
-export const useCoursesQuery = () => {
+export const useCoursesQuery = (requestParameters: CoursesApiListRequest) => {
   return useQuery({
-    queryKey: [QueryKeys.courses],
-    queryFn: () => fetchCourses(),
+    queryKey: [QueryKeys.courses, requestParameters],
+    queryFn: () => fetchCourses(requestParameters),
   });
 };

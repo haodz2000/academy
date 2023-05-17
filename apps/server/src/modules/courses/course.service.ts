@@ -1,6 +1,4 @@
 import { AbilityFactory } from './../auth/ability/ability.factory';
-import { StatusCourseSubscribe } from '@libs/constants/entities/CourseSubscribe';
-import { CourseSubscribe } from '@libs/entities/entities/CourseSubscribe';
 import { UploadService } from './../upload/upload.service';
 import { Course } from '@libs/entities/entities/Course';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -10,42 +8,71 @@ import { CourseCreateDto } from './dtos/course-create.dto';
 import { createSlug } from '@server/utils/slug';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
-import { StatusCourse } from '@libs/constants/entities/Course';
+import { StatusCourse, TypeQueryCourse } from '@libs/constants/entities/Course';
 import { CourseUpdateDto } from './dtos/course-update.dto';
 import { ForbiddenError } from '@casl/ability';
 import { IdAction } from '@libs/constants/abilities';
-import { wrap } from '@mikro-orm/core';
+import { FilterQuery, wrap } from '@mikro-orm/core';
 import { DeleteResponse } from './responses/delete.response';
+import { CourseFilterDto } from './dtos/course-filter.dto';
+import { Pagination } from '@libs/utils/responses';
 
 @Injectable()
 export class CourseService {
   constructor(
     @InjectRepository(Course)
     private readonly courseRepository: EntityRepository<Course>,
-    @InjectRepository(CourseSubscribe)
-    private readonly courseSubscribeRepository: EntityRepository<CourseSubscribe>,
     private readonly uploadService: UploadService,
     @Inject(REQUEST) private request: Request,
     private readonly em: EntityManager,
     private readonly ability: AbilityFactory
   ) {}
 
-  async list(): Promise<Course[]> {
-    return await this.courseRepository.findAll({
-      populate: ['cover', 'administrator'],
+  async list(
+    option: CourseFilterDto
+  ): Promise<{ data: Course[]; pagination: Pagination }> {
+    const where: FilterQuery<Course> = {};
+    const limit = 15;
+    if (option) {
+      if (option.type == TypeQueryCourse.Show) {
+        where.$or = [
+          {
+            teaching_requests: { status: option.status },
+          },
+          {
+            status: option.status,
+          },
+        ];
+      }
+    }
+    const [data, count] = await this.courseRepository.findAndCount(where, {
+      populate: ['cover', 'administrator.avatar'],
+      limit: limit,
+      offset: (option.page - 1) * limit || 0,
     });
+    return {
+      data: data,
+      pagination: {
+        limit: limit,
+        total: count,
+        lastPage: Math.ceil(count / limit),
+        page: 1,
+      },
+    };
   }
 
   async findOne(slug: Course['slug']): Promise<Course> {
     return await this.courseRepository.findOneOrFail(
-      { slug: slug },
+      {
+        slug: slug,
+      },
       {
         populate: [
           'cover',
           'administrator.avatar',
           'sections.lessons',
           'topics',
-          'subscribers',
+          'students.avatar',
         ],
       }
     );
@@ -57,6 +84,10 @@ export class CourseService {
       const coverStoredFile = await this.uploadService.uploadFile(data.cover, {
         folderPath: 'courses',
       });
+      const ids = data.topics_ids[0]
+        .toString()
+        .split(',')
+        .map((i) => Number(i));
       const course = this.courseRepository.create({
         name: data.name,
         slug: createSlug(data.name),
@@ -64,19 +95,11 @@ export class CourseService {
         created_by: this.request.user.id,
         updated_by: this.request.user.id,
         status: StatusCourse.Pending,
-        topics: [...data.topicIds],
+        topics: ids,
         cover_id: coverStoredFile.id,
         description: data.description,
       });
       await this.courseRepository.persistAndFlush(course);
-      const newSubscribe = this.courseSubscribeRepository.create({
-        course_id: course.id,
-        subscriber_id: this.request.user.id,
-        status: StatusCourseSubscribe.Pending,
-        created_by: this.request.user.id,
-        updated_by: this.request.user.id,
-      });
-      await this.courseSubscribeRepository.persistAndFlush(newSubscribe);
       await this.em.commit();
       return course;
     } catch (error) {
@@ -94,9 +117,14 @@ export class CourseService {
       ForbiddenError.from(ability)
         .setMessage('Unauthorize update this course')
         .throwUnlessCan(IdAction.Update, course);
-      const { cover, ...updateData } = data;
+      const { cover, topics_ids, ...updateData } = data;
+      const ids = topics_ids[0]
+        .toString()
+        .split(',')
+        .map((i) => Number(i));
       wrap(course).assign({
         ...updateData,
+        topics: ids,
       });
       await this.courseRepository.persistAndFlush(course);
       if (cover) {

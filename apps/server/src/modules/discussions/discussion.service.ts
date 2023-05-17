@@ -9,6 +9,7 @@ import { Request } from 'express';
 import { CreateDiscussionDto } from './dtos/create-discussion.dto';
 import { FilterDiscussionDto } from './dtos/filter-discussion.dto';
 import { Pagination } from '@libs/utils/responses';
+import { DeleteUuidResponse } from './responses/delelteuuid.response';
 
 @Injectable()
 export class DiscussionService {
@@ -61,5 +62,11 @@ export class DiscussionService {
     });
     await this.discussRepository.persistAndFlush(discussion);
     return discussion;
+  }
+
+  async delete(id: Discuss['id']): Promise<DeleteUuidResponse> {
+    const discussion = this.discussRepository.findOneOrFail(id);
+    await this.discussRepository.removeAndFlush(discussion);
+    return { id };
   }
 }

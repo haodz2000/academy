@@ -19,3 +19,19 @@ export class ManageAllPolicyHandler implements IPolicyHandler {
     return ability.can(IdAction.Manage, IdSubject.All);
   }
 }
+
+export class ManageActionTeachingRequestPolicyHandler
+  implements IPolicyHandler
+{
+  handle(ability: AppAbility): boolean {
+    return ability.can(IdAction.Manage, IdSubject.TeachingRequests);
+  }
+}
+
+export class ManageActionLearningRequestPolicyHandler
+  implements IPolicyHandler
+{
+  handle(ability: AppAbility): boolean {
+    return ability.can(IdAction.Manage, IdSubject.TeachingRequests);
+  }
+}

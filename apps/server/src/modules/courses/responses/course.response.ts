@@ -19,6 +19,9 @@ export class CourseResponse extends BaseSerialKeyResponse {
   @ApiProperty({ type: StoredFileResponse })
   cover: StoredFileResponse | null;
 
+  @ApiProperty()
+  administrator_id: number;
+
   @ApiProperty({ type: UserResponse })
   administrator: UserResponse | null;
 }

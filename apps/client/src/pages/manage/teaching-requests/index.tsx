@@ -2,7 +2,6 @@ import { AppLayout } from '@client/components/layouts/AppLayout';
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { RoundedButton } from '@client/components/ui/buttons';
 import {
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -11,13 +10,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
-  Typography,
 } from '@mui/material';
 import React, { ReactElement, useMemo } from 'react';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
-import Link from '@client/components/ui/Link';
 import { withAuth } from '@client/hocs/withAuth';
 import { useTeachingRequestsQuery } from '@client/hooks/apis/teaching-requests/useTeachingRequestsQuery';
 import { StatusTeachingRequest } from '@libs/constants/entities/TeachingRequest';
@@ -25,8 +19,12 @@ import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage'
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { RequestRow } from '@client/components/manage/teaching-request/RequestRow';
 import { Empty } from '@client/components/ui/Empty';
+import { useRouter } from 'next/router';
+import { Can } from '@client/abilities';
+import { IdAction, IdSubject } from '@libs/constants/abilities';
 
 const Index = () => {
+  const router = useRouter();
   const requestsQuery = useTeachingRequestsQuery({
     status: StatusTeachingRequest.Pending,
     page: 1,
@@ -48,7 +46,9 @@ const Index = () => {
       <Stack width={'30%'}>
         <Stack width={220}>
           <NavbarManage>
-            <RoundedButton>Back</RoundedButton>
+            <RoundedButton onClick={() => router.back()}>
+              Quay lai
+            </RoundedButton>
           </NavbarManage>
         </Stack>
       </Stack>
@@ -61,11 +61,16 @@ const Index = () => {
             >
               <Table>
                 <TableHead>
-                  <TableCell>STT</TableCell>
-                  <TableCell>Khóa học</TableCell>
-                  <TableCell>Người đăng kí</TableCell>
-                  <TableCell>Ngày đăng kí</TableCell>
-                  <TableCell align="center">Thao tác</TableCell>
+                  <TableRow>
+                    <TableCell>STT</TableCell>
+                    <TableCell>Khóa học</TableCell>
+                    <TableCell>Người đăng kí</TableCell>
+                    <TableCell>Ngày đăng kí</TableCell>
+                    <TableCell>Trạng thái</TableCell>
+                    <Can I={IdAction.Manage} a={IdSubject.TeachingRequests}>
+                      <TableCell align="center">Thao tác</TableCell>
+                    </Can>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
                   {requests.map((request, index) => (
@@ -78,7 +83,7 @@ const Index = () => {
                   ))}
                   {!requests.length && (
                     <TableRow>
-                      <TableCell colSpan={5}>
+                      <TableCell colSpan={6}>
                         <Empty content="Không có yêu cầu nào" />
                       </TableCell>
                     </TableRow>

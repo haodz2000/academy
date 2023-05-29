@@ -33,7 +33,9 @@ const Index = () => {
       <Stack width={'30%'}>
         <Stack width={220}>
           <NavbarManage>
-            <RoundedButton>Quay lai</RoundedButton>
+            <RoundedButton onClick={() => router.back()}>
+              Quay lai
+            </RoundedButton>
           </NavbarManage>
         </Stack>
       </Stack>
@@ -43,7 +45,7 @@ const Index = () => {
           <FormCreateSection onCreated={onRefresh} course={course} />
           <Stack gap={2}>
             <Typography variant="h6" fontWeight={600}>
-              List Section
+              Lộ trình học
             </Typography>
             <Stack gap={1}>
               {course.sections?.map((section) => (

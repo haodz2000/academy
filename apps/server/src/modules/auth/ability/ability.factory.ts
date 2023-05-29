@@ -28,9 +28,7 @@ export class AbilityFactory {
         can(IdAction.Update, IdSubject.Users, { id: user.id });
         can(IdAction.Update, IdSubject.Courses, { administrator_id: user.id });
         can(IdAction.Delete, IdSubject.Courses, { administrator_id: user.id });
-        can(IdAction.Insert, IdSubject.Courses, {
-          administrator_id: user.id,
-        });
+        can(IdAction.Insert, IdSubject.Courses, { administrator_id: user.id });
         can(IdAction.Request, IdSubject.Courses, { administrator_id: user.id });
         can(IdAction.Insert, IdSubject.Sections, {
           'course.administrator_id': user.id,
@@ -66,6 +64,12 @@ export class AbilityFactory {
         switch (item.constructor?.name) {
           case Role.name:
             return IdSubject.Roles;
+          case Course.name:
+            return IdSubject.Courses;
+          case Lesson.name:
+            return IdSubject.Lessons;
+          case Section.name:
+            return IdSubject.Sections;
         }
         return IdSubject.All;
       },

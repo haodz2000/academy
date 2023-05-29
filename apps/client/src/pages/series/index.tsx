@@ -34,10 +34,10 @@ export const Index = () => {
             alignItems="center"
           >
             <Typography variant="h1" fontWeight={'700'} fontSize={35}>
-              Current Featured
+              Khóa học mới lên
             </Typography>
             <Typography variant="subtitle1">
-              {"Here's what we're particularly excited to share with you!"}
+              {'Các khóa học mới ra mắt'}
             </Typography>
           </Stack>
           <Stack gap={4}>
@@ -53,9 +53,11 @@ export const Index = () => {
             alignItems="center"
           >
             <Typography variant="h1" fontWeight={'700'} fontSize={35}>
-              Recently Updated
+              Yêu thích
             </Typography>
-            <Typography variant="subtitle1">{'Recently Updated'}</Typography>
+            <Typography variant="subtitle1">
+              {'Khóa học được mọi người yêu thích'}
+            </Typography>
           </Stack>
           <Stack gap={4}>
             {courses.map((course) => (
@@ -72,7 +74,9 @@ export const Index = () => {
             <Typography variant="h1" fontWeight={'700'} fontSize={35}>
               Hot Trending
             </Typography>
-            <Typography variant="subtitle1">{'Hot vkl'}</Typography>
+            <Typography variant="subtitle1">
+              {'Khóa học thịnh hành đang được quan tâm nhất'}
+            </Typography>
           </Stack>
           <Stack gap={4}>
             {courses.map((course) => (

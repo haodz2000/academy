@@ -34,18 +34,18 @@ const menu: IMenu[] = [
   },
   {
     id: 3,
-    name: 'Larabits',
-    href: '/bits',
-  },
-  {
-    id: 4,
     name: 'Quản lý',
     href: '/manage',
   },
   {
-    id: 5,
+    id: 4,
     name: 'Blog',
     href: '/blogs',
+  },
+  {
+    id: 5,
+    name: 'Tôi',
+    href: '/profile/setting',
   },
 ];
 

@@ -14,16 +14,13 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
         .notNullable()
         .index()
         .references('id')
-        .inTable('users')
-        .onUpdate('CASCADE');
+        .inTable('users');
       tableBuilder
         .uuid('cover_id')
         .notNullable()
         .index()
         .references('id')
-        .inTable('stored_files')
-        .onUpdate('CASCADE')
-        .onDelete('set null');
+        .inTable('stored_files');
       this.addActorColumns(tableBuilder);
       this.addTimestampColumns(tableBuilder);
       this.addSoftDeleteColumns(tableBuilder);
@@ -33,6 +30,7 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
       this.addSerialPrimaryColumn(tableBuilder);
       tableBuilder.string('title', 255).notNullable();
       tableBuilder.string('description').nullable();
+      tableBuilder.integer('order').nullable().defaultTo(0);
       tableBuilder
         .integer('course_id')
         .notNullable()
@@ -52,12 +50,16 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
         .notNullable()
         .index()
         .references('id')
-        .inTable('sections')
-        .onUpdate('CASCADE');
+        .inTable('sections');
       tableBuilder.string('title', 255).notNullable();
       tableBuilder.string('description').nullable();
-      tableBuilder.string('link', 255).notNullable();
-      tableBuilder.integer('time').notNullable();
+      tableBuilder.integer('order').nullable().defaultTo(0);
+      tableBuilder
+        .uuid('video_id')
+        .nullable()
+        .index()
+        .references('id')
+        .inTable('stored_files');
       this.addActorColumns(tableBuilder);
       this.addTimestampColumns(tableBuilder);
       this.addSoftDeleteColumns(tableBuilder);
@@ -68,17 +70,13 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
         .notNullable()
         .index()
         .references('id')
-        .inTable('courses')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .inTable('courses');
       tableBuilder
         .integer('topic_id')
         .notNullable()
         .index()
         .references('id')
-        .inTable('topics')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .inTable('topics');
       tableBuilder.primary(['course_id', 'topic_id']);
       this.addActorColumns(tableBuilder);
       this.addTimestampColumns(tableBuilder);
@@ -88,7 +86,6 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
 
   async down(): Promise<void> {
     const knex = this.getKnexBuilder();
-    await knex.schema.dropTable('course_subscribes');
     await knex.schema.dropTable('course_topics');
     await knex.schema.dropTable('lessons');
     await knex.schema.dropTable('sections');

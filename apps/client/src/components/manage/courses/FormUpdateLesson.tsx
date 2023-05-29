@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
   LessonResponse,
-  UpdateLessonDto,
+  LessonsApiUpdateRequest,
 } from '@libs/openapi-generator/generated';
 import {
   Dialog,
@@ -14,18 +14,17 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useNotify } from '@client/components/notification/hook';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUpdateLessonMutation } from '@client/hooks/apis/courses/useUpdateLessonMutation';
+import { UploadSingleVideo } from '@client/components/ui/UploadSingleVideo';
 
 const schema = yup
   .object({
     title: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
-    link: yup.string().required('Trường này không thể bỏ trống.'),
-    time: yup.number().required('Trường này không thể bỏ trống.'),
   })
   .required();
 
@@ -35,7 +34,7 @@ interface Props {
 }
 export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
   const [open, setOpen] = React.useState(false);
-
+  const [change, setChange] = useState<boolean>(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -46,25 +45,31 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
   const { notify, notifyError } = useNotify();
   const updateLessonMutation = useUpdateLessonMutation();
   const {
+    watch,
+    control,
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
-  } = useForm<UpdateLessonDto>({
+  } = useForm<LessonsApiUpdateRequest>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
+      id: lesson.id,
       title: lesson.title,
       description: lesson.description,
-      time: lesson.time,
-      link: lesson.link,
+      link: lesson?.video?.path,
     },
   });
+  const video = watch('video');
 
   const onSubmit = handleSubmit(async (data) => {
+    const { video, link, ...rest } = data;
     try {
       await updateLessonMutation.mutateAsync({
-        id: lesson.id,
-        updateLessonDto: { ...data },
+        ...rest,
+        [change && 'video']: video,
+        link,
       });
       notify();
       onCreated();
@@ -98,11 +103,11 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
         >
           <Stack>
             <Typography variant="h3" fontSize={22} fontWeight={700}>
-              Update lesson
+              Cập nhật bài giảng
             </Typography>
           </Stack>
           <Stack>
-            <Typography>Title *</Typography>
+            <Typography>Tiêu đề *</Typography>
             <FormControl>
               <TextField
                 {...register('title')}
@@ -120,43 +125,48 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
             </FormControl>
           </Stack>
           <Stack>
-            <Typography>Link *</Typography>
+            <Typography>Video *</Typography>
             <FormControl>
-              <TextField
-                {...register('link')}
-                size="small"
-                sx={{
-                  bgcolor: '#9494941a',
-                  '& fieldset': {
-                    border: 'none',
-                  },
-                }}
-                placeholder="Title lesson ..."
-                error={!!errors.link}
-                helperText={errors.link?.message}
+              <Controller
+                name="video"
+                control={control}
+                render={({ field }) => (
+                  <UploadSingleVideo
+                    defaultVideo={lesson.video}
+                    file={field.value}
+                    setFile={(file) => {
+                      field.onChange(file);
+                      setChange(true);
+                      setValue('link', undefined);
+                    }}
+                    sx={{ height: '300px' }}
+                  />
+                )}
               />
             </FormControl>
           </Stack>
+          {!video && !change && (
+            <Stack>
+              <Typography>Link Video</Typography>
+              <FormControl>
+                <TextField
+                  {...register('link')}
+                  size="small"
+                  sx={{
+                    bgcolor: '#9494941a',
+                    '& fieldset': {
+                      border: 'none',
+                    },
+                  }}
+                  placeholder="Title lesson ..."
+                  error={!!errors.link}
+                  helperText={errors.link?.message}
+                />
+              </FormControl>
+            </Stack>
+          )}
           <Stack>
-            <Typography>Time *</Typography>
-            <FormControl>
-              <TextField
-                {...register('time')}
-                size="small"
-                sx={{
-                  bgcolor: '#9494941a',
-                  '& fieldset': {
-                    border: 'none',
-                  },
-                }}
-                placeholder="Title lesson ..."
-                error={!!errors.time}
-                helperText={errors.time?.message}
-              />
-            </FormControl>
-          </Stack>
-          <Stack>
-            <Typography>Description *</Typography>
+            <Typography>Mô tả *</Typography>
             <FormControl>
               <TextField
                 {...register('description')}

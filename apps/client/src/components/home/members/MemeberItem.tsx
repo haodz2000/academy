@@ -1,10 +1,19 @@
+import { UserPublicResponse } from '@libs/openapi-generator/generated';
 import { Avatar, colors, Tooltip } from '@mui/material';
 import React from 'react';
+import { TooltipDrop } from './TooltipDrop';
 
-export const MemeberItem = () => {
+interface Props {
+  user: UserPublicResponse;
+}
+export const MemeberItem = ({ user }: Props) => {
   return (
-    <Tooltip title="H">
+    <Tooltip
+      sx={{ '&.MuiTooltip-popper': { bgcolor: '#151f32' } }}
+      title={<TooltipDrop user={user} />}
+    >
       <Avatar
+        src={user?.avatar.path}
         color={colors.blue[700]}
         sx={{
           width: '82px',
@@ -13,9 +22,10 @@ export const MemeberItem = () => {
           ':hover': {
             boxShadow: `#000 0px 0px 0px 8px`,
           },
+          objectFit: 'cover',
         }}
       >
-        H
+        {user.name}
       </Avatar>
     </Tooltip>
   );

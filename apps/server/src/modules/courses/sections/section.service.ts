@@ -30,11 +30,17 @@ export class SectionService {
     const ability = this.ability.defineAbility(this.request.user);
     ForbiddenError.from(ability)
       .setMessage('Unauthorize create section this course')
-      .throwUnlessCan(IdAction.Insert, course);
+      .throwUnlessCan(IdAction.Update, course);
+    let order = 0;
+    const count = await this.sectionRepository.count({
+      course_id: data.course_id,
+    });
+    order = count + 1;
     const section = this.sectionRepository.create({
       course_id: data.course_id,
       title: data.title,
       description: data.description,
+      order: order,
       created_by: this.request.user.id,
       updated_by: this.request.user.id,
     });

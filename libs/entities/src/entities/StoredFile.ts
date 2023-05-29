@@ -11,6 +11,7 @@ import { BaseEntityWithUuidPrimaryKey } from '@libs/entities/entities/BaseEntity
 import { User } from './User';
 import { Topic } from './Topic';
 import { Course } from './Course';
+import { Lesson } from './Lesson';
 
 @Entity({ tableName: 'stored_files' })
 export class StoredFile extends BaseEntityWithUuidPrimaryKey<StoredFile, 'id'> {
@@ -60,6 +61,12 @@ export class StoredFile extends BaseEntityWithUuidPrimaryKey<StoredFile, 'id'> {
     mappedBy: (course) => course.cover,
   })
   course_cover = new Collection<Course>(this);
+
+  @OneToMany({
+    entity: () => Lesson,
+    mappedBy: (lesson) => lesson.video,
+  })
+  lessons = new Collection<Lesson>(this);
 
   @ManyToOne({
     entity: () => User,

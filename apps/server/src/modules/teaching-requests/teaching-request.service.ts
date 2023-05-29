@@ -16,6 +16,7 @@ import { FilterQuery } from '@mikro-orm/core';
 import { Pagination } from '@libs/utils/responses';
 import { ForbiddenError } from '@casl/ability';
 import { IdAction } from '@libs/constants/abilities';
+import { RoleType } from '@libs/constants/entities/Role';
 
 @Injectable()
 export class TeachingRequestService {
@@ -37,7 +38,10 @@ export class TeachingRequestService {
     const where: FilterQuery<TeachingRequest> = {};
     const limit = 15;
     if (option.status) {
-      where.status = option.status;
+      where.status = StatusTeachingRequest.Pending;
+    }
+    if (this.request.user.role.type == RoleType.User) {
+      where.requester_id == this.request.user.id;
     }
     const [data, count] = await this.teachingRequestRepository.findAndCount(
       where,
@@ -95,13 +99,14 @@ export class TeachingRequestService {
     try {
       const teachingRequest =
         await this.teachingRequestRepository.findOneOrFail(id, {
-          populate: ['course.cover', 'requester.avatar'],
+          populate: ['course', 'requester'],
         });
       teachingRequest.status = StatusTeachingRequest.Approve;
+      await this.teachingRequestRepository.persistAndFlush(teachingRequest);
       const courseTeacher = this.courseTeacherRepository.create({
-        teacher: teachingRequest.requester,
-        course: teachingRequest.course,
-        status: StatusCourseTeacher.Reject,
+        teacher_id: teachingRequest.requester_id,
+        course_id: teachingRequest.course_id,
+        status: StatusCourseTeacher.Approve,
         created_by: this.request.user.id,
         updated_by: this.request.user.id,
       });
@@ -111,11 +116,9 @@ export class TeachingRequestService {
       });
       course.status = StatusCourse.Approved;
       await this.courseRepository.persistAndFlush(course);
-      await this.teachingRequestRepository.persistAndFlush(teachingRequest);
       await this.em.commit();
       return teachingRequest;
     } catch (error) {
-      console.log(error);
       await this.em.rollback();
     }
   }

@@ -71,7 +71,7 @@ export const TopicSelect = forwardRef<typeof Autocomplete, TopicSelectProps>(
           <TextField
             {...params}
             variant={variant}
-            label="Topic"
+            label="Chủ đề"
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',

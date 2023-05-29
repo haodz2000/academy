@@ -20,6 +20,7 @@ export class Section extends BaseEntityWithSerialPrimaryKey<Section, 'id'> {
       'course_id',
       'title',
       'description',
+      'order',
       'created_at',
       'updated_at',
       'deleted_at',
@@ -34,6 +35,9 @@ export class Section extends BaseEntityWithSerialPrimaryKey<Section, 'id'> {
 
   @Property({ type: 'integer' })
   course_id!: Scalar['integer'];
+
+  @Property({ type: 'integer', nullable: true, default: 0 })
+  order!: Scalar['integer'];
 
   @ManyToOne({
     entity: () => Course,

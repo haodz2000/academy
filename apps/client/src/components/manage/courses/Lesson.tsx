@@ -1,4 +1,3 @@
-import Link from '@client/components/ui/Link';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
@@ -26,7 +25,9 @@ export const Lesson = ({ lesson, onCreated }: Props) => {
       position={'relative'}
     >
       <Stack justifyContent={'center'} alignItems={'center'}>
-        <Avatar sx={{ height: 62, width: 62, bgcolor: '#328af11A' }}>01</Avatar>
+        <Avatar sx={{ height: 62, width: 62, bgcolor: '#328af11A' }}>
+          {lesson.order < 10 ? '0' + lesson.order : lesson.order}
+        </Avatar>
       </Stack>
       <Stack gap={1} justifyContent="space-between">
         <Typography variant="h1" fontSize={20} fontWeight={600}>
@@ -35,7 +36,7 @@ export const Lesson = ({ lesson, onCreated }: Props) => {
         <Typography variant="body2">{lesson.description}</Typography>
         <Stack flexDirection="row">
           <Typography fontSize={10} variant="body2">
-            Time: {lesson.time}
+            Cập nhật: {new Date(lesson.updated_at).toLocaleDateString()}
           </Typography>
         </Stack>
       </Stack>

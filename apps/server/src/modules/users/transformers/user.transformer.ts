@@ -5,6 +5,7 @@ import { BaseResponseTransformer } from '@server/transformers/responses/base-res
 import { UserBasicResponse } from '../responses/user-basic.response';
 import { StoredFileTransformer } from '@server/modules/stored-files/transformers/stored-file.transformer';
 import { RoleTransformer } from '@server/modules/roles/transformers/role.transformer';
+import { UserPublicResponse } from '../responses/user-public.response';
 
 export class UserTransformer extends BaseResponseTransformer {
   static toUserBasicResponse(user: User): UserBasicResponse {
@@ -23,6 +24,18 @@ export class UserTransformer extends BaseResponseTransformer {
         ? StoredFileTransformer.toBasicStoredFileResponse(user.avatar)
         : null,
       role: RoleTransformer.toRoleResponse(user.role),
+    };
+  }
+
+  static toUserPublic(user: User): UserPublicResponse {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar
+        ? StoredFileTransformer.toBasicStoredFileResponse(user.avatar)
+        : null,
+      __typename: IdSubject.Users,
     };
   }
 }

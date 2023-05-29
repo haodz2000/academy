@@ -7,11 +7,9 @@ import { AxiosInstance } from 'axios';
 export const fetchMe = async (
   axiosInstance: AxiosInstance | undefined | null = null
 ) => {
-  return (
-    await createApiFactory(AuthApi, axiosInstance)
-      .me()
-      .then((res) => res.data)
-  ).data;
+  return await createApiFactory(AuthApi, axiosInstance)
+    .me()
+    .then((res) => res.data);
 };
 
 export const useMeQuery = () => {

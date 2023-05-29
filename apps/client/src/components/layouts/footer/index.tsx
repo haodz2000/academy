@@ -1,4 +1,3 @@
-import { RoundedButton } from '@client/components/ui/buttons';
 import {
   Button,
   Divider,
@@ -14,6 +13,7 @@ import Image from 'next/image';
 import React from 'react';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Link from '@client/components/ui/Link';
 
 export const Footer = () => {
   return (
@@ -57,7 +57,7 @@ export const Footer = () => {
             fontSize={33}
             fontWeight={600}
           >
-            Want us to email you occasionally with Academy news?
+            Want us to email you occasionally with 𝓩𝓮𝓻𝓸3𝔃 news?
           </Typography>
           <Stack width={'80%'} flexDirection={'row'} gap={1}>
             <FormControl fullWidth>
@@ -87,10 +87,10 @@ export const Footer = () => {
             <Grid item xs={6} padding={1}>
               <Stack width={'65%'} gap={3}>
                 <Typography variant="h1" fontSize={44} fontWeight={700}>
-                  Academy
+                  𝓩𝓮𝓻𝓸3𝔃
                 </Typography>
                 <Typography variant="subtitle2">
-                  Nine out of ten doctors recommend Laracasts over competing
+                  Nine out of ten doctors recommend 𝓩𝓮𝓻𝓸3𝔃 over competing
                   brands. Come inside, see for yourself, and massively level up
                   your development skills in the process.
                 </Typography>
@@ -108,18 +108,45 @@ export const Footer = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={2} zIndex={999}>
               <Stack gap={3}>
                 <Typography variant="h6" fontWeight={700}>
                   Learn
                 </Typography>
                 <Stack gap={1}>
-                  <Typography color={'#BAD9FC80'}>Sign Up</Typography>
-                  <Typography color={'#BAD9FC80'}>Series</Typography>
-                  <Typography color={'#BAD9FC80'}>Learning path</Typography>
-                  <Typography color={'#BAD9FC80'}>Categories</Typography>
-                  <Typography color={'#BAD9FC80'}>Topics</Typography>
-                  <Typography color={'#BAD9FC80'}>Letture</Typography>
+                  <Typography color={'#BAD9FC80'}>Sign In</Typography>
+                  <Typography
+                    component={Link}
+                    href={'/series'}
+                    underline="none"
+                    color={'#BAD9FC80'}
+                  >
+                    Series
+                  </Typography>
+                  <Typography
+                    component={Link}
+                    href={'/my-learning-path'}
+                    underline="none"
+                    color={'#BAD9FC80'}
+                  >
+                    Learning path
+                  </Typography>
+                  <Typography
+                    component={Link}
+                    href={'/topics'}
+                    underline="none"
+                    color={'#BAD9FC80'}
+                  >
+                    Categories
+                  </Typography>
+                  <Typography
+                    component={Link}
+                    href={'/topics'}
+                    underline="none"
+                    color={'#BAD9FC80'}
+                  >
+                    Topics
+                  </Typography>
                 </Stack>
               </Stack>
             </Grid>
@@ -154,7 +181,7 @@ export const Footer = () => {
         <Divider sx={{ bgcolor: 'rgba(186,217,252,.1)' }} />
         <Stack width={'40%'} margin={'0 auto'}>
           <Typography fontSize={12} textAlign={'center'}>
-            © Academy 2023. All rights reserved. Yes, all of them. That means
+            © 𝓩𝓮𝓻𝓸3𝔃 2023. All rights reserved. Yes, all of them. That means
             you, Todd. Proudly hosted with Laravel Forge and DigitalOcean .
           </Typography>
         </Stack>
@@ -163,7 +190,7 @@ export const Footer = () => {
         <Image
           loader={({ src }) => src}
           alt=""
-          src={'https://laracasts.com/images/laravel-footer-logo.png'}
+          src={'/images/bg-footer2.png'}
           fill
           style={{ objectFit: 'contain' }}
           unoptimized
@@ -173,7 +200,7 @@ export const Footer = () => {
         <Image
           loader={({ src }) => src}
           alt=""
-          src={'https://laracasts.com/images/laracasts-gang.png'}
+          src={'/images/bg-footer.png'}
           fill
           style={{ objectFit: 'contain' }}
           unoptimized

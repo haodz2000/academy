@@ -7,6 +7,9 @@ import { Back } from '@client/components/ui/Back';
 import { StatusCourse } from '@libs/constants/entities/Course';
 import { useTeachingRequestMutation } from '@client/hooks/apis/teaching-requests/useTeachingRequestMutation';
 import { useNotify } from '@client/components/notification/hook';
+import { Can } from '@client/abilities';
+import { IdAction } from '@libs/constants/abilities';
+import { useAppSelector } from '@client/stores';
 
 interface Props {
   course: CourseDetailResponse;
@@ -54,16 +57,18 @@ export const HeaderInformation = ({ course }: Props) => {
                 {course.administrator.name}
               </Typography>
             </Stack>
-            {course.status == StatusCourse.Pending && (
-              <Stack>
-                <RoundedButton
-                  sx={{ background: '#328AF11A' }}
-                  onClick={onSendRequest}
-                >
-                  Đăng kí dạy học
-                </RoundedButton>
-              </Stack>
-            )}
+            <Can I={IdAction.Update} this={course}>
+              {course.status == StatusCourse.Pending && (
+                <Stack>
+                  <RoundedButton
+                    sx={{ background: '#328AF11A' }}
+                    onClick={onSendRequest}
+                  >
+                    Đăng kí dạy học
+                  </RoundedButton>
+                </Stack>
+              )}
+            </Can>
           </Stack>
         </Stack>
         <Stack justifyContent={'flex-start'} width={'30%'}>

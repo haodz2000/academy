@@ -4,6 +4,7 @@ import { EntityRepository } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { TopicQueryDto } from './dtos/topic-query.dto';
 import { FilterQuery } from '@mikro-orm/core';
+import { StatusCourse } from '@libs/constants/entities/Course';
 
 @Injectable()
 export class TopicService {
@@ -19,6 +20,9 @@ export class TopicService {
     }
     return await this.topicRepository.find(where, {
       populate: ['cover', 'courses.sections.lessons'],
+      populateWhere: {
+        courses: { status: StatusCourse.Approved },
+      },
     });
   }
 
@@ -32,6 +36,9 @@ export class TopicService {
           'courses.cover',
           'courses.administrator.avatar',
         ],
+        populateWhere: {
+          courses: { status: StatusCourse.Approved },
+        },
       }
     );
   }

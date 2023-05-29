@@ -2,21 +2,20 @@ import { RoundedButton } from '@client/components/ui/buttons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
-  CreateLessonDto,
+  LessonsApiCreateRequest,
   SectionFullResponse,
 } from '@libs/openapi-generator/generated';
 import { FormControl, Stack, TextField, Typography } from '@mui/material';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useNotify } from '@client/components/notification/hook';
 import { useCreateLessonMutation } from '@client/hooks/apis/courses/useCreateLessonMutation';
+import { UploadSingleVideo } from '@client/components/ui/UploadSingleVideo';
 
 const schema = yup
   .object({
     title: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
-    link: yup.string().required('Trường này không thể bỏ trống.'),
-    time: yup.number().required('Trường này không thể bỏ trống.'),
   })
   .required();
 
@@ -28,26 +27,30 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
   const { notify, notifyError } = useNotify();
   const createLessonMutation = useCreateLessonMutation();
   const {
+    control,
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isValid },
-  } = useForm<CreateLessonDto>({
+  } = useForm<LessonsApiCreateRequest>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      section_id: section.id,
+      sectionId: section.id,
       title: '',
       description: '',
-      time: 0,
+      video: undefined,
       link: '',
     },
   });
+  const link = watch('link');
+  const video = watch('video');
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const response = await createLessonMutation.mutateAsync({
-        createLessonDto: { ...data },
+      await createLessonMutation.mutateAsync({
+        ...data,
       });
       reset();
       notify();
@@ -56,11 +59,11 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
       notifyError({ error });
     } finally {
       reset({
-        section_id: section.id,
+        sectionId: section.id,
         title: '',
         description: '',
-        time: 0,
         link: '',
+        video: undefined,
       });
     }
   });
@@ -74,11 +77,11 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
     >
       <Stack>
         <Typography variant="h3" fontSize={22} fontWeight={700}>
-          New lesson
+          Tạo bài giảng mới
         </Typography>
       </Stack>
       <Stack>
-        <Typography>Title *</Typography>
+        <Typography>Tiêu đề *</Typography>
         <FormControl>
           <TextField
             {...register('title')}
@@ -95,44 +98,47 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
           />
         </FormControl>
       </Stack>
+      {!link && (
+        <Stack>
+          <Typography>Video</Typography>
+          <FormControl>
+            <Controller
+              name="video"
+              control={control}
+              render={({ field }) => (
+                <UploadSingleVideo
+                  defaultVideo={null}
+                  file={field.value}
+                  setFile={(file) => field.onChange(file)}
+                  sx={{ height: '300px' }}
+                />
+              )}
+            />
+          </FormControl>
+        </Stack>
+      )}
+      {!video && (
+        <Stack>
+          <Typography>Link Video</Typography>
+          <FormControl>
+            <TextField
+              {...register('link')}
+              size="small"
+              sx={{
+                bgcolor: '#9494941a',
+                '& fieldset': {
+                  border: 'none',
+                },
+              }}
+              placeholder="Title lesson ..."
+              error={!!errors.link}
+              helperText={errors.link?.message}
+            />
+          </FormControl>
+        </Stack>
+      )}
       <Stack>
-        <Typography>Link *</Typography>
-        <FormControl>
-          <TextField
-            {...register('link')}
-            size="small"
-            sx={{
-              bgcolor: '#9494941a',
-              '& fieldset': {
-                border: 'none',
-              },
-            }}
-            placeholder="Title lesson ..."
-            error={!!errors.link}
-            helperText={errors.link?.message}
-          />
-        </FormControl>
-      </Stack>
-      <Stack>
-        <Typography>Time *</Typography>
-        <FormControl>
-          <TextField
-            {...register('time')}
-            size="small"
-            sx={{
-              bgcolor: '#9494941a',
-              '& fieldset': {
-                border: 'none',
-              },
-            }}
-            placeholder="Title lesson ..."
-            error={!!errors.time}
-            helperText={errors.time?.message}
-          />
-        </FormControl>
-      </Stack>
-      <Stack>
-        <Typography>Description *</Typography>
+        <Typography>Mô tả *</Typography>
         <FormControl>
           <TextField
             {...register('description')}

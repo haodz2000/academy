@@ -1,5 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { BaseAPI } from '@libs/openapi-generator/generated/base';
+import { GetServerSidePropsContext } from 'next';
+import { JwtCookieToken } from '@libs/constants/auth';
 
 export type ErrorResponseData = {
   error: string;
@@ -42,4 +44,24 @@ export const createApiFactory = <T extends BaseAPIConstructor>(
 export const getAxiosErrorData = (payload: unknown): ErrorResponseData => {
   const err = payload as AxiosError;
   return err.response?.data as ErrorResponseData;
+};
+
+export const createUserAxiosInstance = (
+  token: string,
+  options: CreateAxiosInstanceOptions = {}
+) => {
+  return axios.create({
+    headers: {
+      Cookie: `${JwtCookieToken}=${token};`,
+    },
+    ...options.config,
+  });
+};
+
+export const createUserAxiosInstanceFromContext = (
+  context: GetServerSidePropsContext,
+  options: CreateAxiosInstanceOptions = {}
+) => {
+  const token = context.req?.cookies?.[JwtCookieToken] ?? '';
+  return createUserAxiosInstance(token, options);
 };

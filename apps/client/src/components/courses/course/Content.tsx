@@ -10,6 +10,9 @@ interface Props {
   course: CourseDetailResponse;
 }
 export const Content = ({ course }: Props) => {
+  const totalLesson = course.sections?.reduce((total, current) => {
+    return total + current.lessons?.length;
+  }, 0);
   return (
     <Stack gap={3}>
       <Stack
@@ -31,12 +34,12 @@ export const Content = ({ course }: Props) => {
         >
           <Stack flexDirection={'row'} gap={1} alignItems={'center'}>
             <AutoStoriesIcon />
-            <Typography>{course.sections?.length || 0} sections</Typography>
+            <Typography>{course.sections?.length || 0} Chương</Typography>
           </Stack>
           <Divider color="#9b9b9b" orientation="vertical" />
           <Stack flexDirection={'row'} gap={1} alignItems={'center'}>
             <AccessTimeIcon />
-            <Typography>1h 43m</Typography>
+            <Typography>{totalLesson} videos</Typography>
           </Stack>
         </Stack>
         <Stack flexDirection={'row'}>

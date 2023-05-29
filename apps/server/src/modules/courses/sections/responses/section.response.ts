@@ -10,4 +10,7 @@ export class SectionRespone extends BaseSerialKeyResponse {
 
   @ApiProperty()
   course_id: number;
+
+  @ApiProperty()
+  order: number;
 }

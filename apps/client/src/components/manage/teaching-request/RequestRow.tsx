@@ -16,6 +16,9 @@ import { useTeachingRequestAcceptMutation } from '@client/hooks/apis/teaching-re
 import { useTeachingRequestRejectMutation } from '@client/hooks/apis/teaching-requests/useTeachingRequestRejectMutation';
 import { useNotify } from '@client/components/notification/hook';
 import { useConfirm } from 'material-ui-confirm';
+import { StatusTeachingRequest } from '@libs/constants/entities/TeachingRequest';
+import { Can } from '@client/abilities';
+import { IdAction, IdSubject } from '@libs/constants/abilities';
 
 interface Props extends TableRowProps {
   request: TeachingRequestResponse;
@@ -83,24 +86,29 @@ export const RequestRow = ({ request, order, onRefresh, ...props }: Props) => {
           {new Date(request.created_at).toLocaleDateString()}
         </Typography>
       </TableCell>
-      <TableCell align="center">
-        <Stack
-          flexDirection="row"
-          alignItems="center"
-          justifyContent={'center'}
-        >
-          <Tooltip title="Accept">
-            <IconButton onClick={onAccept}>
-              <CheckCircleIcon color="success" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Reject">
-            <IconButton onClick={onReject}>
-              <CancelIcon color="error" />
-            </IconButton>
-          </Tooltip>
-        </Stack>
+      <TableCell>
+        {request.status === StatusTeachingRequest.Pending && 'Đang chờ'}
       </TableCell>
+      <Can I={IdAction.Manage} a={IdSubject.TeachingRequests}>
+        <TableCell align="center">
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent={'center'}
+          >
+            <Tooltip title="Accept">
+              <IconButton onClick={onAccept}>
+                <CheckCircleIcon color="success" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Reject">
+              <IconButton onClick={onReject}>
+                <CancelIcon color="error" />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+        </TableCell>
+      </Can>
     </TableRow>
   );
 };

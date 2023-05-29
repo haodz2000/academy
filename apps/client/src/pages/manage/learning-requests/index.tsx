@@ -23,6 +23,8 @@ import {
   LearningRequestResponse,
 } from '@libs/openapi-generator/generated';
 import { LearningRequestRow } from '@client/components/manage/learning-request/LearningRequestRow';
+import { useRouter } from 'next/router';
+import { Empty } from '@client/components/ui/Empty';
 
 export interface ILearningRequestCustome {
   course: CourseResponse;
@@ -30,6 +32,7 @@ export interface ILearningRequestCustome {
 }
 
 const Index = () => {
+  const router = useRouter();
   const requestsQuery = useLearningRequestsQuery({
     status: StatusLearningRequest.Pending,
     page: 1,
@@ -66,7 +69,9 @@ const Index = () => {
       <Stack width={'30%'}>
         <Stack width={220}>
           <NavbarManage>
-            <RoundedButton>Back</RoundedButton>
+            <RoundedButton onClick={() => router.back()}>
+              Quay lai
+            </RoundedButton>
           </NavbarManage>
         </Stack>
       </Stack>
@@ -110,6 +115,13 @@ const Index = () => {
                     />
                   ))}
                 </TableBody>
+                {!requestsQuery.data?.data.length && (
+                  <TableRow>
+                    <TableCell colSpan={6}>
+                      <Empty content="Không có yêu cầu nào" />
+                    </TableCell>
+                  </TableRow>
+                )}
               </Table>
             </TableContainer>
           </Stack>

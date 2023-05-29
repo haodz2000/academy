@@ -43,11 +43,19 @@ export const Topics = () => {
         margin={'0 auto'}
       >
         <Typography variant="h1" fontWeight={500} fontSize={35}>
-          Pick a topic. Any topic
+          Chọn 1 chủ đề, bất cứ chủ đề nào
         </Typography>
         <Typography variant="subtitle1" fontSize={15} textAlign="center">
-          If you already know what {"you'"}re looking for, Laracasts is divided
-          into various topics ranging from frameworks to packages to tools.
+          Nếu bạn đã biết những gì bạn đang tìm kiếm,{' '}
+          <Typography
+            component={'span'}
+            marginX={1}
+            fontSize={22}
+            color={'#175cdd'}
+          >
+            𝓩𝓮𝓻𝓸3𝔃
+          </Typography>{' '}
+          được chia thành các chủ đề khác nhau, từ frameworks đến gói đến tools.
         </Typography>
       </Stack>
       <Stack alignItems={'center'}>

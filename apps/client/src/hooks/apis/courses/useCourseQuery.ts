@@ -5,11 +5,15 @@ import {
 } from '@libs/openapi-generator/generated/api';
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@client/hooks/apis/queryKeys';
+import { AxiosInstance } from 'axios';
 
 export const fetchCourse = async (
-  requestParameters: CoursesApiFindOneRequest
+  requestParameters: CoursesApiFindOneRequest,
+  axiosInstance: AxiosInstance | undefined | null = null
 ) => {
-  return (await createApiFactory(CoursesApi).findOne(requestParameters)).data;
+  return (
+    await createApiFactory(CoursesApi, axiosInstance).findOne(requestParameters)
+  ).data;
 };
 
 export const useCourseQuery = (requestParameters: CoursesApiFindOneRequest) => {

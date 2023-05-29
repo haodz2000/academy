@@ -88,7 +88,8 @@ export default function MyApp(props: MyAppProps) {
                     name="viewport"
                     content="initial-scale=1, width=device-width"
                   />
-                  <title>Academy</title>
+                  <title>𝓩𝓮𝓻𝓸3𝔃</title>
+                  <link rel="icon" href="/images/logo.ico" />
                 </Head>
                 <AppThemeProvider>
                   {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

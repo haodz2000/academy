@@ -19,14 +19,17 @@ export class CreateLessonDto extends BaseDto {
   @IsDefined()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({ nullable: true, required: false })
   @IsOptional()
-  @IsDefined()
   @MaxLength(255)
   link: string;
 
-  @ApiProperty()
   @IsOptional()
-  @IsDefined()
-  time: number;
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    nullable: true,
+    required: false,
+  })
+  video: Express.Multer.File;
 }

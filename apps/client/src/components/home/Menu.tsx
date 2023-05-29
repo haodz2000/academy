@@ -10,54 +10,34 @@ export interface IMenu {
 }
 const menu: IMenu[] = [
   {
-    url: '/series',
-    subtitle: 'Series',
-    title: 'categories',
+    url: '/topics',
+    subtitle: 'Chủ đề',
+    title: 'Danh mục',
     topic: '// depp dives',
   },
   {
-    url: '/topics',
-    subtitle: 'Topics',
-    title: 'find',
-    topic: '// pick a category',
+    url: '/series',
+    subtitle: 'Khóa học',
+    title: 'Chủ đề ',
+    topic: '// pick a course',
   },
   {
-    url: '/path',
-    subtitle: 'Path',
-    title: 'follow',
+    url: '/my-learning-path',
+    subtitle: 'Khóa học của tôi',
+    title: 'Đang học',
     topic: '// engine a community',
   },
   {
-    url: '/discuss',
-    subtitle: 'Discuss',
-    title: 'play',
+    url: '#',
+    subtitle: 'Bài viết',
+    title: 'Thảo luận',
     topic: '// watch our ad',
   },
   {
-    url: '/',
-    subtitle: 'Sign Up',
-    title: 'join',
+    url: '/manage/courses',
+    subtitle: 'Quản lý',
+    title: 'Tham gia',
     topic: '// you know watch to do',
-  },
-];
-const stats: IMenu[] = [
-  {
-    url: '/',
-    subtitle: '181',
-    title: 'series',
-    topic: '// multi-episode training',
-  },
-  {
-    url: '/',
-    subtitle: '2704',
-    title: 'lessons',
-    topic: '// new ones every week',
-  },
-  {
-    url: '/',
-    subtitle: '420',
-    title: 'hour',
-    topic: '// hour and hours of content',
   },
 ];
 const Keyframes = styled(Stack)({
@@ -79,6 +59,26 @@ const Keyframes = styled(Stack)({
 });
 
 export const Menu = () => {
+  const stats: IMenu[] = [
+    {
+      url: '/',
+      subtitle: '181',
+      title: 'series',
+      topic: '// multi-episode training',
+    },
+    {
+      url: '/',
+      subtitle: '2704',
+      title: 'lessons',
+      topic: '// new ones every week',
+    },
+    {
+      url: '/',
+      subtitle: '420',
+      title: 'hour',
+      topic: '// hour and hours of content',
+    },
+  ];
   return (
     <Keyframes
       bgcolor={'#000'}

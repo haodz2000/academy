@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Link from '@client/components/ui/Link';
 import { CourseResponse } from '@libs/openapi-generator/generated';
 import AddIcon from '@mui/icons-material/Add';
+import { useAppSelector } from '@client/stores';
 
 interface Props {
   course: CourseResponse;

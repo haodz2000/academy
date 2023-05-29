@@ -54,7 +54,7 @@ const Index = () => {
               width={'100%'}
               height={'100%'}
               controls
-              url={lesson?.link}
+              url={lesson?.video.path}
             />
           )}
         </Stack>
@@ -92,7 +92,7 @@ const Index = () => {
                   <Divider color="#dbdbdb" orientation="vertical" />
                   <Stack gap={1}>
                     <Typography fontSize={10}>Time</Typography>
-                    <Typography fontWeight={600}>{lesson?.time}</Typography>
+                    {/* <Typography fontWeight={600}>{lesson?.time}</Typography> */}
                   </Stack>
                   <Divider color="#dbdbdb" orientation="vertical" />
                   <Stack gap={1}>

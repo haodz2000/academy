@@ -3,12 +3,13 @@ import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { Course } from '@client/components/manage/courses/Course';
+import { Empty } from '@client/components/ui/Empty';
 import Link from '@client/components/ui/Link';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { withAuth } from '@client/hocs/withAuth';
 import { useCoursesQuery } from '@client/hooks/apis/courses/useCoursesQuery';
 import { TypeQueryCourse } from '@libs/constants/entities/Course';
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import React, { ReactElement, useMemo } from 'react';
 
 const Index = () => {
@@ -34,7 +35,7 @@ const Index = () => {
         <Stack width={220}>
           <NavbarManage>
             <RoundedButton href="/manage/courses/create" component={Link}>
-              New course
+              Tạo khóa học
             </RoundedButton>
           </NavbarManage>
         </Stack>
@@ -45,6 +46,7 @@ const Index = () => {
             {courses.map((course) => (
               <Course course={course} key={course.id} />
             ))}
+            {!courses.length && <Empty content="Không có khóa học nào" />}
           </Stack>
         </Stack>
       </Stack>

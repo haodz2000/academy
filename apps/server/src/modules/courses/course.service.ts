@@ -16,6 +16,7 @@ import { FilterQuery, wrap } from '@mikro-orm/core';
 import { DeleteResponse } from './responses/delete.response';
 import { CourseFilterDto } from './dtos/course-filter.dto';
 import { Pagination } from '@libs/utils/responses';
+import { RoleType } from '@libs/constants/entities/Role';
 
 @Injectable()
 export class CourseService {
@@ -44,11 +45,53 @@ export class CourseService {
           },
         ];
       }
+      if (option.type == TypeQueryCourse.Manage) {
+        if (this.request.user.role.type == RoleType.User) {
+          where.administrator_id = this.request.user.id;
+        }
+      }
     }
     const [data, count] = await this.courseRepository.findAndCount(where, {
       populate: ['cover', 'administrator.avatar'],
       limit: limit,
       offset: (option.page - 1) * limit || 0,
+    });
+    return {
+      data: data,
+      pagination: {
+        limit: limit,
+        total: count,
+        lastPage: Math.ceil(count / limit),
+        page: 1,
+      },
+    };
+  }
+
+  async findCourseLearnings(): Promise<{
+    data: Course[];
+    pagination: Pagination;
+  }> {
+    const where: FilterQuery<Course> = {};
+    where.$and = [
+      {
+        course_students: {
+          student_id: this.request.user.id,
+        },
+      },
+      {
+        status: StatusCourse.Approved,
+      },
+    ];
+    const limit = 15;
+    const [data, count] = await this.courseRepository.findAndCount(where, {
+      populate: [
+        'cover',
+        'administrator.avatar',
+        'sections.lessons',
+        'topics',
+        'students.avatar',
+      ],
+      limit: limit,
     });
     return {
       data: data,
@@ -70,7 +113,7 @@ export class CourseService {
         populate: [
           'cover',
           'administrator.avatar',
-          'sections.lessons',
+          'sections.lessons.video',
           'topics',
           'students.avatar',
         ],

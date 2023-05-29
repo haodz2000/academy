@@ -5,6 +5,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -43,24 +44,30 @@ export const LearningRequestRow = ({ request, order, onRefresh }: Props) => {
               <Typography variant="h6" gutterBottom component="div">
                 Danh sách người đăng kí
               </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell component={'th'}>Tên</TableCell>
-                    <TableCell component={'th'}>Email</TableCell>
-                    <TableCell component={'th'}>Avatar</TableCell>
-                    <TableCell component={'th'}>Ngày đăng ký</TableCell>
-                    <TableCell component={'th'} align="center">
-                      Thao tác
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {request.requests.map((i, index) => (
-                    <RequestRow onRefresh={onRefresh} request={i} key={index} />
-                  ))}
-                </TableBody>
-              </Table>
+              <TableContainer>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell component={'th'}>Tên</TableCell>
+                      <TableCell component={'th'}>Email</TableCell>
+                      <TableCell component={'th'}>Avatar</TableCell>
+                      <TableCell component={'th'}>Ngày đăng ký</TableCell>
+                      <TableCell component={'th'} align="center">
+                        Thao tác
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {request.requests.map((i, index) => (
+                      <RequestRow
+                        onRefresh={onRefresh}
+                        request={i}
+                        key={index}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Stack>
           </Collapse>
         </TableCell>

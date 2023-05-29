@@ -39,7 +39,6 @@ export class TeachingRequestController {
     private readonly teachingRequestService: TeachingRequestService
   ) {}
 
-  @CheckPolicies(new ManageActionTeachingRequestPolicyHandler())
   @ApiOperation({ tags: [AppSwaggerTag.TeachingRequests] })
   @ApiPaginatedResponse(TeachingRequestResponse)
   @ApiErrorResponse()

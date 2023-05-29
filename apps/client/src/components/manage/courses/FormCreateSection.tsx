@@ -67,12 +67,12 @@ export const FormCreateSection = ({ course, onCreated }: Props) => {
     >
       <Stack>
         <Typography variant="h3" fontSize={22} fontWeight={700}>
-          New Section
+          Tạo chương
         </Typography>
       </Stack>
       <Stack gap={2}>
         <Stack>
-          <Typography> Title *</Typography>
+          <Typography>Tiêu đề *</Typography>
           <FormControl>
             <TextField
               {...register('title')}
@@ -90,7 +90,7 @@ export const FormCreateSection = ({ course, onCreated }: Props) => {
           </FormControl>
         </Stack>
         <Stack>
-          <Typography>Descripton</Typography>
+          <Typography>Mô tả</Typography>
           <FormControl>
             <TextField
               {...register('description')}

@@ -35,7 +35,7 @@ export const FormCreateCourse = () => {
     handleSubmit,
     reset,
     control,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<CoursesApiCreateRequest>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
@@ -88,7 +88,7 @@ export const FormCreateCourse = () => {
     >
       <Stack>
         <Typography variant="h3" fontSize={22} fontWeight={700}>
-          New Course
+          Tạo khóa học mới
         </Typography>
       </Stack>
       <Stack gap={2}>
@@ -105,7 +105,7 @@ export const FormCreateCourse = () => {
           )}
         />
         <Stack>
-          <Typography> Name course *</Typography>
+          <Typography> Tên khóa học *</Typography>
           <FormControl>
             <TextField
               {...register('name')}
@@ -116,12 +116,12 @@ export const FormCreateCourse = () => {
                   border: 'none',
                 },
               }}
-              placeholder="Name course ..."
+              placeholder="ReactJS ..."
             />
           </FormControl>
         </Stack>
         <Stack>
-          <Typography>Topic *</Typography>
+          <Typography>Chọn chủ đề *</Typography>
           <FormControl>
             <Controller
               control={control}
@@ -145,7 +145,7 @@ export const FormCreateCourse = () => {
           </FormControl>
         </Stack>
         <Stack>
-          <Typography>Descripton</Typography>
+          <Typography>Mô tả</Typography>
           <FormControl>
             <TextField
               {...register('description')}
@@ -158,7 +158,7 @@ export const FormCreateCourse = () => {
                   border: 'none',
                 },
               }}
-              placeholder="Name course ..."
+              placeholder="Mô tả ..."
             />
           </FormControl>
         </Stack>

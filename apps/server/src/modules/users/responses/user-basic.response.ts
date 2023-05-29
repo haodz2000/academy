@@ -20,6 +20,24 @@ export class UserBasicResponse {
   @ApiProperty({ nullable: true })
   avatar_id: string | null;
 
+  @ApiProperty({ nullable: true })
+  phone: string | null;
+
+  @ApiProperty({ nullable: true })
+  facebook: string | null;
+
+  @ApiProperty({ nullable: true })
+  github: string | null;
+
+  @ApiProperty({ nullable: true })
+  twitter: string | null;
+
+  @ApiProperty({ nullable: true })
+  job: string | null;
+
+  @ApiProperty({ nullable: true })
+  description: string | null;
+
   @ApiProperty()
   created_at: string;
 

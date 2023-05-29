@@ -95,12 +95,12 @@ export const FormUpdateSection = ({ section, onCreated }: Props) => {
         >
           <Stack>
             <Typography variant="h3" fontSize={22} fontWeight={700}>
-              Update Section
+              Chỉnh sửa chương
             </Typography>
           </Stack>
           <Stack gap={2}>
             <Stack>
-              <Typography> Title *</Typography>
+              <Typography> Tiêu đề *</Typography>
               <FormControl>
                 <TextField
                   {...register('title')}
@@ -118,7 +118,7 @@ export const FormUpdateSection = ({ section, onCreated }: Props) => {
               </FormControl>
             </Stack>
             <Stack>
-              <Typography>Descripton</Typography>
+              <Typography>Mô tả</Typography>
               <FormControl>
                 <TextField
                   {...register('description')}

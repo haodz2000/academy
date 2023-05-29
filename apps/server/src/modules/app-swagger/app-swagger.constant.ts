@@ -1,5 +1,6 @@
 export enum AppSwaggerTag {
   App = 'app',
+  Users = 'users',
   AuthGoogle = 'authGoogle',
   Auth = 'auth',
   Categories = 'categories',

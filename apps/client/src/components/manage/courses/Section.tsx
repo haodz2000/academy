@@ -40,7 +40,7 @@ export const Section = ({ section, onCreated }: Props) => {
       >
         <Stack gap={2} height={1} flexDirection={'row'} alignItems="center">
           <Typography variant="subtitle1" fontWeight={600}>
-            Section {section.id}
+            Chương {section.order}
           </Typography>
           <Divider color="#9b9b9b" orientation="vertical" />
           <Typography variant="subtitle1" fontWeight={600}>
@@ -49,7 +49,7 @@ export const Section = ({ section, onCreated }: Props) => {
         </Stack>
         <Stack flexDirection={'row'} alignItems={'center'}>
           <FormUpdateSection section={section} onCreated={onCreated} />
-          <Tooltip title={'New Lesson'}>
+          <Tooltip title={'Tạo bài giảng'}>
             <IconButton onClick={() => setOpenForm(!openForm)}>
               <AddIcon fontSize="large" htmlColor="#FFF" />
             </IconButton>

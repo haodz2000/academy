@@ -82,7 +82,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
     >
       <Stack>
         <Typography variant="h3" fontSize={22} fontWeight={700}>
-          Update Course
+          Cập nhật khóa học
         </Typography>
       </Stack>
       <Stack gap={2}>
@@ -99,7 +99,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
           )}
         />
         <Stack>
-          <Typography> Name course *</Typography>
+          <Typography> Tên khóa học *</Typography>
           <FormControl>
             <TextField
               {...register('name')}
@@ -110,7 +110,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
                   border: 'none',
                 },
               }}
-              placeholder="Name course ..."
+              placeholder="ReactJS,..."
               error={!!errors.name}
               helperText={errors.name?.message}
             />
@@ -141,7 +141,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
           </FormControl>
         </Stack>
         <Stack>
-          <Typography>Descripton</Typography>
+          <Typography>Mô tả</Typography>
           <FormControl>
             <TextField
               {...register('description')}
@@ -154,7 +154,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
                   border: 'none',
                 },
               }}
-              placeholder="Description ..."
+              placeholder="Mô tả ..."
               error={!!errors.description}
               helperText={errors.description?.message}
             />

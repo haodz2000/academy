@@ -3,6 +3,7 @@ import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { FormUpdateCourse } from '@client/components/manage/courses/FormUpdateCourse';
 import { HeaderInformation } from '@client/components/manage/courses/HeaderInformation';
+import { Back } from '@client/components/ui/Back';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { withAuth } from '@client/hocs/withAuth';
 import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
@@ -28,7 +29,9 @@ const Index = () => {
       <Stack width={'30%'}>
         <Stack width={220}>
           <NavbarManage>
-            <RoundedButton>Quay lai</RoundedButton>
+            <RoundedButton onClick={() => router.back()}>
+              Quay lai
+            </RoundedButton>
           </NavbarManage>
         </Stack>
       </Stack>

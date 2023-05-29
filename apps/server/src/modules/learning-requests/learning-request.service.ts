@@ -33,7 +33,7 @@ export class LearningRequestService {
     if (option.status) {
       where.$and = [
         {
-          status: option.status,
+          status: 1,
         },
         {
           $or: [
@@ -105,8 +105,8 @@ export class LearningRequestService {
       learningRequest.status = StatusLearningRequest.Approve;
       await this.learningRequestRepository.persistAndFlush(learningRequest);
       const courseStudent = this.courseStudentRepository.create({
-        student: learningRequest.requester,
-        course: learningRequest.course,
+        student_id: learningRequest.requester.id,
+        course_id: learningRequest.course.id,
         status: StatusCourseStudent.Approve,
         created_by: this.request.user.id,
         updated_by: this.request.user.id,

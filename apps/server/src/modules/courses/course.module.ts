@@ -1,9 +1,9 @@
+import { StoredFile } from '@libs/entities/entities/StoredFile';
 import { LessonController } from './lessons/lesson.controller';
 import { LessonService } from './lessons/lesson.service';
 import { SectionService } from './sections/section.service';
 import { CourseService } from './course.service';
 import { CourseController } from './course.controller';
-
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { User } from '@libs/entities/entities/User';
@@ -26,6 +26,7 @@ import { IsArrayTopicIdsValidator } from '@server/validators/is-array-topic-ids.
       Lesson,
       Topic,
       CourseTopic,
+      StoredFile,
     ]),
     UploadModule,
     AbilityModule,

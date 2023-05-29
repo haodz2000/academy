@@ -11,6 +11,7 @@ import { User } from './User';
 import { Section } from './Section';
 import { Assignment } from './Assignment';
 import { Discuss } from './Discuss';
+import { StoredFile } from './StoredFile';
 
 @Entity({ tableName: 'lessons' })
 export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
@@ -21,8 +22,8 @@ export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
       'section_id',
       'title',
       'description',
-      'link',
-      'time',
+      'order',
+      'video_id',
       'created_at',
       'updated_at',
       'deleted_at',
@@ -38,11 +39,11 @@ export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
   @Property({ type: 'integer' })
   section_id!: Scalar['integer'];
 
-  @Property({ type: 'varchar', length: 255 })
-  link!: Scalar['varchar'];
+  @Property({ type: 'integer', nullable: true, default: 0 })
+  order!: Scalar['integer'];
 
-  @Property({ type: 'integer' })
-  time!: Scalar['integer'];
+  @Property({ type: 'uuid', nullable: true })
+  video_id!: Scalar['uuid'];
 
   @ManyToOne({
     entity: () => User,
@@ -66,6 +67,13 @@ export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
     nullable: true,
   })
   section!: Section;
+
+  @ManyToOne({
+    entity: () => StoredFile,
+    inversedBy: (storeFiled) => storeFiled.lessons,
+    nullable: true,
+  })
+  video!: StoredFile;
 
   @OneToMany({
     entity: () => Assignment,

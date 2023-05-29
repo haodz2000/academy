@@ -35,6 +35,12 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
       'google_id',
       'role_id',
       'avatar_id',
+      'phone',
+      'facebook',
+      'github',
+      'twitter',
+      'job',
+      'description',
       'created_by',
       'updated_by',
       'created_at',
@@ -57,6 +63,24 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
 
   @Property({ type: 'uuid', nullable: true })
   avatar_id: Maybe<'uuid'>;
+
+  @Property({ type: 'varchar', length: 15, nullable: true })
+  phone!: Maybe<'varchar'>;
+
+  @Property({ type: 'varchar', length: 255, nullable: true })
+  facebook!: Maybe<'varchar'>;
+
+  @Property({ type: 'varchar', length: 255, nullable: true })
+  github!: Maybe<'varchar'>;
+
+  @Property({ type: 'varchar', length: 255, nullable: true })
+  twitter!: Maybe<'varchar'>;
+
+  @Property({ type: 'varchar', length: 255, nullable: true })
+  job!: Maybe<'varchar'>;
+
+  @Property({ type: 'varchar', length: 255, nullable: true })
+  description!: Maybe<'varchar'>;
 
   @ManyToOne({
     entity: () => Role,

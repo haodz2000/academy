@@ -297,38 +297,6 @@ export type AssignmentResponseTypenameEnum =
 /**
  *
  * @export
- * @interface AuthMe200Response
- */
-export interface AuthMe200Response {
-  /**
-   *
-   * @type {string}
-   * @memberof AuthMe200Response
-   */
-  message: string;
-  /**
-   *
-   * @type {UserResponse}
-   * @memberof AuthMe200Response
-   */
-  data: UserResponse;
-}
-/**
- *
- * @export
- * @interface AuthMe200ResponseAllOf
- */
-export interface AuthMe200ResponseAllOf {
-  /**
-   *
-   * @type {UserResponse}
-   * @memberof AuthMe200ResponseAllOf
-   */
-  data?: UserResponse;
-}
-/**
- *
- * @export
  * @interface CategoryList200Response
  */
 export interface CategoryList200Response {
@@ -579,6 +547,12 @@ export interface CourseDetailResponse {
   cover: StoredFileResponse;
   /**
    *
+   * @type {number}
+   * @memberof CourseDetailResponse
+   */
+  administrator_id: number;
+  /**
+   *
    * @type {UserResponse}
    * @memberof CourseDetailResponse
    */
@@ -624,6 +598,44 @@ export const CourseDetailResponseTypenameEnum = {
 export type CourseDetailResponseTypenameEnum =
   (typeof CourseDetailResponseTypenameEnum)[keyof typeof CourseDetailResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface CourseFindCourseLearnings200Response
+ */
+export interface CourseFindCourseLearnings200Response {
+  /**
+   *
+   * @type {Array<CourseDetailResponse>}
+   * @memberof CourseFindCourseLearnings200Response
+   */
+  data: Array<CourseDetailResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof CourseFindCourseLearnings200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof CourseFindCourseLearnings200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface CourseFindCourseLearnings200ResponseAllOf
+ */
+export interface CourseFindCourseLearnings200ResponseAllOf {
+  /**
+   *
+   * @type {Array<CourseDetailResponse>}
+   * @memberof CourseFindCourseLearnings200ResponseAllOf
+   */
+  data?: Array<CourseDetailResponse>;
+}
 /**
  *
  * @export
@@ -768,6 +780,12 @@ export interface CourseResponse {
   cover: StoredFileResponse;
   /**
    *
+   * @type {number}
+   * @memberof CourseResponse
+   */
+  administrator_id: number;
+  /**
+   *
    * @type {UserResponse}
    * @memberof CourseResponse
    */
@@ -838,43 +856,6 @@ export interface CreateDiscussionDto {
    * @memberof CreateDiscussionDto
    */
   description: string;
-}
-/**
- *
- * @export
- * @interface CreateLessonDto
- */
-export interface CreateLessonDto {
-  /**
-   *
-   * @type {number}
-   * @memberof CreateLessonDto
-   */
-  section_id: number;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateLessonDto
-   */
-  title: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateLessonDto
-   */
-  description: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateLessonDto
-   */
-  link: string;
-  /**
-   *
-   * @type {number}
-   * @memberof CreateLessonDto
-   */
-  time: number;
 }
 /**
  *
@@ -1416,6 +1397,12 @@ export interface LearningRequestResponseCourse {
   cover: StoredFileResponse;
   /**
    *
+   * @type {number}
+   * @memberof LearningRequestResponseCourse
+   */
+  administrator_id: number;
+  /**
+   *
    * @type {UserResponse}
    * @memberof LearningRequestResponseCourse
    */
@@ -1485,6 +1472,42 @@ export interface LearningRequestResponseRequester {
    * @memberof LearningRequestResponseRequester
    */
   avatar_id: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LearningRequestResponseRequester
+   */
+  phone: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LearningRequestResponseRequester
+   */
+  facebook: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LearningRequestResponseRequester
+   */
+  github: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LearningRequestResponseRequester
+   */
+  twitter: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LearningRequestResponseRequester
+   */
+  job: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof LearningRequestResponseRequester
+   */
+  description: string | null;
   /**
    *
    * @type {string}
@@ -1609,19 +1632,25 @@ export interface LessonResponse {
    * @type {string}
    * @memberof LessonResponse
    */
-  link: string;
-  /**
-   *
-   * @type {number}
-   * @memberof LessonResponse
-   */
-  time: number;
+  video_id: string;
   /**
    *
    * @type {number}
    * @memberof LessonResponse
    */
   section_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof LessonResponse
+   */
+  order: number;
+  /**
+   *
+   * @type {TopicStatResponseCover}
+   * @memberof LessonResponse
+   */
+  video: TopicStatResponseCover | null;
 }
 
 export const LessonResponseTypenameEnum = {
@@ -1852,6 +1881,12 @@ export interface SectionFullResponse {
    * @memberof SectionFullResponse
    */
   course_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof SectionFullResponse
+   */
+  order: number;
   /**
    *
    * @type {Array<LessonResponse>}
@@ -2601,37 +2636,6 @@ export type TopicStatResponseCoverTypenameEnum =
 /**
  *
  * @export
- * @interface UpdateLessonDto
- */
-export interface UpdateLessonDto {
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateLessonDto
-   */
-  title: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateLessonDto
-   */
-  description: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateLessonDto
-   */
-  link: string;
-  /**
-   *
-   * @type {number}
-   * @memberof UpdateLessonDto
-   */
-  time: number;
-}
-/**
- *
- * @export
  * @interface UpdateSectionDto
  */
 export interface UpdateSectionDto {
@@ -2690,6 +2694,42 @@ export interface UserBasicResponse {
    * @memberof UserBasicResponse
    */
   avatar_id: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponse
+   */
+  phone: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponse
+   */
+  facebook: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponse
+   */
+  github: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponse
+   */
+  twitter: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponse
+   */
+  job: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponse
+   */
+  description: string | null;
   /**
    *
    * @type {string}
@@ -2790,6 +2830,42 @@ export interface UserBasicResponseCreator {
    * @type {string}
    * @memberof UserBasicResponseCreator
    */
+  phone: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponseCreator
+   */
+  facebook: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponseCreator
+   */
+  github: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponseCreator
+   */
+  twitter: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponseCreator
+   */
+  job: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponseCreator
+   */
+  description: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserBasicResponseCreator
+   */
   created_at: string;
   /**
    *
@@ -2841,6 +2917,141 @@ export type UserBasicResponseCreatorTypenameEnum =
 /**
  *
  * @export
+ * @interface UserList200Response
+ */
+export interface UserList200Response {
+  /**
+   *
+   * @type {Array<UserResponse>}
+   * @memberof UserList200Response
+   */
+  data: Array<UserResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof UserList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof UserList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface UserList200ResponseAllOf
+ */
+export interface UserList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<UserResponse>}
+   * @memberof UserList200ResponseAllOf
+   */
+  data?: Array<UserResponse>;
+}
+/**
+ *
+ * @export
+ * @interface UserPublic200Response
+ */
+export interface UserPublic200Response {
+  /**
+   *
+   * @type {Array<UserPublicResponse>}
+   * @memberof UserPublic200Response
+   */
+  data: Array<UserPublicResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof UserPublic200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPublic200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface UserPublic200ResponseAllOf
+ */
+export interface UserPublic200ResponseAllOf {
+  /**
+   *
+   * @type {Array<UserPublicResponse>}
+   * @memberof UserPublic200ResponseAllOf
+   */
+  data?: Array<UserPublicResponse>;
+}
+/**
+ *
+ * @export
+ * @interface UserPublicResponse
+ */
+export interface UserPublicResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof UserPublicResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPublicResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPublicResponse
+   */
+  email: string;
+  /**
+   *
+   * @type {TopicStatResponseCover}
+   * @memberof UserPublicResponse
+   */
+  avatar: TopicStatResponseCover | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPublicResponse
+   */
+  __typename?: UserPublicResponseTypenameEnum;
+}
+
+export const UserPublicResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+} as const;
+
+export type UserPublicResponseTypenameEnum =
+  (typeof UserPublicResponseTypenameEnum)[keyof typeof UserPublicResponseTypenameEnum];
+
+/**
+ *
+ * @export
  * @interface UserResponse
  */
 export interface UserResponse {
@@ -2880,6 +3091,42 @@ export interface UserResponse {
    * @memberof UserResponse
    */
   avatar_id: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserResponse
+   */
+  phone: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserResponse
+   */
+  facebook: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserResponse
+   */
+  github: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserResponse
+   */
+  twitter: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserResponse
+   */
+  job: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UserResponse
+   */
+  description: string | null;
   /**
    *
    * @type {string}
@@ -2945,6 +3192,87 @@ export const UserResponseTypenameEnum = {
 export type UserResponseTypenameEnum =
   (typeof UserResponseTypenameEnum)[keyof typeof UserResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface UserUpdate200Response
+ */
+export interface UserUpdate200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdate200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {UserResponse}
+   * @memberof UserUpdate200Response
+   */
+  data: UserResponse;
+}
+/**
+ *
+ * @export
+ * @interface UserUpdate200ResponseAllOf
+ */
+export interface UserUpdate200ResponseAllOf {
+  /**
+   *
+   * @type {UserResponse}
+   * @memberof UserUpdate200ResponseAllOf
+   */
+  data?: UserResponse;
+}
+/**
+ *
+ * @export
+ * @interface UserUpdateDto
+ */
+export interface UserUpdateDto {
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  phone: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  facebook: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  github: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  twitter: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  job: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserUpdateDto
+   */
+  description: string;
+}
 /**
  *
  * @export
@@ -3719,7 +4047,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<AuthMe200Response>
+      ) => AxiosPromise<UserUpdate200Response>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.me(options);
       return createRequestFunction(
@@ -3749,7 +4077,7 @@ export const AuthApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    me(options?: any): AxiosPromise<AuthMe200Response> {
+    me(options?: any): AxiosPromise<UserUpdate200Response> {
       return localVarFp.me(options).then((request) => request(axios, basePath));
     },
   };
@@ -4204,6 +4532,45 @@ export const CoursesApiAxiosParamCreator = function (
     /**
      *
      * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findCourseLearnings: async (
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/courses/learnings`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
      * @param {string} slug
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4468,6 +4835,29 @@ export const CoursesApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async findCourseLearnings(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseFindCourseLearnings200Response>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.findCourseLearnings(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
      * @param {string} slug
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4609,6 +4999,19 @@ export const CoursesApiFactory = function (
     ): AxiosPromise<CourseCreate200Response> {
       return localVarFp
         .create(name, description, cover, topicsIds, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findCourseLearnings(
+      options?: any
+    ): AxiosPromise<CourseFindCourseLearnings200Response> {
+      return localVarFp
+        .findCourseLearnings(options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -4848,6 +5251,19 @@ export class CoursesApi extends BaseAPI {
         requestParameters.topicsIds,
         options
       )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public findCourseLearnings(options?: AxiosRequestConfig) {
+    return CoursesApiFp(this.configuration)
+      .findCourseLearnings(options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -5822,16 +6238,28 @@ export const LessonsApiAxiosParamCreator = function (
     /**
      *
      * @summary
-     * @param {CreateLessonDto} createLessonDto
+     * @param {number} sectionId
+     * @param {string} title
+     * @param {string} description
+     * @param {string} [link]
+     * @param {File} [video]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     create: async (
-      createLessonDto: CreateLessonDto,
+      sectionId: number,
+      title: string,
+      description: string,
+      link?: string,
+      video?: File,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      // verify required parameter 'createLessonDto' is not null or undefined
-      assertParamExists('create', 'createLessonDto', createLessonDto);
+      // verify required parameter 'sectionId' is not null or undefined
+      assertParamExists('create', 'sectionId', sectionId);
+      // verify required parameter 'title' is not null or undefined
+      assertParamExists('create', 'title', title);
+      // verify required parameter 'description' is not null or undefined
+      assertParamExists('create', 'description', description);
       const localVarPath = `/api/lesson`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5847,8 +6275,31 @@ export const LessonsApiAxiosParamCreator = function (
       };
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
+      const localVarFormParams = new ((configuration &&
+        configuration.formDataCtor) ||
+        FormData)();
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      if (sectionId !== undefined) {
+        localVarFormParams.append('section_id', sectionId as any);
+      }
+
+      if (title !== undefined) {
+        localVarFormParams.append('title', title as any);
+      }
+
+      if (description !== undefined) {
+        localVarFormParams.append('description', description as any);
+      }
+
+      if (link !== undefined) {
+        localVarFormParams.append('link', link as any);
+      }
+
+      if (video !== undefined) {
+        localVarFormParams.append('video', video as any);
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
@@ -5858,11 +6309,7 @@ export const LessonsApiAxiosParamCreator = function (
         ...headersFromBaseOptions,
         ...options.headers,
       };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        createLessonDto,
-        localVarRequestOptions,
-        configuration
-      );
+      localVarRequestOptions.data = localVarFormParams;
 
       return {
         url: toPathString(localVarUrlObj),
@@ -5873,19 +6320,27 @@ export const LessonsApiAxiosParamCreator = function (
      *
      * @summary
      * @param {number} id
-     * @param {UpdateLessonDto} updateLessonDto
+     * @param {string} title
+     * @param {string} description
+     * @param {string} [link]
+     * @param {File} [video]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     update: async (
       id: number,
-      updateLessonDto: UpdateLessonDto,
+      title: string,
+      description: string,
+      link?: string,
+      video?: File,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
       assertParamExists('update', 'id', id);
-      // verify required parameter 'updateLessonDto' is not null or undefined
-      assertParamExists('update', 'updateLessonDto', updateLessonDto);
+      // verify required parameter 'title' is not null or undefined
+      assertParamExists('update', 'title', title);
+      // verify required parameter 'description' is not null or undefined
+      assertParamExists('update', 'description', description);
       const localVarPath = `/api/lesson/{id}`.replace(
         `{${'id'}}`,
         encodeURIComponent(String(id))
@@ -5904,8 +6359,27 @@ export const LessonsApiAxiosParamCreator = function (
       };
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
+      const localVarFormParams = new ((configuration &&
+        configuration.formDataCtor) ||
+        FormData)();
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      if (title !== undefined) {
+        localVarFormParams.append('title', title as any);
+      }
+
+      if (description !== undefined) {
+        localVarFormParams.append('description', description as any);
+      }
+
+      if (link !== undefined) {
+        localVarFormParams.append('link', link as any);
+      }
+
+      if (video !== undefined) {
+        localVarFormParams.append('video', video as any);
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
@@ -5915,11 +6389,7 @@ export const LessonsApiAxiosParamCreator = function (
         ...headersFromBaseOptions,
         ...options.headers,
       };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        updateLessonDto,
-        localVarRequestOptions,
-        configuration
-      );
+      localVarRequestOptions.data = localVarFormParams;
 
       return {
         url: toPathString(localVarUrlObj),
@@ -5966,12 +6436,20 @@ export const LessonsApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
-     * @param {CreateLessonDto} createLessonDto
+     * @param {number} sectionId
+     * @param {string} title
+     * @param {string} description
+     * @param {string} [link]
+     * @param {File} [video]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async create(
-      createLessonDto: CreateLessonDto,
+      sectionId: number,
+      title: string,
+      description: string,
+      link?: string,
+      video?: File,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -5980,7 +6458,11 @@ export const LessonsApiFp = function (configuration?: Configuration) {
       ) => AxiosPromise<SectionCreate200Response>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.create(
-        createLessonDto,
+        sectionId,
+        title,
+        description,
+        link,
+        video,
         options
       );
       return createRequestFunction(
@@ -5994,13 +6476,19 @@ export const LessonsApiFp = function (configuration?: Configuration) {
      *
      * @summary
      * @param {number} id
-     * @param {UpdateLessonDto} updateLessonDto
+     * @param {string} title
+     * @param {string} description
+     * @param {string} [link]
+     * @param {File} [video]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async update(
       id: number,
-      updateLessonDto: UpdateLessonDto,
+      title: string,
+      description: string,
+      link?: string,
+      video?: File,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -6010,7 +6498,10 @@ export const LessonsApiFp = function (configuration?: Configuration) {
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.update(
         id,
-        updateLessonDto,
+        title,
+        description,
+        link,
+        video,
         options
       );
       return createRequestFunction(
@@ -6049,33 +6540,47 @@ export const LessonsApiFactory = function (
     /**
      *
      * @summary
-     * @param {CreateLessonDto} createLessonDto
+     * @param {number} sectionId
+     * @param {string} title
+     * @param {string} description
+     * @param {string} [link]
+     * @param {File} [video]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     create(
-      createLessonDto: CreateLessonDto,
+      sectionId: number,
+      title: string,
+      description: string,
+      link?: string,
+      video?: File,
       options?: any
     ): AxiosPromise<SectionCreate200Response> {
       return localVarFp
-        .create(createLessonDto, options)
+        .create(sectionId, title, description, link, video, options)
         .then((request) => request(axios, basePath));
     },
     /**
      *
      * @summary
      * @param {number} id
-     * @param {UpdateLessonDto} updateLessonDto
+     * @param {string} title
+     * @param {string} description
+     * @param {string} [link]
+     * @param {File} [video]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     update(
       id: number,
-      updateLessonDto: UpdateLessonDto,
+      title: string,
+      description: string,
+      link?: string,
+      video?: File,
       options?: any
     ): AxiosPromise<SectionCreate200Response> {
       return localVarFp
-        .update(id, updateLessonDto, options)
+        .update(id, title, description, link, video, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -6103,10 +6608,38 @@ export interface LessonsApiDeleteRequest {
 export interface LessonsApiCreateRequest {
   /**
    *
-   * @type {CreateLessonDto}
+   * @type {number}
    * @memberof LessonsApiCreate
    */
-  readonly createLessonDto: CreateLessonDto;
+  readonly sectionId: number;
+
+  /**
+   *
+   * @type {string}
+   * @memberof LessonsApiCreate
+   */
+  readonly title: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof LessonsApiCreate
+   */
+  readonly description: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof LessonsApiCreate
+   */
+  readonly link?: string;
+
+  /**
+   *
+   * @type {File}
+   * @memberof LessonsApiCreate
+   */
+  readonly video?: File;
 }
 
 /**
@@ -6124,10 +6657,31 @@ export interface LessonsApiUpdateRequest {
 
   /**
    *
-   * @type {UpdateLessonDto}
+   * @type {string}
    * @memberof LessonsApiUpdate
    */
-  readonly updateLessonDto: UpdateLessonDto;
+  readonly title: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof LessonsApiUpdate
+   */
+  readonly description: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof LessonsApiUpdate
+   */
+  readonly link?: string;
+
+  /**
+   *
+   * @type {File}
+   * @memberof LessonsApiUpdate
+   */
+  readonly video?: File;
 }
 
 /**
@@ -6167,7 +6721,14 @@ export class LessonsApi extends BaseAPI {
     options?: AxiosRequestConfig
   ) {
     return LessonsApiFp(this.configuration)
-      .create(requestParameters.createLessonDto, options)
+      .create(
+        requestParameters.sectionId,
+        requestParameters.title,
+        requestParameters.description,
+        requestParameters.link,
+        requestParameters.video,
+        options
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -6184,7 +6745,14 @@ export class LessonsApi extends BaseAPI {
     options?: AxiosRequestConfig
   ) {
     return LessonsApiFp(this.configuration)
-      .update(requestParameters.id, requestParameters.updateLessonDto, options)
+      .update(
+        requestParameters.id,
+        requestParameters.title,
+        requestParameters.description,
+        requestParameters.link,
+        requestParameters.video,
+        options
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -7431,6 +7999,501 @@ export class TopicsApi extends BaseAPI {
   ) {
     return TopicsApiFp(this.configuration)
       .findOne(requestParameters.slug, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * UsersApi - axios parameter creator
+ * @export
+ */
+export const UsersApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _public: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/users/public`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {string} [q]
+     * @param {number} [page]
+     * @param {number} [limit]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (
+      q?: string,
+      page?: number,
+      limit?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/users`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (q !== undefined) {
+        localVarQueryParameter['q'] = q;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    profile: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/users/profile`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {UserUpdateDto} userUpdateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update: async (
+      userUpdateDto: UserUpdateDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'userUpdateDto' is not null or undefined
+      assertParamExists('update', 'userUpdateDto', userUpdateDto);
+      const localVarPath = `/api/users`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        userUpdateDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * UsersApi - functional programming interface
+ * @export
+ */
+export const UsersApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async _public(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<UserPublic200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator._public(
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {string} [q]
+     * @param {number} [page]
+     * @param {number} [limit]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      q?: string,
+      page?: number,
+      limit?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<UserList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(
+        q,
+        page,
+        limit,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async profile(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<UserUpdate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.profile(
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {UserUpdateDto} userUpdateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async update(
+      userUpdateDto: UserUpdateDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<UserUpdate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.update(
+        userUpdateDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * UsersApi - factory interface
+ * @export
+ */
+export const UsersApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = UsersApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _public(options?: any): AxiosPromise<UserPublic200Response> {
+      return localVarFp
+        ._public(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {string} [q]
+     * @param {number} [page]
+     * @param {number} [limit]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(
+      q?: string,
+      page?: number,
+      limit?: number,
+      options?: any
+    ): AxiosPromise<UserList200Response> {
+      return localVarFp
+        .list(q, page, limit, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    profile(options?: any): AxiosPromise<UserUpdate200Response> {
+      return localVarFp
+        .profile(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {UserUpdateDto} userUpdateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update(
+      userUpdateDto: UserUpdateDto,
+      options?: any
+    ): AxiosPromise<UserUpdate200Response> {
+      return localVarFp
+        .update(userUpdateDto, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for list operation in UsersApi.
+ * @export
+ * @interface UsersApiListRequest
+ */
+export interface UsersApiListRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof UsersApiList
+   */
+  readonly q?: string;
+
+  /**
+   *
+   * @type {number}
+   * @memberof UsersApiList
+   */
+  readonly page?: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof UsersApiList
+   */
+  readonly limit?: number;
+}
+
+/**
+ * Request parameters for update operation in UsersApi.
+ * @export
+ * @interface UsersApiUpdateRequest
+ */
+export interface UsersApiUpdateRequest {
+  /**
+   *
+   * @type {UserUpdateDto}
+   * @memberof UsersApiUpdate
+   */
+  readonly userUpdateDto: UserUpdateDto;
+}
+
+/**
+ * UsersApi - object-oriented interface
+ * @export
+ * @class UsersApi
+ * @extends {BaseAPI}
+ */
+export class UsersApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public _public(options?: AxiosRequestConfig) {
+    return UsersApiFp(this.configuration)
+      ._public(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {UsersApiListRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public list(
+    requestParameters: UsersApiListRequest = {},
+    options?: AxiosRequestConfig
+  ) {
+    return UsersApiFp(this.configuration)
+      .list(
+        requestParameters.q,
+        requestParameters.page,
+        requestParameters.limit,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public profile(options?: AxiosRequestConfig) {
+    return UsersApiFp(this.configuration)
+      .profile(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {UsersApiUpdateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public update(
+    requestParameters: UsersApiUpdateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return UsersApiFp(this.configuration)
+      .update(requestParameters.userUpdateDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

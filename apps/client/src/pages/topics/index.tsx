@@ -14,7 +14,7 @@ const Index = () => {
 
 Index.getLayout = function getLayout(page: ReactElement) {
   return (
-    <AppLayout hasMenu={false} custom={false}>
+    <AppLayout hasMenu={true} custom={false}>
       {page}
     </AppLayout>
   );

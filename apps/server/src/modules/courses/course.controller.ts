@@ -59,6 +59,20 @@ export class CourseController {
 
   @ApiOperation({ tags: [AppSwaggerTag.Courses] })
   @UseInterceptors()
+  @ApiPaginatedResponse(CourseDetailResponse)
+  @ApiErrorResponse()
+  @InjectUserToQuery()
+  @Get('/learnings')
+  async findCourseLearnings() {
+    const result = await this.courseSerive.findCourseLearnings();
+    return AppApiPaginatedResponse.create(
+      result.data.map((i) => CourseTransformer.toCourseDetailResponse(i)),
+      result.pagination
+    );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.Courses] })
+  @UseInterceptors()
   @ApiSuccessResponse(CourseDetailResponse)
   @ApiErrorResponse()
   @InjectUserToQuery()

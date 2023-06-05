@@ -23,6 +23,8 @@ import { TeachingRequest } from './TeachingRequest';
 import { LearningRequest } from './LearningRequest';
 import { CourseTeacher } from './CourseTeacher';
 import { CourseStudent } from './CourseStudent';
+import { NotificationSubscription } from './NotificationSubscription';
+import { Notification } from './Notification';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -349,4 +351,16 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (data) => data.updater,
   })
   updated_course_students = new Collection<CourseStudent>(this);
+
+  @OneToMany({
+    entity: () => NotificationSubscription,
+    mappedBy: (notificationSubscription) => notificationSubscription.user,
+  })
+  notification_subscriptions = new Collection<NotificationSubscription>(this);
+
+  @OneToMany({
+    entity: () => Notification,
+    mappedBy: (notification) => notification.user,
+  })
+  notifications = new Collection<Notification>(this);
 }

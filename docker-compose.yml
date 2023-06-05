@@ -30,6 +30,16 @@ services:
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
     command: 'server /data --console-address ":9001"'
 
+  redis:
+    container_name: academy-redis
+    image: redis:7-alpine
+    command: 'redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes'
+    restart: always
+    ports:
+      - ${REDIS_HOST_PORT}:6379
+    networks:
+      - academy-network
+
 networks:
   academy-network:
 

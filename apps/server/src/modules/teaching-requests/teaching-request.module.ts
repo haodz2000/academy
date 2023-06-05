@@ -7,11 +7,13 @@ import { User } from '@libs/entities/entities/User';
 import { TeachingRequest } from '@libs/entities/entities/TeachingRequest';
 import { AbilityModule } from '../auth/ability/ability.module';
 import { CourseTeacher } from '@libs/entities/entities/CourseTeacher';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
     MikroOrmModule.forFeature([Course, User, TeachingRequest, CourseTeacher]),
     AbilityModule,
+    NotificationsModule,
   ],
   controllers: [TeachingRequestController],
   providers: [TeachingRequestService],

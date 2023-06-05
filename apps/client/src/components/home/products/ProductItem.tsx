@@ -47,7 +47,7 @@ export const ProductItem = () => {
               >
                 <Image
                   loader={({ src }) => src}
-                  alt=""
+                  alt="image"
                   src={
                     'https://ik.imagekit.io/laracasts/instructors/34923.jpeg?tr=w-560,q-70'
                   }
@@ -114,7 +114,7 @@ export const ProductItem = () => {
             >
               <Image
                 loader={({ src }) => src}
-                alt=""
+                alt="image"
                 src="https://ik.imagekit.io/laracasts/instructors/34923.jpeg?tr=w-560,q-70"
                 fill
                 style={{

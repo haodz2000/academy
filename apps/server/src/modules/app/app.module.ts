@@ -1,3 +1,7 @@
+import { FirebaseModule } from './../firebase/firebase.module';
+import { NotificationsModule } from './../notifications/notifications.module';
+import { QueuePrefix } from '@libs/constants/queue';
+import { NotificationSubscriptionModule } from './../notification-subscriptions/notification-subscription.module';
 import { TeachingRequestModule } from './../teaching-requests/teaching-request.module';
 import { LearningRequestModule } from '../learning-requests/learning-request.module';
 import { DiscussionModule } from '../discussions/discussion.module';
@@ -19,9 +23,21 @@ import { AbilityModule } from '../auth/ability/ability.module';
 import { HttpErrorFilter } from '@server/filters/http-error.filter';
 import { RavenInterceptor } from 'nest-raven';
 import { ValidationException } from '@server/exceptions';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
+    FirebaseModule,
+    NotificationsModule,
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST,
+        port: +process.env.REDIS_PORT,
+        password: process.env.REDIS_PASSWORD,
+      },
+      prefix: QueuePrefix.Queue,
+    }),
+    NotificationSubscriptionModule,
     TeachingRequestModule,
     LearningRequestModule,
     DiscussionModule,

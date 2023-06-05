@@ -17,6 +17,9 @@ import { useLearningRequestAcceptMutation } from '@client/hooks/apis/learning-re
 import { useConfirm } from 'material-ui-confirm';
 import { useNotify } from '@client/components/notification/hook';
 import { useLearningRequestRejectMutation } from '@client/hooks/apis/learning-requests/useLearningRequestRejectMutation';
+import { IdAction, IdSubject } from '@libs/constants/abilities';
+import { Can } from '@client/abilities';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface Props extends TableRowProps {
   request: Partial<LearningRequestResponse>;
@@ -28,7 +31,7 @@ export const RequestRow = ({ request, onRefresh, ...props }: Props) => {
   const learningRequestAcceptMutation = useLearningRequestAcceptMutation();
   const learningRequestRejectMutation = useLearningRequestRejectMutation();
   const onAccept = async () => {
-    confirm({ title: '?' })
+    confirm({ title: 'Bạn chắc chắn chứ' })
       .then(async () => {
         try {
           await learningRequestAcceptMutation.mutateAsync({
@@ -45,7 +48,7 @@ export const RequestRow = ({ request, onRefresh, ...props }: Props) => {
       });
   };
   const onReject = async () => {
-    confirm({ title: 'Bạn chắc chắn muốn xóa?' })
+    confirm({ title: 'Bạn chắc chắn muốn từ chối?' })
       .then(async () => {
         try {
           await learningRequestRejectMutation.mutateAsync({
@@ -86,16 +89,24 @@ export const RequestRow = ({ request, onRefresh, ...props }: Props) => {
           alignItems="center"
           justifyContent={'center'}
         >
-          <Tooltip title="Accept">
-            <IconButton onClick={onAccept}>
-              <CheckCircleIcon color="success" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Reject">
-            <IconButton onClick={onReject}>
-              <CancelIcon color="error" />
-            </IconButton>
-          </Tooltip>
+          <IconButton
+            LinkComponent={Link}
+            href={'/learning-requests/' + request.id}
+          >
+            <VisibilityIcon color="primary" />
+          </IconButton>
+          <Can I={IdAction.Manage} a={IdSubject.LearningRequest}>
+            <Tooltip title="Accept">
+              <IconButton onClick={onAccept}>
+                <CheckCircleIcon color="success" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Reject">
+              <IconButton onClick={onReject}>
+                <CancelIcon color="error" />
+              </IconButton>
+            </Tooltip>
+          </Can>
         </Stack>
       </TableCell>
     </TableRow>

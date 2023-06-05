@@ -1,12 +1,6 @@
 import { AppLayout } from '@client/components/layouts/AppLayout';
 import { Topics } from '@client/components/topics';
-import {
-  CircularProgress,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Grid, IconButton, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import React, { ReactElement, useMemo } from 'react';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -35,18 +29,20 @@ export const Index = () => {
   return (
     <Stack position={'relative'} gap={8}>
       <Stack width={'100%'} flexDirection={'row'} padding={2} gap={12}>
-        <Grid container md={12}>
+        <Grid container>
           <Grid item md={3}>
             <Stack paddingX={2} gap={2}>
               <Stack width={315} height={445} position={'relative'}>
-                <Image
-                  loader={({ src }) => src}
-                  alt={course.administrator?.name}
-                  src={course.administrator?.avatar.path}
-                  fill
-                  style={{ borderRadius: '20px' }}
-                  unoptimized
-                />
+                {course.administrator && (
+                  <Image
+                    loader={({ src }) => src}
+                    alt={course.administrator?.name}
+                    src={course.administrator?.avatar.path}
+                    fill
+                    style={{ borderRadius: '20px' }}
+                    unoptimized
+                  />
+                )}
               </Stack>
               <Stack width={'90%'} margin={'0 auto'}>
                 <Stack

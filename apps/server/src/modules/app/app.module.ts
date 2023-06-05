@@ -1,3 +1,4 @@
+import { SocketModule } from './../socket/socket.module';
 import { FirebaseModule } from './../firebase/firebase.module';
 import { NotificationsModule } from './../notifications/notifications.module';
 import { QueuePrefix } from '@libs/constants/queue';
@@ -27,6 +28,7 @@ import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
+    SocketModule,
     FirebaseModule,
     NotificationsModule,
     BullModule.forRoot({

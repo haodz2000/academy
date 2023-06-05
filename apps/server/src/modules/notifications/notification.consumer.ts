@@ -1,5 +1,7 @@
+import { SocketEvent } from './../../../../../libs/constants/src/socket/index';
 import {
   NotificationPayloadType,
+  NotificationRead,
   NotificationRequestPayload,
 } from '@libs/constants/entities/Notification';
 import {
@@ -18,10 +20,14 @@ import { Job } from 'bull';
 import { StatusLearningRequest } from '@libs/constants/entities/LearningRequest';
 import { TeachingRequest } from '@libs/entities/entities/TeachingRequest';
 import { StatusTeachingRequest } from '@libs/constants/entities/TeachingRequest';
+import { SocketGateway } from '../socket/socket.gateway';
 
 @Processor(QueueName.Notification)
 export class NotificationConsumer {
-  constructor(private readonly em: EntityManager) {}
+  constructor(
+    private readonly em: EntityManager,
+    private readonly socket: SocketGateway
+  ) {}
 
   async getFirebaseMessageNotification(
     token: string,
@@ -179,6 +185,17 @@ export class NotificationConsumer {
       const notification = await this.em.findOneOrFail(Notification, {
         id: payload.id,
       });
+      const fcmMessage = await this.getFirebaseMessageNotification(
+        '',
+        notification,
+        this.em
+      );
+      notification.fcm_message = fcmMessage;
+      const messages: Message[] = [];
+      const message = fcmMessage;
+      await em.persistAndFlush(notification);
+      const nps = this.socket.server.of('/' + notification.user_id);
+      nps.emit(SocketEvent.Notification, notification);
       const reciver = await this.em.findOneOrFail(
         User,
         { id: notification.payload.to },
@@ -191,14 +208,6 @@ export class NotificationConsumer {
         await job.moveToCompleted();
         return;
       }
-      const fcmMessage = await this.getFirebaseMessageNotification(
-        '',
-        notification,
-        this.em
-      );
-      notification.fcm_message = fcmMessage;
-      const messages: Message[] = [];
-      const message = fcmMessage;
       for (const subscription of subscriptions) {
         messages.push({
           ...message,
@@ -217,12 +226,43 @@ export class NotificationConsumer {
           em.remove(subscriptions[key]);
         }
       }
-      await em.persistAndFlush(notification);
       await em.flush();
       await job.moveToCompleted();
     } catch (error) {
       console.log(error);
       await job.moveToFailed(error.message);
     }
+  }
+
+  @Process({ name: NotificationQueueJob.MarkAsRead })
+  async markReadAllNotification(
+    job: Job<{
+      requester_id: User['id'];
+      notificationId: Notification['id'];
+    }>
+  ) {
+    const em = this.em.fork();
+    try {
+      const notificationRepository = em.getRepository(Notification);
+      const payload = job.data;
+      const notificationId = payload.notificationId;
+      const notifications = await notificationRepository.find({
+        id: { $lte: notificationId },
+        user_id: job.data.requester_id,
+        read: NotificationRead.UnRead,
+      });
+      for (const notification of notifications) {
+        notification.read = NotificationRead.Read;
+      }
+      await notificationRepository.persistAndFlush(notifications);
+      const nps = this.socket.server.of('/' + job.data.requester_id);
+      nps.emit(SocketEvent.MarkAsRead, 'Tất cả thông báo đã được đánh dấu');
+      await job.moveToCompleted();
+      await em.flush();
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+    return {};
   }
 }

@@ -8,4 +8,5 @@ export enum QueueName {
 
 export enum NotificationQueueJob {
   Send = 'send',
+  MarkAsRead = 'mark-as-read',
 }

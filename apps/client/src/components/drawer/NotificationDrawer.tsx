@@ -17,6 +17,8 @@ import { useGetNotificationsQuery } from '@client/hooks/apis/notifications/useGe
 import { NotificationRead } from '@libs/constants/entities/Notification';
 import { NotificationResponse } from '@libs/openapi-generator/generated';
 import { Empty } from '../ui/Empty';
+import { useReadAllNotificationMutation } from '@client/hooks/apis/notifications/useReadAllNotificationMutation';
+import { useNotify } from '../notification/hook';
 
 export interface INotificationCustome {
   date: string;
@@ -24,7 +26,9 @@ export interface INotificationCustome {
 }
 
 export const NotificationDrawer = () => {
+  const { notify, notifyError } = useNotify();
   const [state, setState] = React.useState(false);
+  const readAllNotificationMutation = useReadAllNotificationMutation();
   const notificationsQuery = useGetNotificationsQuery({
     limit: 10,
     page: 1,
@@ -52,6 +56,15 @@ export const NotificationDrawer = () => {
     return Object.values(map);
   }, [notifications]);
   const total = notificationsQuery.data?.pagination.total || 0;
+
+  const onMarkAllNotification = async () => {
+    try {
+      const data = await readAllNotificationMutation.mutateAsync();
+      notify({ content: data.data?.message });
+    } catch (error) {
+      notifyError({ error });
+    }
+  };
 
   return (
     <div>
@@ -95,6 +108,14 @@ export const NotificationDrawer = () => {
                     Thông báo
                   </Typography>
                   <NotificationsActiveIcon htmlColor="#a9c3d4" />
+                  {!!data.length && (
+                    <RoundedButton
+                      onClick={onMarkAllNotification}
+                      variant="text"
+                    >
+                      Đánh dấu tất cả
+                    </RoundedButton>
+                  )}
                 </Stack>
                 <Divider sx={{ bgcolor: '#FFF' }} />
                 <Stack gap={1}>

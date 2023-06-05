@@ -1,6 +1,4 @@
 import { AppLayout } from '@client/components/layouts/AppLayout';
-import { NavbarManage } from '@client/components/manage/NavbarManage';
-import { RoundedButton } from '@client/components/ui/buttons';
 import {
   Paper,
   Stack,
@@ -23,7 +21,6 @@ import {
   LearningRequestResponse,
 } from '@libs/openapi-generator/generated';
 import { LearningRequestRow } from '@client/components/manage/learning-request/LearningRequestRow';
-import { useRouter } from 'next/router';
 import { Empty } from '@client/components/ui/Empty';
 
 export interface ILearningRequestCustome {
@@ -32,7 +29,6 @@ export interface ILearningRequestCustome {
 }
 
 const Index = () => {
-  const router = useRouter();
   const requestsQuery = useLearningRequestsQuery({
     status: StatusLearningRequest.Pending,
     page: 1,
@@ -66,16 +62,7 @@ const Index = () => {
   }
   return (
     <Stack width={'100%'} paddingX={2} flexDirection={'row'} gap={2}>
-      <Stack width={'30%'}>
-        <Stack width={220}>
-          <NavbarManage>
-            <RoundedButton onClick={() => router.back()}>
-              Quay lai
-            </RoundedButton>
-          </NavbarManage>
-        </Stack>
-      </Stack>
-      <Stack width={'70%'}>
+      <Stack width={1}>
         <Stack paddingX={2} gap={2}>
           <Stack gap={2}>
             <Typography variant="h6">
@@ -106,14 +93,15 @@ const Index = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.map((item, index) => (
-                    <LearningRequestRow
-                      onRefresh={onRefresh}
-                      request={item}
-                      order={index + 1}
-                      key={index}
-                    />
-                  ))}
+                  {!!data.length &&
+                    data.map((item, index) => (
+                      <LearningRequestRow
+                        onRefresh={onRefresh}
+                        request={item}
+                        order={index + 1}
+                        key={index}
+                      />
+                    ))}
                 </TableBody>
                 {!requestsQuery.data?.data.length && (
                   <TableRow>

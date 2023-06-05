@@ -289,6 +289,7 @@ export const AssignmentResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type AssignmentResponseTypenameEnum =
@@ -404,6 +405,7 @@ export const CategoryResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type CategoryResponseTypenameEnum =
@@ -593,6 +595,7 @@ export const CourseDetailResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type CourseDetailResponseTypenameEnum =
@@ -808,6 +811,7 @@ export const CourseResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type CourseResponseTypenameEnum =
@@ -1082,11 +1086,88 @@ export const DiscussionResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type DiscussionResponseTypenameEnum =
   (typeof DiscussionResponseTypenameEnum)[keyof typeof DiscussionResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface FcmMessageOptions
+ */
+export interface FcmMessageOptions {
+  /**
+   *
+   * @type {string}
+   * @memberof FcmMessageOptions
+   */
+  link?: string;
+}
+/**
+ *
+ * @export
+ * @interface FcmMessageResponse
+ */
+export interface FcmMessageResponse {
+  /**
+   *
+   * @type {FcmNotificationPayloadResponse}
+   * @memberof FcmMessageResponse
+   */
+  notification: FcmNotificationPayloadResponse;
+  /**
+   *
+   * @type {FcmMessageWebpush}
+   * @memberof FcmMessageResponse
+   */
+  webpush?: FcmMessageWebpush;
+}
+/**
+ *
+ * @export
+ * @interface FcmMessageWebpush
+ */
+export interface FcmMessageWebpush {
+  /**
+   *
+   * @type {FcmMessageOptions}
+   * @memberof FcmMessageWebpush
+   */
+  fcmOptions?: FcmMessageOptions;
+}
+/**
+ *
+ * @export
+ * @interface FcmNotificationPayloadResponse
+ */
+export interface FcmNotificationPayloadResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof FcmNotificationPayloadResponse
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof FcmNotificationPayloadResponse
+   */
+  body: string;
+  /**
+   *
+   * @type {string}
+   * @memberof FcmNotificationPayloadResponse
+   */
+  link: string;
+  /**
+   *
+   * @type {string}
+   * @memberof FcmNotificationPayloadResponse
+   */
+  imageUrl?: string;
+}
 /**
  *
  * @export
@@ -1318,6 +1399,7 @@ export const LearningRequestResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type LearningRequestResponseTypenameEnum =
@@ -1425,6 +1507,7 @@ export const LearningRequestResponseCourseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type LearningRequestResponseCourseTypenameEnum =
@@ -1568,6 +1651,7 @@ export const LearningRequestResponseRequesterTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type LearningRequestResponseRequesterTypenameEnum =
@@ -1669,11 +1753,354 @@ export const LessonResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type LessonResponseTypenameEnum =
   (typeof LessonResponseTypenameEnum)[keyof typeof LessonResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface NotificationPayloadResponse
+ */
+export interface NotificationPayloadResponse {
+  /**
+   *
+   * @type {NotificationRequestDataPayload}
+   * @memberof NotificationPayloadResponse
+   */
+  data: NotificationRequestDataPayload;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationPayloadResponse
+   */
+  type: NotificationPayloadResponseTypeEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationPayloadResponse
+   */
+  to: number;
+}
+
+export const NotificationPayloadResponseTypeEnum = {
+  LearningRequests: 'learning-requests',
+  TechingRequest: 'teching-request',
+} as const;
+
+export type NotificationPayloadResponseTypeEnum =
+  (typeof NotificationPayloadResponseTypeEnum)[keyof typeof NotificationPayloadResponseTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface NotificationRequestDataPayload
+ */
+export interface NotificationRequestDataPayload {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationRequestDataPayload
+   */
+  request_id: string;
+}
+/**
+ *
+ * @export
+ * @interface NotificationResponse
+ */
+export interface NotificationResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof NotificationResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof NotificationResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationResponse
+   */
+  __typename?: NotificationResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationResponse
+   */
+  user_id: number | null;
+  /**
+   *
+   * @type {NotificationPayloadResponse}
+   * @memberof NotificationResponse
+   */
+  payload: NotificationPayloadResponse;
+  /**
+   *
+   * @type {FcmMessageResponse}
+   * @memberof NotificationResponse
+   */
+  fcm_message: FcmMessageResponse;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationResponse
+   */
+  type: NotificationResponseTypeEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationResponse
+   */
+  status: NotificationResponseStatusEnum;
+}
+
+export const NotificationResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
+} as const;
+
+export type NotificationResponseTypenameEnum =
+  (typeof NotificationResponseTypenameEnum)[keyof typeof NotificationResponseTypenameEnum];
+export const NotificationResponseTypeEnum = {
+  NUMBER_1: 1,
+} as const;
+
+export type NotificationResponseTypeEnum =
+  (typeof NotificationResponseTypeEnum)[keyof typeof NotificationResponseTypeEnum];
+export const NotificationResponseStatusEnum = {
+  NUMBER_0: 0,
+  NUMBER_1: 1,
+} as const;
+
+export type NotificationResponseStatusEnum =
+  (typeof NotificationResponseStatusEnum)[keyof typeof NotificationResponseStatusEnum];
+
+/**
+ *
+ * @export
+ * @interface NotificationSubscriptionCreate200Response
+ */
+export interface NotificationSubscriptionCreate200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionCreate200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {NotificationSubscriptionResponse}
+   * @memberof NotificationSubscriptionCreate200Response
+   */
+  data: NotificationSubscriptionResponse;
+}
+/**
+ *
+ * @export
+ * @interface NotificationSubscriptionCreate200ResponseAllOf
+ */
+export interface NotificationSubscriptionCreate200ResponseAllOf {
+  /**
+   *
+   * @type {NotificationSubscriptionResponse}
+   * @memberof NotificationSubscriptionCreate200ResponseAllOf
+   */
+  data?: NotificationSubscriptionResponse;
+}
+/**
+ *
+ * @export
+ * @interface NotificationSubscriptionCreateDto
+ */
+export interface NotificationSubscriptionCreateDto {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionCreateDto
+   */
+  token: string;
+}
+/**
+ *
+ * @export
+ * @interface NotificationSubscriptionResponse
+ */
+export interface NotificationSubscriptionResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof NotificationSubscriptionResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof NotificationSubscriptionResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionResponse
+   */
+  __typename?: NotificationSubscriptionResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationSubscriptionResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationSubscriptionResponse
+   */
+  user_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionResponse
+   */
+  token: string;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationSubscriptionResponse
+   */
+  last_active: string;
+  /**
+   *
+   * @type {UserBasicResponse}
+   * @memberof NotificationSubscriptionResponse
+   */
+  user: UserBasicResponse;
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationSubscriptionResponse
+   */
+  status: NotificationSubscriptionResponseStatusEnum;
+}
+
+export const NotificationSubscriptionResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
+} as const;
+
+export type NotificationSubscriptionResponseTypenameEnum =
+  (typeof NotificationSubscriptionResponseTypenameEnum)[keyof typeof NotificationSubscriptionResponseTypenameEnum];
+export const NotificationSubscriptionResponseStatusEnum = {
+  NUMBER_0: 0,
+  NUMBER_1: 1,
+} as const;
+
+export type NotificationSubscriptionResponseStatusEnum =
+  (typeof NotificationSubscriptionResponseStatusEnum)[keyof typeof NotificationSubscriptionResponseStatusEnum];
+
+/**
+ *
+ * @export
+ * @interface NotificationsList200Response
+ */
+export interface NotificationsList200Response {
+  /**
+   *
+   * @type {Array<NotificationResponse>}
+   * @memberof NotificationsList200Response
+   */
+  data: Array<NotificationResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof NotificationsList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationsList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsList200ResponseAllOf
+ */
+export interface NotificationsList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<NotificationResponse>}
+   * @memberof NotificationsList200ResponseAllOf
+   */
+  data?: Array<NotificationResponse>;
+}
 /**
  *
  * @export
@@ -1777,6 +2204,7 @@ export const RoleResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type RoleResponseTypenameEnum =
@@ -1911,6 +2339,7 @@ export const SectionFullResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type SectionFullResponseTypenameEnum =
@@ -2000,6 +2429,7 @@ export const StoredFileResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type StoredFileResponseTypenameEnum =
@@ -2178,6 +2608,7 @@ export const TeachingRequestResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type TeachingRequestResponseTypenameEnum =
@@ -2349,6 +2780,7 @@ export const TopicFullResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type TopicFullResponseTypenameEnum =
@@ -2438,6 +2870,7 @@ export const TopicResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type TopicResponseTypenameEnum =
@@ -2539,6 +2972,7 @@ export const TopicStatResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type TopicStatResponseTypenameEnum =
@@ -2628,6 +3062,7 @@ export const TopicStatResponseCoverTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type TopicStatResponseCoverTypenameEnum =
@@ -2778,6 +3213,7 @@ export const UserBasicResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type UserBasicResponseTypenameEnum =
@@ -2909,6 +3345,7 @@ export const UserBasicResponseCreatorTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type UserBasicResponseCreatorTypenameEnum =
@@ -3044,6 +3481,7 @@ export const UserPublicResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type UserPublicResponseTypenameEnum =
@@ -3187,6 +3625,7 @@ export const UserResponseTypenameEnum = {
   LearningRequests: 'learning_requests',
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
 } as const;
 
 export type UserResponseTypenameEnum =
@@ -5693,6 +6132,52 @@ export const LeariningRequestsApiAxiosParamCreator = function (
     /**
      *
      * @summary
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne: async (
+      id: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('findOne', 'id', id);
+      const localVarPath = `/api/learning-requests/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
      * @param {number} status
      * @param {number} page
      * @param {*} [options] Override http request option.
@@ -5882,6 +6367,33 @@ export const LeariningRequestsApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async findOne(
+      id: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<LearningRequestRequest200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.findOne(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
      * @param {number} status
      * @param {number} page
      * @param {*} [options] Override http request option.
@@ -5995,6 +6507,21 @@ export const LeariningRequestsApiFactory = function (
     /**
      *
      * @summary
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne(
+      id: string,
+      options?: any
+    ): AxiosPromise<LearningRequestRequest200Response> {
+      return localVarFp
+        .findOne(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
      * @param {number} status
      * @param {number} page
      * @param {*} [options] Override http request option.
@@ -6052,6 +6579,20 @@ export interface LeariningRequestsApiAcceptRequest {
    *
    * @type {string}
    * @memberof LeariningRequestsApiAccept
+   */
+  readonly id: string;
+}
+
+/**
+ * Request parameters for findOne operation in LeariningRequestsApi.
+ * @export
+ * @interface LeariningRequestsApiFindOneRequest
+ */
+export interface LeariningRequestsApiFindOneRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof LeariningRequestsApiFindOne
    */
   readonly id: string;
 }
@@ -6126,6 +6667,23 @@ export class LeariningRequestsApi extends BaseAPI {
   ) {
     return LeariningRequestsApiFp(this.configuration)
       .accept(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {LeariningRequestsApiFindOneRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LeariningRequestsApi
+   */
+  public findOne(
+    requestParameters: LeariningRequestsApiFindOneRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return LeariningRequestsApiFp(this.configuration)
+      .findOne(requestParameters.id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -6751,6 +7309,386 @@ export class LessonsApi extends BaseAPI {
         requestParameters.description,
         requestParameters.link,
         requestParameters.video,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * NotificationSubscriptionsApi - axios parameter creator
+ * @export
+ */
+export const NotificationSubscriptionsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {NotificationSubscriptionCreateDto} notificationSubscriptionCreateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      notificationSubscriptionCreateDto: NotificationSubscriptionCreateDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'notificationSubscriptionCreateDto' is not null or undefined
+      assertParamExists(
+        'create',
+        'notificationSubscriptionCreateDto',
+        notificationSubscriptionCreateDto
+      );
+      const localVarPath = `/api/notification-subscriptions`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        notificationSubscriptionCreateDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * NotificationSubscriptionsApi - functional programming interface
+ * @export
+ */
+export const NotificationSubscriptionsApiFp = function (
+  configuration?: Configuration
+) {
+  const localVarAxiosParamCreator =
+    NotificationSubscriptionsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {NotificationSubscriptionCreateDto} notificationSubscriptionCreateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      notificationSubscriptionCreateDto: NotificationSubscriptionCreateDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<NotificationSubscriptionCreate200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(
+        notificationSubscriptionCreateDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * NotificationSubscriptionsApi - factory interface
+ * @export
+ */
+export const NotificationSubscriptionsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = NotificationSubscriptionsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {NotificationSubscriptionCreateDto} notificationSubscriptionCreateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      notificationSubscriptionCreateDto: NotificationSubscriptionCreateDto,
+      options?: any
+    ): AxiosPromise<NotificationSubscriptionCreate200Response> {
+      return localVarFp
+        .create(notificationSubscriptionCreateDto, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for create operation in NotificationSubscriptionsApi.
+ * @export
+ * @interface NotificationSubscriptionsApiCreateRequest
+ */
+export interface NotificationSubscriptionsApiCreateRequest {
+  /**
+   *
+   * @type {NotificationSubscriptionCreateDto}
+   * @memberof NotificationSubscriptionsApiCreate
+   */
+  readonly notificationSubscriptionCreateDto: NotificationSubscriptionCreateDto;
+}
+
+/**
+ * NotificationSubscriptionsApi - object-oriented interface
+ * @export
+ * @class NotificationSubscriptionsApi
+ * @extends {BaseAPI}
+ */
+export class NotificationSubscriptionsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {NotificationSubscriptionsApiCreateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof NotificationSubscriptionsApi
+   */
+  public create(
+    requestParameters: NotificationSubscriptionsApiCreateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return NotificationSubscriptionsApiFp(this.configuration)
+      .create(requestParameters.notificationSubscriptionCreateDto, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * NotificationsApi - axios parameter creator
+ * @export
+ */
+export const NotificationsApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {0 | 1} read
+     * @param {number} limit
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (
+      read: 0 | 1,
+      limit: number,
+      page?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'read' is not null or undefined
+      assertParamExists('list', 'read', read);
+      // verify required parameter 'limit' is not null or undefined
+      assertParamExists('list', 'limit', limit);
+      const localVarPath = `/api/notifications`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (read !== undefined) {
+        localVarQueryParameter['read'] = read;
+      }
+
+      if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * NotificationsApi - functional programming interface
+ * @export
+ */
+export const NotificationsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    NotificationsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {0 | 1} read
+     * @param {number} limit
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      read: 0 | 1,
+      limit: number,
+      page?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<NotificationsList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(
+        read,
+        limit,
+        page,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * NotificationsApi - factory interface
+ * @export
+ */
+export const NotificationsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = NotificationsApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {0 | 1} read
+     * @param {number} limit
+     * @param {number} [page]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(
+      read: 0 | 1,
+      limit: number,
+      page?: number,
+      options?: any
+    ): AxiosPromise<NotificationsList200Response> {
+      return localVarFp
+        .list(read, limit, page, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for list operation in NotificationsApi.
+ * @export
+ * @interface NotificationsApiListRequest
+ */
+export interface NotificationsApiListRequest {
+  /**
+   *
+   * @type {0 | 1}
+   * @memberof NotificationsApiList
+   */
+  readonly read: 0 | 1;
+
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationsApiList
+   */
+  readonly limit: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationsApiList
+   */
+  readonly page?: number;
+}
+
+/**
+ * NotificationsApi - object-oriented interface
+ * @export
+ * @class NotificationsApi
+ * @extends {BaseAPI}
+ */
+export class NotificationsApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {NotificationsApiListRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof NotificationsApi
+   */
+  public list(
+    requestParameters: NotificationsApiListRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return NotificationsApiFp(this.configuration)
+      .list(
+        requestParameters.read,
+        requestParameters.limit,
+        requestParameters.page,
         options
       )
       .then((request) => request(this.axios, this.basePath));

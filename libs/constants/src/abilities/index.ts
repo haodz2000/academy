@@ -25,4 +25,5 @@ export enum IdSubject {
   LearningRequest = 'learning_requests',
   CourseTeacher = 'course_teachers',
   CourseStudents = 'course_students',
+  NotificationSubscriptions = 'notification_subscriptions',
 }

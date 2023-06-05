@@ -6,6 +6,7 @@ import { Stack, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UserDrawer } from '@client/components/drawer/UserDrawer';
+import { NotificationDrawer } from '@client/components/drawer/NotificationDrawer';
 
 interface Props {
   hasMenu: boolean;
@@ -39,8 +40,8 @@ const menu: IMenu[] = [
   },
   {
     id: 4,
-    name: 'Blog',
-    href: '/blogs',
+    name: 'Yêu cầu',
+    href: '/learning-requests',
   },
   {
     id: 5,
@@ -119,7 +120,16 @@ export const Header = ({ hasMenu }: Props) => {
           </Tabs>
         </Stack>
       )}
-      <Stack>{!user ? <GoogleSignInButton /> : <UserDrawer />}</Stack>
+      <Stack>
+        {!user ? (
+          <GoogleSignInButton />
+        ) : (
+          <Stack flexDirection="row" alignItems={'center'}>
+            <NotificationDrawer />
+            <UserDrawer />
+          </Stack>
+        )}
+      </Stack>
     </Stack>
   );
 };

@@ -17,7 +17,7 @@ export const useLearningRequestsQuery = (
   requestParameters: LeariningRequestsApiListRequest
 ) => {
   return useQuery({
-    queryKey: [QueryKeys.teachingRequests, requestParameters],
+    queryKey: [QueryKeys.learningRequests, requestParameters],
     queryFn: () => getLearningRequests(requestParameters),
   });
 };

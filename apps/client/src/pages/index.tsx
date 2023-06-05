@@ -7,12 +7,31 @@ import { AppLayout } from '@client/components/layouts/AppLayout';
 import { withUnAuth } from '@client/hocs/withUnAuth';
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
+import { isSupported } from 'firebase/messaging';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
+const NotificationAlert = dynamic(
+  () =>
+    import('../components/home/NotificationAlert').then(
+      (c) => c.NotificationAlert
+    ),
+  {
+    ssr: false,
+  }
+);
 export function Index() {
+  const [isSupportWebpush, setIsSupportWebPush] = useState<boolean>(false);
+  useEffect(() => {
+    const checkSupprtWebpush = async () => {
+      setIsSupportWebPush(await isSupported());
+    };
+    checkSupprtWebpush();
+  }, []);
   return (
     <Stack width={'100%'} gap={5}>
+      <Stack mb={2}>{isSupportWebpush && <NotificationAlert />}</Stack>
       <Stack
         position={'relative'}
         height={700}
@@ -23,7 +42,7 @@ export function Index() {
         <Image
           loader={({ src }) => src}
           src={'/images/background.svg'}
-          alt=""
+          alt="image"
           fill
           style={{ opacity: 0.8, objectFit: 'contain', position: 'absolute' }}
           unoptimized

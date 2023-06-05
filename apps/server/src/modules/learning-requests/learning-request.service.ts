@@ -1,4 +1,10 @@
-import { Inject, Injectable, BadRequestException } from '@nestjs/common';
+import { NotificationsService } from './../notifications/notifications.service';
+import {
+  Inject,
+  Injectable,
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { LearningRequest } from '@libs/entities/entities/LearningRequest';
 import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
@@ -12,6 +18,14 @@ import { LearningRequestDto } from './dtos/learning-request.dto';
 import { CourseStudent } from '@libs/entities/entities/CourseStudent';
 import { StatusLearningRequest } from '@libs/constants/entities/LearningRequest';
 import { StatusCourseStudent } from '@libs/constants/entities/CourseStudent';
+import { Notification } from '@libs/entities/entities/Notification';
+import { User } from '@libs/entities/entities/User';
+import {
+  NotificationPayloadType,
+  NotificationRequestPayload,
+  NotificationType,
+} from '@libs/constants/entities/Notification';
+import { RoleType } from '@libs/constants/entities/Role';
 
 @Injectable()
 export class LearningRequestService {
@@ -20,9 +34,12 @@ export class LearningRequestService {
     private readonly learningRequestRepository: EntityRepository<LearningRequest>,
     @InjectRepository(CourseStudent)
     private readonly courseStudentRepository: EntityRepository<CourseStudent>,
+    @InjectRepository(Notification)
+    private readonly notificationRepository: EntityRepository<Notification>,
     @Inject(REQUEST) private request: Request,
     private readonly em: EntityManager,
-    private readonly ability: AbilityFactory
+    private readonly ability: AbilityFactory,
+    private readonly notificationsService: NotificationsService
   ) {}
 
   async list(
@@ -33,7 +50,7 @@ export class LearningRequestService {
     if (option.status) {
       where.$and = [
         {
-          status: 1,
+          status: option.status,
         },
         {
           $or: [
@@ -67,32 +84,68 @@ export class LearningRequestService {
     };
   }
 
-  async createRequest(data: LearningRequestDto): Promise<LearningRequest> {
-    const oldRequest = await this.learningRequestRepository.findOne({
-      course_id: data.course_id,
-      requester_id: this.request.user.id,
-      $or: [
-        { status: StatusLearningRequest.Pending },
-        {
-          status: StatusLearningRequest.Approve,
-        },
+  async findOne(id: string) {
+    const where: FilterQuery<LearningRequest> = {};
+    if (this.request.user.role.type !== RoleType.Admin) {
+      where.requester_id = this.request.user.id;
+    }
+    where.id = id;
+    return await this.learningRequestRepository.findOneOrFail(where, {
+      populate: [
+        'course.cover',
+        'course.administrator.avatar',
+        'requester.avatar',
       ],
     });
-    if (oldRequest) {
-      throw new BadRequestException('Khóa học đã được đăng kí');
+  }
+
+  async createRequest(data: LearningRequestDto): Promise<LearningRequest> {
+    await this.em.begin();
+    try {
+      const oldRequest = await this.learningRequestRepository.findOne({
+        course_id: data.course_id,
+        requester_id: this.request.user.id,
+        $or: [
+          { status: StatusLearningRequest.Pending },
+          {
+            status: StatusLearningRequest.Approve,
+          },
+        ],
+      });
+      if (oldRequest) {
+        throw new BadRequestException('Khóa học đã được đăng kí');
+      }
+      const learningRequest = this.learningRequestRepository.create({
+        course_id: data.course_id,
+        requester_id: this.request.user.id,
+        status: StatusLearningRequest.Pending,
+        created_by: this.request.user.id,
+        updated_by: this.request.user.id,
+      });
+      const teacher = await this.em.findOneOrFail(User, {
+        course_teachers: { course_id: data.course_id },
+      });
+      await this.learningRequestRepository.persistAndFlush(learningRequest);
+      await this.notificationsService.sendNotificationToQueue({
+        user_id: teacher.id,
+        type: NotificationType.Personal,
+        payload: {
+          type: NotificationPayloadType.LearningRequest,
+          data: {
+            request_id: learningRequest.id,
+          },
+          to: teacher.id,
+        } as NotificationRequestPayload,
+      });
+      await this.em.commit();
+      return await this.learningRequestRepository.findOne(
+        { id: learningRequest.id },
+        { populate: ['requester.avatar', 'course.cover'] }
+      );
+    } catch (error) {
+      await this.em.rollback();
+      throw new InternalServerErrorException(error);
     }
-    const learningRequest = this.learningRequestRepository.create({
-      course_id: data.course_id,
-      requester_id: this.request.user.id,
-      status: StatusLearningRequest.Pending,
-      created_by: this.request.user.id,
-      updated_by: this.request.user.id,
-    });
-    await this.learningRequestRepository.persistAndFlush(learningRequest);
-    return await this.learningRequestRepository.findOne(
-      { id: learningRequest.id },
-      { populate: ['requester.avatar', 'course.cover'] }
-    );
   }
 
   async accept(id: string): Promise<LearningRequest> {
@@ -100,8 +153,11 @@ export class LearningRequestService {
     try {
       const learningRequest =
         await this.learningRequestRepository.findOneOrFail(id, {
-          populate: ['course.cover', 'requester.avatar'],
+          populate: ['course.administrator', 'requester.avatar'],
         });
+      if (learningRequest.course.administrator_id !== this.request.user.id) {
+        throw new BadRequestException('Bạn không có quyền');
+      }
       learningRequest.status = StatusLearningRequest.Approve;
       await this.learningRequestRepository.persistAndFlush(learningRequest);
       const courseStudent = this.courseStudentRepository.create({
@@ -112,6 +168,17 @@ export class LearningRequestService {
         updated_by: this.request.user.id,
       });
       await this.courseStudentRepository.persistAndFlush(courseStudent);
+      await this.notificationsService.sendNotificationToQueue({
+        user_id: learningRequest.requester.id,
+        type: NotificationType.Personal,
+        payload: {
+          type: NotificationPayloadType.LearningRequest,
+          data: {
+            request_id: learningRequest.id,
+          },
+          to: learningRequest.requester.id,
+        } as NotificationRequestPayload,
+      });
       await this.em.commit();
       return learningRequest;
     } catch (error) {
@@ -124,11 +191,25 @@ export class LearningRequestService {
     const learningRequest = await this.learningRequestRepository.findOneOrFail(
       id,
       {
-        populate: ['course.cover', 'requester.avatar'],
+        populate: ['course.administrator', 'requester.avatar'],
       }
     );
+    if (learningRequest.course.administrator_id !== this.request.user.id) {
+      throw new BadRequestException('Bạn không có quyền');
+    }
     learningRequest.status = StatusLearningRequest.Reject;
     await this.learningRequestRepository.persistAndFlush(learningRequest);
+    await this.notificationsService.sendNotificationToQueue({
+      user_id: learningRequest.requester.id,
+      type: NotificationType.Personal,
+      payload: {
+        type: NotificationPayloadType.LearningRequest,
+        data: {
+          request_id: learningRequest.id,
+        },
+        to: learningRequest.requester.id,
+      } as NotificationRequestPayload,
+    });
     return learningRequest;
   }
 }

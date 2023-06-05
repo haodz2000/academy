@@ -18,6 +18,7 @@ import { AuthProvider } from '@client/providers/AuthProvider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppThemeProvider } from '@client/providers/ThemeProvider';
 import { ConfirmProvider } from 'material-ui-confirm';
+import { FcmProvider } from '@client/providers/FcmProvider';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -63,39 +64,41 @@ export default function MyApp(props: MyAppProps) {
           <Provider store={store}>
             <CacheProvider value={emotionCache}>
               <AuthProvider>
-                <Script
-                  src="https://accounts.google.com/gsi/client"
-                  strategy="lazyOnload"
-                  async
-                  defer
-                />
-                <Script
-                  src="https://cdn.headwayapp.co/widget.js"
-                  strategy="beforeInteractive"
-                />
-                <Script
-                  strategy="afterInteractive"
-                  onReady={() => {
-                    const config = {
-                      selector: '.headway',
-                      account: process.env.NEXT_PUBLIC_ID_HEADWAY_ACCOUNT,
-                    };
-                    window.Headway?.init(config);
-                  }}
-                />
-                <Head>
-                  <meta
-                    name="viewport"
-                    content="initial-scale=1, width=device-width"
+                <FcmProvider>
+                  <Script
+                    src="https://accounts.google.com/gsi/client"
+                    strategy="lazyOnload"
+                    async
+                    defer
                   />
-                  <title>𝓩𝓮𝓻𝓸3𝔃</title>
-                  <link rel="icon" href="/images/logo.ico" />
-                </Head>
-                <AppThemeProvider>
-                  {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                  <CssBaseline />
-                  {getLayout(<Component {...pageProps} />)}
-                </AppThemeProvider>
+                  <Script
+                    src="https://cdn.headwayapp.co/widget.js"
+                    strategy="beforeInteractive"
+                  />
+                  <Script
+                    strategy="afterInteractive"
+                    onReady={() => {
+                      const config = {
+                        selector: '.headway',
+                        account: process.env.NEXT_PUBLIC_ID_HEADWAY_ACCOUNT,
+                      };
+                      window.Headway?.init(config);
+                    }}
+                  />
+                  <Head>
+                    <meta
+                      name="viewport"
+                      content="initial-scale=1, width=device-width"
+                    />
+                    <title>𝓩𝓮𝓻𝓸3𝔃</title>
+                    <link rel="icon" href="/images/logo.ico" />
+                  </Head>
+                  <AppThemeProvider>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    {getLayout(<Component {...pageProps} />)}
+                  </AppThemeProvider>
+                </FcmProvider>
               </AuthProvider>
             </CacheProvider>
           </Provider>

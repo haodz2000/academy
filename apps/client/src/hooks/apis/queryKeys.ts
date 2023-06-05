@@ -11,7 +11,9 @@ export enum QueryKeys {
   discussions = 'discussions',
   teachingRequests = 'teachingRequests',
   learningRequests = 'learningRequests',
+  learningRequest = 'learningRequest',
   users = 'users',
   userPublics = 'userPublics',
   courseLearnings = 'courseLearnings',
+  notifications = 'notifications',
 }

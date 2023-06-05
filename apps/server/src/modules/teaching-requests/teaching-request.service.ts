@@ -17,6 +17,13 @@ import { Pagination } from '@libs/utils/responses';
 import { ForbiddenError } from '@casl/ability';
 import { IdAction } from '@libs/constants/abilities';
 import { RoleType } from '@libs/constants/entities/Role';
+import { NotificationsService } from '../notifications/notifications.service';
+import {
+  NotificationPayloadType,
+  NotificationRequestPayload,
+  NotificationType,
+} from '@libs/constants/entities/Notification';
+import { User } from '@libs/entities/entities/User';
 
 @Injectable()
 export class TeachingRequestService {
@@ -29,7 +36,8 @@ export class TeachingRequestService {
     private readonly courseRepository: EntityRepository<Course>,
     @Inject(REQUEST) private request: Request,
     private readonly em: EntityManager,
-    private readonly ability: AbilityFactory
+    private readonly ability: AbilityFactory,
+    private readonly notificationsService: NotificationsService
   ) {}
 
   async list(
@@ -87,7 +95,21 @@ export class TeachingRequestService {
       created_by: this.request.user.id,
       updated_by: this.request.user.id,
     });
+    const admin = await this.em.findOneOrFail(User, {
+      email: process.env.ADMIN_EMAIL,
+    });
     await this.teachingRequestRepository.persistAndFlush(teachingRequest);
+    await this.notificationsService.sendNotificationToQueue({
+      user_id: this.request.user.id,
+      type: NotificationType.Personal,
+      payload: {
+        type: NotificationPayloadType.TeachingRequest,
+        data: {
+          request_id: teachingRequest.id,
+        },
+        to: admin.id,
+      } as NotificationRequestPayload,
+    });
     return await this.teachingRequestRepository.findOne(
       { id: teachingRequest.id },
       { populate: ['requester.avatar', 'course.cover'] }
@@ -117,6 +139,17 @@ export class TeachingRequestService {
       course.status = StatusCourse.Approved;
       await this.courseRepository.persistAndFlush(course);
       await this.em.commit();
+      await this.notificationsService.sendNotificationToQueue({
+        user_id: this.request.user.id,
+        type: NotificationType.Personal,
+        payload: {
+          type: NotificationPayloadType.TeachingRequest,
+          data: {
+            request_id: teachingRequest.id,
+          },
+          to: teachingRequest.requester.id,
+        } as NotificationRequestPayload,
+      });
       return teachingRequest;
     } catch (error) {
       await this.em.rollback();
@@ -132,6 +165,17 @@ export class TeachingRequestService {
     );
     teachingRequest.status = StatusTeachingRequest.Reject;
     await this.teachingRequestRepository.persistAndFlush(teachingRequest);
+    await this.notificationsService.sendNotificationToQueue({
+      user_id: this.request.user.id,
+      type: NotificationType.Personal,
+      payload: {
+        type: NotificationPayloadType.TeachingRequest,
+        data: {
+          request_id: teachingRequest.id,
+        },
+        to: teachingRequest.requester.id,
+      } as NotificationRequestPayload,
+    });
     return teachingRequest;
   }
 }

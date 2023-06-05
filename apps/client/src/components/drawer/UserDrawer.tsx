@@ -23,7 +23,7 @@ export const UserDrawer = () => {
         </IconButton>
         <Drawer anchor={'right'} open={state} onClose={toggleDrawer}>
           <Stack
-            sx={{ width: 400, bgcolor: '#151f32' }}
+            sx={{ width: 300, bgcolor: '#151f32' }}
             onClick={toggleDrawer}
             onKeyDown={toggleDrawer}
             height={1}
@@ -48,8 +48,16 @@ export const UserDrawer = () => {
                     alignItems="center"
                     gap={2}
                   >
-                    <SettingsIcon fontSize="large" />
-                    <Typography fontSize={20} variant="h6" fontWeight={700}>
+                    <SettingsIcon htmlColor="#fff" />
+                    <Typography
+                      component={Link}
+                      underline="none"
+                      href={'/profile/setting'}
+                      color={'#FFF'}
+                      fontSize={18}
+                      variant="h6"
+                      fontWeight={700}
+                    >
                       Thiết lập
                     </Typography>
                   </Stack>
@@ -62,11 +70,17 @@ export const UserDrawer = () => {
                     gap={2}
                   >
                     <RoundedButton
+                      sx={{ px: 2 }}
                       type="submit"
                       variant="text"
-                      startIcon={<LogoutIcon />}
+                      startIcon={<LogoutIcon htmlColor="#fff" />}
                     >
-                      <Typography variant="h6" fontSize={20} fontWeight={700}>
+                      <Typography
+                        color={'#FFF'}
+                        variant="h6"
+                        fontSize={18}
+                        fontWeight={700}
+                      >
                         Đăng xuất
                       </Typography>
                     </RoundedButton>

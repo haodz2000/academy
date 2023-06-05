@@ -32,7 +32,7 @@ const ProfilePage = () => {
         <Stack position={'absolute'} right={'35%'}>
           <Image
             loader={({ src }) => src}
-            alt=""
+            alt="image"
             src={'https://laracasts.com/images/settings/gears.svg'}
             unoptimized
             width={120}

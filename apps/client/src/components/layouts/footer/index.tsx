@@ -34,7 +34,7 @@ export const Footer = () => {
         <Stack position={'absolute'} gap={5} justifyContent={'space-between'}>
           <Image
             loader={({ src }) => src}
-            alt=""
+            alt="image"
             src={'https://laracasts.com/images/mic-drop@2x.webp'}
             width={200}
             height={200}
@@ -189,7 +189,7 @@ export const Footer = () => {
       <Stack zIndex={0} width={'50%'} height={1} position="absolute">
         <Image
           loader={({ src }) => src}
-          alt=""
+          alt="image"
           src={'/images/bg-footer2.png'}
           fill
           style={{ objectFit: 'contain' }}
@@ -199,7 +199,7 @@ export const Footer = () => {
       <Stack right={0} zIndex={0} width={'50%'} height={1} position="absolute">
         <Image
           loader={({ src }) => src}
-          alt=""
+          alt="image"
           src={'/images/bg-footer.png'}
           fill
           style={{ objectFit: 'contain' }}

@@ -32,6 +32,6 @@ export class ManageActionLearningRequestPolicyHandler
   implements IPolicyHandler
 {
   handle(ability: AppAbility): boolean {
-    return ability.can(IdAction.Manage, IdSubject.TeachingRequests);
+    return ability.can(IdAction.Manage, IdSubject.LearningRequest);
   }
 }

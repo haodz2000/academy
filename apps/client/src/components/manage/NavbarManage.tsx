@@ -22,7 +22,7 @@ const menu: Menu[] = [
   },
   {
     title: 'Yêu cầu tham gia học',
-    href: '/manage/learning-requests',
+    href: '/learning-requests',
   },
 ];
 

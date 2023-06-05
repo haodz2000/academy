@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { ILearningRequestCustome } from '@client/pages/manage/learning-requests';
+import { ILearningRequestCustome } from '@client/pages/learning-requests';
 import { RequestRow } from './RequestRow';
 
 interface Props {

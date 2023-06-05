@@ -4,7 +4,7 @@ import {
   FcmMessageResponse,
   NotificationPayloadResponse,
   NotificationResponse,
-} from '../responses/NotificationResponse';
+} from '../responses/notification.response';
 
 export class NotificationTransformer extends BaseResponseTransformer {
   static toNotificationResponse(

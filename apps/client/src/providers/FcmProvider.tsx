@@ -44,7 +44,6 @@ export const FcmProvider: FC<PropsWithChildren> = (props) => {
           });
         }
         onMessage(messaging, (payload) => {
-          console.log(1);
           new Notification(payload.notification?.title ?? '', {
             body: payload.notification?.body,
             image: payload.notification?.image,

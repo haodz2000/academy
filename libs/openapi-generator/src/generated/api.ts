@@ -1762,6 +1762,19 @@ export type LessonResponseTypenameEnum =
 /**
  *
  * @export
+ * @interface MarkNotificationResponse
+ */
+export interface MarkNotificationResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof MarkNotificationResponse
+   */
+  message: string;
+}
+/**
+ *
+ * @export
  * @interface NotificationPayloadResponse
  */
 export interface NotificationPayloadResponse {
@@ -1787,7 +1800,7 @@ export interface NotificationPayloadResponse {
 
 export const NotificationPayloadResponseTypeEnum = {
   LearningRequests: 'learning-requests',
-  TechingRequest: 'teching-request',
+  TechingRequests: 'teching-requests',
 } as const;
 
 export type NotificationPayloadResponseTypeEnum =
@@ -2100,6 +2113,70 @@ export interface NotificationsList200ResponseAllOf {
    * @memberof NotificationsList200ResponseAllOf
    */
   data?: Array<NotificationResponse>;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsReadAllNotification200Response
+ */
+export interface NotificationsReadAllNotification200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationsReadAllNotification200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {MarkNotificationResponse}
+   * @memberof NotificationsReadAllNotification200Response
+   */
+  data: MarkNotificationResponse;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsReadAllNotification200ResponseAllOf
+ */
+export interface NotificationsReadAllNotification200ResponseAllOf {
+  /**
+   *
+   * @type {MarkNotificationResponse}
+   * @memberof NotificationsReadAllNotification200ResponseAllOf
+   */
+  data?: MarkNotificationResponse;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsReadNotification200Response
+ */
+export interface NotificationsReadNotification200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof NotificationsReadNotification200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {NotificationResponse}
+   * @memberof NotificationsReadNotification200Response
+   */
+  data: NotificationResponse;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsReadNotification200ResponseAllOf
+ */
+export interface NotificationsReadNotification200ResponseAllOf {
+  /**
+   *
+   * @type {NotificationResponse}
+   * @memberof NotificationsReadNotification200ResponseAllOf
+   */
+  data?: NotificationResponse;
 }
 /**
  *
@@ -7557,6 +7634,91 @@ export const NotificationsApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    readAllNotification: async (
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/notifications/mark-as-read`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    readNotification: async (
+      id: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('readNotification', 'id', id);
+      const localVarPath = `/api/notifications/{id}/mark-as-read`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -7601,6 +7763,54 @@ export const NotificationsApiFp = function (configuration?: Configuration) {
         configuration
       );
     },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async readAllNotification(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<NotificationsReadAllNotification200Response>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.readAllNotification(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async readNotification(
+      id: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<NotificationsReadNotification200Response>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.readNotification(id, options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
   };
 };
 
@@ -7632,6 +7842,34 @@ export const NotificationsApiFactory = function (
     ): AxiosPromise<NotificationsList200Response> {
       return localVarFp
         .list(read, limit, page, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    readAllNotification(
+      options?: any
+    ): AxiosPromise<NotificationsReadAllNotification200Response> {
+      return localVarFp
+        .readAllNotification(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    readNotification(
+      id: number,
+      options?: any
+    ): AxiosPromise<NotificationsReadNotification200Response> {
+      return localVarFp
+        .readNotification(id, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -7666,6 +7904,20 @@ export interface NotificationsApiListRequest {
 }
 
 /**
+ * Request parameters for readNotification operation in NotificationsApi.
+ * @export
+ * @interface NotificationsApiReadNotificationRequest
+ */
+export interface NotificationsApiReadNotificationRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof NotificationsApiReadNotification
+   */
+  readonly id: number;
+}
+
+/**
  * NotificationsApi - object-oriented interface
  * @export
  * @class NotificationsApi
@@ -7691,6 +7943,36 @@ export class NotificationsApi extends BaseAPI {
         requestParameters.page,
         options
       )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof NotificationsApi
+   */
+  public readAllNotification(options?: AxiosRequestConfig) {
+    return NotificationsApiFp(this.configuration)
+      .readAllNotification(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {NotificationsApiReadNotificationRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof NotificationsApi
+   */
+  public readNotification(
+    requestParameters: NotificationsApiReadNotificationRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return NotificationsApiFp(this.configuration)
+      .readNotification(requestParameters.id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

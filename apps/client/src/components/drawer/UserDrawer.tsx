@@ -6,11 +6,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Link from '../ui/Link';
 import { RoundedButton } from '../ui/buttons';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 export const UserDrawer = () => {
   const user = useAppSelector((state) => state.user.user);
   const [state, setState] = React.useState(false);
-
   const toggleDrawer = () => {
     setState(!state);
   };
@@ -22,12 +22,7 @@ export const UserDrawer = () => {
           <Avatar src={user.avatar?.path || ''}></Avatar>
         </IconButton>
         <Drawer anchor={'right'} open={state} onClose={toggleDrawer}>
-          <Stack
-            sx={{ width: 300, bgcolor: '#151f32' }}
-            onClick={toggleDrawer}
-            onKeyDown={toggleDrawer}
-            height={1}
-          >
+          <Stack sx={{ width: 300, bgcolor: '#151f32' }} height={1}>
             <Paper sx={{ bgcolor: '#151f32', width: 1, height: 1 }}>
               <Stack paddingX={2} paddingY={4} gap={5}>
                 <Stack alignItems="center" gap={2}>
@@ -38,6 +33,15 @@ export const UserDrawer = () => {
                   <Typography variant="h3" fontSize={26} fontWeight={600}>
                     {user.name}
                   </Typography>
+                  <Stack flexDirection="row" gap={1} alignItems="center">
+                    <Typography variant="h3" fontSize={16}>
+                      Ví số dư:
+                    </Typography>
+                    <Typography fontSize={20} fontWeight={600} color="#129900">
+                      {user.wallet?.balance}
+                    </Typography>
+                    <MonetizationOnIcon />
+                  </Stack>
                 </Stack>
                 <Stack gap={2}>
                   <Stack

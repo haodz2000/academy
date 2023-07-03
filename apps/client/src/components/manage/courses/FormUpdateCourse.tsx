@@ -1,6 +1,10 @@
 import {
+  Collapse,
   FormControl,
+  FormControlLabel,
   FormHelperText,
+  Radio,
+  RadioGroup,
   Stack,
   TextField,
   Typography,
@@ -18,7 +22,8 @@ import { UploadSingleImage } from '@client/components/ui/UploadSingleImage';
 import { TopicSelect } from '@client/components/ui/TopicSelect';
 import { useNotify } from '@client/components/notification/hook';
 import { useUpdateCourseMutation } from '@client/hooks/apis/courses/useUpdateCourseMutation';
-import { useRouter } from 'next/router';
+import { ModeCourse } from '@libs/constants/entities/Course';
+import { Back } from '@client/components/ui/Back';
 
 const schema = yup
   .object({
@@ -31,7 +36,6 @@ interface Props {
   course: CourseDetailResponse;
 }
 export const FormUpdateCourse = ({ course }: Props) => {
-  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const { notify, notifyError } = useNotify();
   const courseUpdateMutation = useUpdateCourseMutation();
@@ -39,6 +43,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
     register,
     handleSubmit,
     reset,
+    watch,
     control,
     formState: { errors, isValid },
   } = useForm<CoursesApiUpdateRequest>({
@@ -49,13 +54,21 @@ export const FormUpdateCourse = ({ course }: Props) => {
       name: course.name,
       description: course.description,
       topicsIds: course.topics.map((i) => i.id),
+      mode: course.mode,
+      price: course.course_price.price,
+      discount: course.course_price.discount,
     },
   });
+  const mode = watch('mode');
   const onReset = () => {
     reset({
+      id: course.id,
       name: course.name,
       description: course.description,
-      topicsIds: [],
+      topicsIds: course.topics.map((i) => i.id),
+      mode: course.mode,
+      price: course.course_price.price,
+      discount: course.course_price.discount,
     });
   };
 
@@ -67,7 +80,6 @@ export const FormUpdateCourse = ({ course }: Props) => {
       });
       notify();
       setLoading(false);
-      router.push('/manage/courses');
     } catch (error) {
       notifyError({ error });
     }
@@ -80,7 +92,8 @@ export const FormUpdateCourse = ({ course }: Props) => {
       sx={{ bgcolor: '#328AF11A', p: 3 }}
       onSubmit={onSubmit}
     >
-      <Stack>
+      <Stack gap={3}>
+        <Back />
         <Typography variant="h3" fontSize={22} fontWeight={700}>
           Cập nhật khóa học
         </Typography>
@@ -139,6 +152,64 @@ export const FormUpdateCourse = ({ course }: Props) => {
               name="topicsIds"
             />
           </FormControl>
+        </Stack>
+        <Stack>
+          <Typography>Hình thức</Typography>
+          <FormControl>
+            <Controller
+              rules={{ required: true }}
+              control={control}
+              name="mode"
+              render={({ field }) => (
+                <RadioGroup row {...field}>
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label="Miễn phí"
+                  />
+                  <FormControlLabel
+                    value={2}
+                    control={<Radio />}
+                    label="Trả phí"
+                  />
+                </RadioGroup>
+              )}
+            />
+          </FormControl>
+          <Collapse in={mode == ModeCourse.PayFee}>
+            <Stack>
+              <Stack>
+                <FormControl>
+                  <Typography>Giá *</Typography>
+                  <TextField
+                    {...register('price')}
+                    size="small"
+                    sx={{
+                      bgcolor: '#9494941a',
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Stack>
+              <Stack>
+                <FormControl>
+                  <Typography>Discount *</Typography>
+                  <TextField
+                    {...register('discount')}
+                    size="small"
+                    sx={{
+                      bgcolor: '#9494941a',
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Stack>
+            </Stack>
+          </Collapse>
         </Stack>
         <Stack>
           <Typography>Mô tả</Typography>

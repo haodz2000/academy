@@ -16,6 +16,8 @@ import { UploadModule } from '../upload/upload.module';
 import { AbilityModule } from '../auth/ability/ability.module';
 import { SectionController } from './sections/section.controller';
 import { IsArrayTopicIdsValidator } from '@server/validators/is-array-topic-ids.validator';
+import { IsSectionIdValidator } from '@server/validators/is-section-id.validator';
+import { CoursePrice } from '@libs/entities/entities/CoursePrice';
 
 @Module({
   imports: [
@@ -27,6 +29,7 @@ import { IsArrayTopicIdsValidator } from '@server/validators/is-array-topic-ids.
       Topic,
       CourseTopic,
       StoredFile,
+      CoursePrice,
     ]),
     UploadModule,
     AbilityModule,
@@ -37,6 +40,7 @@ import { IsArrayTopicIdsValidator } from '@server/validators/is-array-topic-ids.
     SectionService,
     LessonService,
     IsArrayTopicIdsValidator,
+    IsSectionIdValidator,
   ],
 })
 export class CourseModule {}

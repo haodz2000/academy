@@ -18,9 +18,14 @@ export class UserService {
   ) {}
 
   async me(): Promise<User> {
-    return await this.userRepostiory.findOneOrFail({
-      id: this.request.user.id,
-    });
+    return await this.userRepostiory.findOneOrFail(
+      {
+        id: this.request.user.id,
+      },
+      {
+        populate: ['wallet'],
+      }
+    );
   }
 
   async list(option: FilterUserQueryDto): Promise<{
@@ -96,5 +101,32 @@ export class UserService {
     return await this.userRepostiory.findOneOrFail(this.request.user.id, {
       populate: ['avatar', 'role'],
     });
+  }
+
+  async getTeacher(): Promise<{
+    data: User[];
+    pagination: Pagination;
+  }> {
+    const [users, count] = await this.userRepostiory.findAndCount(
+      {
+        course_teachers: {
+          teacher_id: { $gt: 0 },
+        },
+      },
+      {
+        populate: ['avatar', 'course_manages.cover'],
+        limit: 12,
+      }
+    );
+
+    return {
+      data: users,
+      pagination: {
+        limit: 12,
+        total: count,
+        lastPage: 1,
+        page: 1,
+      },
+    };
   }
 }

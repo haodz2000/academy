@@ -7,12 +7,14 @@ import { Seeder } from '@mikro-orm/seeder';
 import { Role } from '../entities/Role';
 import { User } from '../entities/User';
 import { Topic } from '../entities/Topic';
+import { Wallet } from '../entities/Wallet';
 
 const BaseURL = `https://res.cloudinary.com/dhjrftwo1/image/upload/v1680934014/`;
 export class DatabaseSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
     const roleRepository = em.getRepository(Role);
     const storedFileRepository = em.getRepository(StoredFile);
+    const walletRepository = em.getRepository(Wallet);
     const adminRole = await roleRepository.upsert({
       name: 'Quản lý',
       type: RoleType.Admin,
@@ -39,6 +41,10 @@ export class DatabaseSeeder extends Seeder {
         }
       );
       await accountRepository.persistAndFlush(adminUser);
+      const wallet = walletRepository.create({
+        user_id: adminUser.id,
+      });
+      await walletRepository.persistAndFlush(wallet);
     }
     const categoryRepository = em.getRepository(Category);
     const devOps = await categoryRepository.upsert({

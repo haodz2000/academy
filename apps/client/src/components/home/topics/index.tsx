@@ -37,12 +37,12 @@ export const Topics = () => {
         margin={'0 auto'}
       >
         <Typography variant="h1" fontWeight={500} fontSize={35}>
-          Explore By Topic
+          Khám phá theo chủ đề{' '}
         </Typography>
         <Typography variant="subtitle1" fontSize={15} textAlign="center">
-          All Laracasts series are categorized into various //topics. This
-          should provide you with an alternate way to decide what to learn next,
-          whether it be a particular framework, language, or tool.
+          Tất cả các khóa học được phân loại thành cách chủ đề khác nhau. Điều
+          này sẽ cung cấp cho bạn một lộ trình quyết định học tập theo chủ đề và
+          các chủ đề liên quan đến khóa học
         </Typography>
       </Stack>
       <Stack alignItems={'center'}>

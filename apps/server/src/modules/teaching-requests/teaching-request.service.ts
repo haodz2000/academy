@@ -70,6 +70,21 @@ export class TeachingRequestService {
     };
   }
 
+  async findOne(id: string): Promise<TeachingRequest> {
+    const where: FilterQuery<TeachingRequest> = {};
+    if (this.request.user.role.type !== RoleType.Admin) {
+      where.requester_id = this.request.user.id;
+    }
+    where.id = id;
+    return await this.teachingRequestRepository.findOneOrFail(where, {
+      populate: [
+        'course.cover',
+        'course.administrator.avatar',
+        'requester.avatar',
+      ],
+    });
+  }
+
   async createRequest(data: TeachingRequestDto): Promise<TeachingRequest> {
     const course = await this.courseRepository.findOneOrFail(data.course_id);
     const ability = this.ability.defineAbility(this.request.user);

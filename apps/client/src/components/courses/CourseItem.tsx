@@ -1,12 +1,13 @@
 import { RoundedButton } from '@client/components/ui/buttons';
 import Link from '@client/components/ui/Link';
-import { Paper, Typography } from '@mui/material';
+import { Avatar, Paper, Rating, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Image from 'next/image';
 import React from 'react';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { CourseResponse } from '@libs/openapi-generator/generated';
+import { PriceCourse } from './PriceCourse';
 
 interface Props {
   course: CourseResponse;
@@ -68,16 +69,22 @@ export const CourseItem = ({ course }: Props) => {
             justifyContent={'space-between'}
             gap={1}
           >
-            <Stack gap={6}>
-              <Typography variant="h1" fontWeight={700} fontSize={30}>
-                {course.name}
-              </Typography>
+            <Stack gap={2}>
+              <Stack flexDirection="row" gap={2} alignItems={'center'}>
+                <Typography variant="h1" fontWeight={700} fontSize={30}>
+                  {course.name}
+                </Typography>
+                <Rating size="small" readOnly value={5} />
+              </Stack>
+              <PriceCourse course={course} />
               <Typography variant="subtitle1" fontSize={13}>
                 {course.description}
               </Typography>
             </Stack>
             <Stack gap={2}>
-              <Stack></Stack>
+              <Stack>
+                <Avatar></Avatar>
+              </Stack>
               <Stack flexDirection={'row'} gap={2} mb={2}>
                 <RoundedButton
                   size="large"

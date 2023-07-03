@@ -290,6 +290,8 @@ export const AssignmentResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type AssignmentResponseTypenameEnum =
@@ -406,6 +408,8 @@ export const CategoryResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type CategoryResponseTypenameEnum =
@@ -543,6 +547,18 @@ export interface CourseDetailResponse {
   status: number;
   /**
    *
+   * @type {number}
+   * @memberof CourseDetailResponse
+   */
+  mode: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseDetailResponse
+   */
+  type: number;
+  /**
+   *
    * @type {StoredFileResponse}
    * @memberof CourseDetailResponse
    */
@@ -559,6 +575,12 @@ export interface CourseDetailResponse {
    * @memberof CourseDetailResponse
    */
   administrator: UserResponse;
+  /**
+   *
+   * @type {CoursePriceResponse}
+   * @memberof CourseDetailResponse
+   */
+  course_price: CoursePriceResponse;
   /**
    *
    * @type {Array<SectionFullResponse>}
@@ -596,6 +618,8 @@ export const CourseDetailResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type CourseDetailResponseTypenameEnum =
@@ -712,6 +736,92 @@ export interface CourseList200ResponseAllOf {
 /**
  *
  * @export
+ * @interface CoursePriceResponse
+ */
+export interface CoursePriceResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof CoursePriceResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CoursePriceResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CoursePriceResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof CoursePriceResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof CoursePriceResponse
+   */
+  __typename?: CoursePriceResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof CoursePriceResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CoursePriceResponse
+   */
+  course_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CoursePriceResponse
+   */
+  price: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CoursePriceResponse
+   */
+  discount: number;
+}
+
+export const CoursePriceResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
+} as const;
+
+export type CoursePriceResponseTypenameEnum =
+  (typeof CoursePriceResponseTypenameEnum)[keyof typeof CoursePriceResponseTypenameEnum];
+
+/**
+ *
+ * @export
  * @interface CourseResponse
  */
 export interface CourseResponse {
@@ -777,6 +887,18 @@ export interface CourseResponse {
   status: number;
   /**
    *
+   * @type {number}
+   * @memberof CourseResponse
+   */
+  mode: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseResponse
+   */
+  type: number;
+  /**
+   *
    * @type {StoredFileResponse}
    * @memberof CourseResponse
    */
@@ -793,6 +915,12 @@ export interface CourseResponse {
    * @memberof CourseResponse
    */
   administrator: UserResponse;
+  /**
+   *
+   * @type {CoursePriceResponse}
+   * @memberof CourseResponse
+   */
+  course_price: CoursePriceResponse;
 }
 
 export const CourseResponseTypenameEnum = {
@@ -812,6 +940,8 @@ export const CourseResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type CourseResponseTypenameEnum =
@@ -1087,6 +1217,8 @@ export const DiscussionResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type DiscussionResponseTypenameEnum =
@@ -1400,6 +1532,8 @@ export const LearningRequestResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type LearningRequestResponseTypenameEnum =
@@ -1473,6 +1607,18 @@ export interface LearningRequestResponseCourse {
   status: number;
   /**
    *
+   * @type {number}
+   * @memberof LearningRequestResponseCourse
+   */
+  mode: number;
+  /**
+   *
+   * @type {number}
+   * @memberof LearningRequestResponseCourse
+   */
+  type: number;
+  /**
+   *
    * @type {StoredFileResponse}
    * @memberof LearningRequestResponseCourse
    */
@@ -1489,6 +1635,12 @@ export interface LearningRequestResponseCourse {
    * @memberof LearningRequestResponseCourse
    */
   administrator: UserResponse;
+  /**
+   *
+   * @type {CoursePriceResponse}
+   * @memberof LearningRequestResponseCourse
+   */
+  course_price: CoursePriceResponse;
 }
 
 export const LearningRequestResponseCourseTypenameEnum = {
@@ -1508,6 +1660,8 @@ export const LearningRequestResponseCourseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type LearningRequestResponseCourseTypenameEnum =
@@ -1633,6 +1787,12 @@ export interface LearningRequestResponseRequester {
    * @memberof LearningRequestResponseRequester
    */
   role: RoleResponse;
+  /**
+   *
+   * @type {WalletResponse}
+   * @memberof LearningRequestResponseRequester
+   */
+  wallet: WalletResponse;
 }
 
 export const LearningRequestResponseRequesterTypenameEnum = {
@@ -1652,6 +1812,8 @@ export const LearningRequestResponseRequesterTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type LearningRequestResponseRequesterTypenameEnum =
@@ -1735,6 +1897,18 @@ export interface LessonResponse {
    * @memberof LessonResponse
    */
   video: TopicStatResponseCover | null;
+  /**
+   *
+   * @type {number}
+   * @memberof LessonResponse
+   */
+  type: number;
+  /**
+   *
+   * @type {number}
+   * @memberof LessonResponse
+   */
+  time: number;
 }
 
 export const LessonResponseTypenameEnum = {
@@ -1754,6 +1928,8 @@ export const LessonResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type LessonResponseTypenameEnum =
@@ -1910,6 +2086,8 @@ export const NotificationResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type NotificationResponseTypenameEnum =
@@ -2064,6 +2242,8 @@ export const NotificationSubscriptionResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type NotificationSubscriptionResponseTypenameEnum =
@@ -2282,6 +2462,8 @@ export const RoleResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type RoleResponseTypenameEnum =
@@ -2417,6 +2599,8 @@ export const SectionFullResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type SectionFullResponseTypenameEnum =
@@ -2507,10 +2691,170 @@ export const StoredFileResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type StoredFileResponseTypenameEnum =
   (typeof StoredFileResponseTypenameEnum)[keyof typeof StoredFileResponseTypenameEnum];
+
+/**
+ *
+ * @export
+ * @interface TeacherResponse
+ */
+export interface TeacherResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof TeacherResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  google_id: string | null;
+  /**
+   *
+   * @type {number}
+   * @memberof TeacherResponse
+   */
+  role_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  avatar_id: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  phone: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  facebook: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  github: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  twitter: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  job: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  description: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TeacherResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof TeacherResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TeacherResponse
+   */
+  __typename?: TeacherResponseTypenameEnum;
+  /**
+   *
+   * @type {StoredFileResponse}
+   * @memberof TeacherResponse
+   */
+  avatar: StoredFileResponse;
+  /**
+   *
+   * @type {RoleResponse}
+   * @memberof TeacherResponse
+   */
+  role: RoleResponse;
+  /**
+   *
+   * @type {WalletResponse}
+   * @memberof TeacherResponse
+   */
+  wallet: WalletResponse;
+  /**
+   *
+   * @type {Array<CourseResponse>}
+   * @memberof TeacherResponse
+   */
+  courses: Array<CourseResponse>;
+}
+
+export const TeacherResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
+} as const;
+
+export type TeacherResponseTypenameEnum =
+  (typeof TeacherResponseTypenameEnum)[keyof typeof TeacherResponseTypenameEnum];
 
 /**
  *
@@ -2686,6 +3030,8 @@ export const TeachingRequestResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type TeachingRequestResponseTypenameEnum =
@@ -2858,6 +3204,8 @@ export const TopicFullResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type TopicFullResponseTypenameEnum =
@@ -2948,6 +3296,8 @@ export const TopicResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type TopicResponseTypenameEnum =
@@ -3050,6 +3400,8 @@ export const TopicStatResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type TopicStatResponseTypenameEnum =
@@ -3140,6 +3492,8 @@ export const TopicStatResponseCoverTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type TopicStatResponseCoverTypenameEnum =
@@ -3291,6 +3645,8 @@ export const UserBasicResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type UserBasicResponseTypenameEnum =
@@ -3423,11 +3779,51 @@ export const UserBasicResponseCreatorTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type UserBasicResponseCreatorTypenameEnum =
   (typeof UserBasicResponseCreatorTypenameEnum)[keyof typeof UserBasicResponseCreatorTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface UserGetTeacher200Response
+ */
+export interface UserGetTeacher200Response {
+  /**
+   *
+   * @type {Array<TeacherResponse>}
+   * @memberof UserGetTeacher200Response
+   */
+  data: Array<TeacherResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof UserGetTeacher200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof UserGetTeacher200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface UserGetTeacher200ResponseAllOf
+ */
+export interface UserGetTeacher200ResponseAllOf {
+  /**
+   *
+   * @type {Array<TeacherResponse>}
+   * @memberof UserGetTeacher200ResponseAllOf
+   */
+  data?: Array<TeacherResponse>;
+}
 /**
  *
  * @export
@@ -3559,6 +3955,8 @@ export const UserPublicResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type UserPublicResponseTypenameEnum =
@@ -3684,6 +4082,12 @@ export interface UserResponse {
    * @memberof UserResponse
    */
   role: RoleResponse;
+  /**
+   *
+   * @type {WalletResponse}
+   * @memberof UserResponse
+   */
+  wallet: WalletResponse;
 }
 
 export const UserResponseTypenameEnum = {
@@ -3703,6 +4107,8 @@ export const UserResponseTypenameEnum = {
   CourseTeachers: 'course_teachers',
   CourseStudents: 'course_students',
   NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
 } as const;
 
 export type UserResponseTypenameEnum =
@@ -3827,6 +4233,85 @@ export interface ValidationExceptionResponse {
    */
   errors: Array<ValidationExceptionErrorResponse>;
 }
+/**
+ *
+ * @export
+ * @interface WalletResponse
+ */
+export interface WalletResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof WalletResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof WalletResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof WalletResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof WalletResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof WalletResponse
+   */
+  __typename?: WalletResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof WalletResponse
+   */
+  id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof WalletResponse
+   */
+  user_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof WalletResponse
+   */
+  balance: number;
+}
+
+export const WalletResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
+} as const;
+
+export type WalletResponseTypenameEnum =
+  (typeof WalletResponseTypenameEnum)[keyof typeof WalletResponseTypenameEnum];
 
 /**
  * AppApi - axios parameter creator
@@ -4974,7 +5459,10 @@ export const CoursesApiAxiosParamCreator = function (
      * @param {string} name
      * @param {string} description
      * @param {File} cover
+     * @param {number} mode
+     * @param {number} [price]
      * @param {Array<number>} [topicsIds]
+     * @param {number} [discount]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -4982,7 +5470,10 @@ export const CoursesApiAxiosParamCreator = function (
       name: string,
       description: string,
       cover: File,
+      mode: number,
+      price?: number,
       topicsIds?: Array<number>,
+      discount?: number,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'name' is not null or undefined
@@ -4991,6 +5482,8 @@ export const CoursesApiAxiosParamCreator = function (
       assertParamExists('create', 'description', description);
       // verify required parameter 'cover' is not null or undefined
       assertParamExists('create', 'cover', cover);
+      // verify required parameter 'mode' is not null or undefined
+      assertParamExists('create', 'mode', mode);
       const localVarPath = `/api/courses`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5021,11 +5514,23 @@ export const CoursesApiAxiosParamCreator = function (
       if (cover !== undefined) {
         localVarFormParams.append('cover', cover as any);
       }
+
+      if (mode !== undefined) {
+        localVarFormParams.append('mode', mode as any);
+      }
+
+      if (price !== undefined) {
+        localVarFormParams.append('price', price as any);
+      }
       if (topicsIds) {
         localVarFormParams.append(
           'topics_ids[]',
           topicsIds.join(COLLECTION_FORMATS.csv)
         );
+      }
+
+      if (discount !== undefined) {
+        localVarFormParams.append('discount', discount as any);
       }
 
       localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
@@ -5135,6 +5640,7 @@ export const CoursesApiAxiosParamCreator = function (
      * @summary
      * @param {number} status
      * @param {number} page
+     * @param {number} limit
      * @param {'manage' | 'show'} type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5142,6 +5648,7 @@ export const CoursesApiAxiosParamCreator = function (
     list: async (
       status: number,
       page: number,
+      limit: number,
       type: 'manage' | 'show',
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
@@ -5149,6 +5656,8 @@ export const CoursesApiAxiosParamCreator = function (
       assertParamExists('list', 'status', status);
       // verify required parameter 'page' is not null or undefined
       assertParamExists('list', 'page', page);
+      // verify required parameter 'limit' is not null or undefined
+      assertParamExists('list', 'limit', limit);
       // verify required parameter 'type' is not null or undefined
       assertParamExists('list', 'type', type);
       const localVarPath = `/api/courses`;
@@ -5175,6 +5684,10 @@ export const CoursesApiAxiosParamCreator = function (
         localVarQueryParameter['page'] = page;
       }
 
+      if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+      }
+
       if (type !== undefined) {
         localVarQueryParameter['type'] = type;
       }
@@ -5199,8 +5712,11 @@ export const CoursesApiAxiosParamCreator = function (
      * @param {number} id
      * @param {string} name
      * @param {string} description
+     * @param {number} mode
      * @param {File} [cover]
      * @param {Array<number>} [topicsIds]
+     * @param {number} [price]
+     * @param {number} [discount]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5208,8 +5724,11 @@ export const CoursesApiAxiosParamCreator = function (
       id: number,
       name: string,
       description: string,
+      mode: number,
       cover?: File,
       topicsIds?: Array<number>,
+      price?: number,
+      discount?: number,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
@@ -5218,6 +5737,8 @@ export const CoursesApiAxiosParamCreator = function (
       assertParamExists('update', 'name', name);
       // verify required parameter 'description' is not null or undefined
       assertParamExists('update', 'description', description);
+      // verify required parameter 'mode' is not null or undefined
+      assertParamExists('update', 'mode', mode);
       const localVarPath = `/api/courses/{id}`.replace(
         `{${'id'}}`,
         encodeURIComponent(String(id))
@@ -5256,6 +5777,18 @@ export const CoursesApiAxiosParamCreator = function (
           'topics_ids[]',
           topicsIds.join(COLLECTION_FORMATS.csv)
         );
+      }
+
+      if (mode !== undefined) {
+        localVarFormParams.append('mode', mode as any);
+      }
+
+      if (price !== undefined) {
+        localVarFormParams.append('price', price as any);
+      }
+
+      if (discount !== undefined) {
+        localVarFormParams.append('discount', discount as any);
       }
 
       localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
@@ -5318,7 +5851,10 @@ export const CoursesApiFp = function (configuration?: Configuration) {
      * @param {string} name
      * @param {string} description
      * @param {File} cover
+     * @param {number} mode
+     * @param {number} [price]
      * @param {Array<number>} [topicsIds]
+     * @param {number} [discount]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5326,7 +5862,10 @@ export const CoursesApiFp = function (configuration?: Configuration) {
       name: string,
       description: string,
       cover: File,
+      mode: number,
+      price?: number,
       topicsIds?: Array<number>,
+      discount?: number,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -5338,7 +5877,10 @@ export const CoursesApiFp = function (configuration?: Configuration) {
         name,
         description,
         cover,
+        mode,
+        price,
         topicsIds,
+        discount,
         options
       );
       return createRequestFunction(
@@ -5403,6 +5945,7 @@ export const CoursesApiFp = function (configuration?: Configuration) {
      * @summary
      * @param {number} status
      * @param {number} page
+     * @param {number} limit
      * @param {'manage' | 'show'} type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5410,6 +5953,7 @@ export const CoursesApiFp = function (configuration?: Configuration) {
     async list(
       status: number,
       page: number,
+      limit: number,
       type: 'manage' | 'show',
       options?: AxiosRequestConfig
     ): Promise<
@@ -5421,6 +5965,7 @@ export const CoursesApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs = await localVarAxiosParamCreator.list(
         status,
         page,
+        limit,
         type,
         options
       );
@@ -5437,8 +5982,11 @@ export const CoursesApiFp = function (configuration?: Configuration) {
      * @param {number} id
      * @param {string} name
      * @param {string} description
+     * @param {number} mode
      * @param {File} [cover]
      * @param {Array<number>} [topicsIds]
+     * @param {number} [price]
+     * @param {number} [discount]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5446,8 +5994,11 @@ export const CoursesApiFp = function (configuration?: Configuration) {
       id: number,
       name: string,
       description: string,
+      mode: number,
       cover?: File,
       topicsIds?: Array<number>,
+      price?: number,
+      discount?: number,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -5459,8 +6010,11 @@ export const CoursesApiFp = function (configuration?: Configuration) {
         id,
         name,
         description,
+        mode,
         cover,
         topicsIds,
+        price,
+        discount,
         options
       );
       return createRequestFunction(
@@ -5502,7 +6056,10 @@ export const CoursesApiFactory = function (
      * @param {string} name
      * @param {string} description
      * @param {File} cover
+     * @param {number} mode
+     * @param {number} [price]
      * @param {Array<number>} [topicsIds]
+     * @param {number} [discount]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5510,11 +6067,23 @@ export const CoursesApiFactory = function (
       name: string,
       description: string,
       cover: File,
+      mode: number,
+      price?: number,
       topicsIds?: Array<number>,
+      discount?: number,
       options?: any
     ): AxiosPromise<CourseCreate200Response> {
       return localVarFp
-        .create(name, description, cover, topicsIds, options)
+        .create(
+          name,
+          description,
+          cover,
+          mode,
+          price,
+          topicsIds,
+          discount,
+          options
+        )
         .then((request) => request(axios, basePath));
     },
     /**
@@ -5550,6 +6119,7 @@ export const CoursesApiFactory = function (
      * @summary
      * @param {number} status
      * @param {number} page
+     * @param {number} limit
      * @param {'manage' | 'show'} type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5557,11 +6127,12 @@ export const CoursesApiFactory = function (
     list(
       status: number,
       page: number,
+      limit: number,
       type: 'manage' | 'show',
       options?: any
     ): AxiosPromise<CourseList200Response> {
       return localVarFp
-        .list(status, page, type, options)
+        .list(status, page, limit, type, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -5570,8 +6141,11 @@ export const CoursesApiFactory = function (
      * @param {number} id
      * @param {string} name
      * @param {string} description
+     * @param {number} mode
      * @param {File} [cover]
      * @param {Array<number>} [topicsIds]
+     * @param {number} [price]
+     * @param {number} [discount]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5579,12 +6153,25 @@ export const CoursesApiFactory = function (
       id: number,
       name: string,
       description: string,
+      mode: number,
       cover?: File,
       topicsIds?: Array<number>,
+      price?: number,
+      discount?: number,
       options?: any
     ): AxiosPromise<CourseCreate200Response> {
       return localVarFp
-        .update(id, name, description, cover, topicsIds, options)
+        .update(
+          id,
+          name,
+          description,
+          mode,
+          cover,
+          topicsIds,
+          price,
+          discount,
+          options
+        )
         .then((request) => request(axios, basePath));
     },
   };
@@ -5633,10 +6220,31 @@ export interface CoursesApiCreateRequest {
 
   /**
    *
+   * @type {number}
+   * @memberof CoursesApiCreate
+   */
+  readonly mode: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiCreate
+   */
+  readonly price?: number;
+
+  /**
+   *
    * @type {Array<number>}
    * @memberof CoursesApiCreate
    */
   readonly topicsIds?: Array<number>;
+
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiCreate
+   */
+  readonly discount?: number;
 }
 
 /**
@@ -5675,6 +6283,13 @@ export interface CoursesApiListRequest {
 
   /**
    *
+   * @type {number}
+   * @memberof CoursesApiList
+   */
+  readonly limit: number;
+
+  /**
+   *
    * @type {'manage' | 'show'}
    * @memberof CoursesApiList
    */
@@ -5710,6 +6325,13 @@ export interface CoursesApiUpdateRequest {
 
   /**
    *
+   * @type {number}
+   * @memberof CoursesApiUpdate
+   */
+  readonly mode: number;
+
+  /**
+   *
    * @type {File}
    * @memberof CoursesApiUpdate
    */
@@ -5721,6 +6343,20 @@ export interface CoursesApiUpdateRequest {
    * @memberof CoursesApiUpdate
    */
   readonly topicsIds?: Array<number>;
+
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiUpdate
+   */
+  readonly price?: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiUpdate
+   */
+  readonly discount?: number;
 }
 
 /**
@@ -5764,7 +6400,10 @@ export class CoursesApi extends BaseAPI {
         requestParameters.name,
         requestParameters.description,
         requestParameters.cover,
+        requestParameters.mode,
+        requestParameters.price,
         requestParameters.topicsIds,
+        requestParameters.discount,
         options
       )
       .then((request) => request(this.axios, this.basePath));
@@ -5816,6 +6455,7 @@ export class CoursesApi extends BaseAPI {
       .list(
         requestParameters.status,
         requestParameters.page,
+        requestParameters.limit,
         requestParameters.type,
         options
       )
@@ -5839,8 +6479,11 @@ export class CoursesApi extends BaseAPI {
         requestParameters.id,
         requestParameters.name,
         requestParameters.description,
+        requestParameters.mode,
         requestParameters.cover,
         requestParameters.topicsIds,
+        requestParameters.price,
+        requestParameters.discount,
         options
       )
       .then((request) => request(this.axios, this.basePath));
@@ -6876,6 +7519,8 @@ export const LessonsApiAxiosParamCreator = function (
      * @param {number} sectionId
      * @param {string} title
      * @param {string} description
+     * @param {number} type
+     * @param {number} time
      * @param {string} [link]
      * @param {File} [video]
      * @param {*} [options] Override http request option.
@@ -6885,6 +7530,8 @@ export const LessonsApiAxiosParamCreator = function (
       sectionId: number,
       title: string,
       description: string,
+      type: number,
+      time: number,
       link?: string,
       video?: File,
       options: AxiosRequestConfig = {}
@@ -6895,6 +7542,10 @@ export const LessonsApiAxiosParamCreator = function (
       assertParamExists('create', 'title', title);
       // verify required parameter 'description' is not null or undefined
       assertParamExists('create', 'description', description);
+      // verify required parameter 'type' is not null or undefined
+      assertParamExists('create', 'type', type);
+      // verify required parameter 'time' is not null or undefined
+      assertParamExists('create', 'time', time);
       const localVarPath = `/api/lesson`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6934,6 +7585,14 @@ export const LessonsApiAxiosParamCreator = function (
         localVarFormParams.append('video', video as any);
       }
 
+      if (type !== undefined) {
+        localVarFormParams.append('type', type as any);
+      }
+
+      if (time !== undefined) {
+        localVarFormParams.append('time', time as any);
+      }
+
       localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6957,6 +7616,8 @@ export const LessonsApiAxiosParamCreator = function (
      * @param {number} id
      * @param {string} title
      * @param {string} description
+     * @param {number} type
+     * @param {number} time
      * @param {string} [link]
      * @param {File} [video]
      * @param {*} [options] Override http request option.
@@ -6966,6 +7627,8 @@ export const LessonsApiAxiosParamCreator = function (
       id: number,
       title: string,
       description: string,
+      type: number,
+      time: number,
       link?: string,
       video?: File,
       options: AxiosRequestConfig = {}
@@ -6976,6 +7639,10 @@ export const LessonsApiAxiosParamCreator = function (
       assertParamExists('update', 'title', title);
       // verify required parameter 'description' is not null or undefined
       assertParamExists('update', 'description', description);
+      // verify required parameter 'type' is not null or undefined
+      assertParamExists('update', 'type', type);
+      // verify required parameter 'time' is not null or undefined
+      assertParamExists('update', 'time', time);
       const localVarPath = `/api/lesson/{id}`.replace(
         `{${'id'}}`,
         encodeURIComponent(String(id))
@@ -7012,6 +7679,14 @@ export const LessonsApiAxiosParamCreator = function (
 
       if (video !== undefined) {
         localVarFormParams.append('video', video as any);
+      }
+
+      if (type !== undefined) {
+        localVarFormParams.append('type', type as any);
+      }
+
+      if (time !== undefined) {
+        localVarFormParams.append('time', time as any);
       }
 
       localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
@@ -7074,6 +7749,8 @@ export const LessonsApiFp = function (configuration?: Configuration) {
      * @param {number} sectionId
      * @param {string} title
      * @param {string} description
+     * @param {number} type
+     * @param {number} time
      * @param {string} [link]
      * @param {File} [video]
      * @param {*} [options] Override http request option.
@@ -7083,6 +7760,8 @@ export const LessonsApiFp = function (configuration?: Configuration) {
       sectionId: number,
       title: string,
       description: string,
+      type: number,
+      time: number,
       link?: string,
       video?: File,
       options?: AxiosRequestConfig
@@ -7096,6 +7775,8 @@ export const LessonsApiFp = function (configuration?: Configuration) {
         sectionId,
         title,
         description,
+        type,
+        time,
         link,
         video,
         options
@@ -7113,6 +7794,8 @@ export const LessonsApiFp = function (configuration?: Configuration) {
      * @param {number} id
      * @param {string} title
      * @param {string} description
+     * @param {number} type
+     * @param {number} time
      * @param {string} [link]
      * @param {File} [video]
      * @param {*} [options] Override http request option.
@@ -7122,6 +7805,8 @@ export const LessonsApiFp = function (configuration?: Configuration) {
       id: number,
       title: string,
       description: string,
+      type: number,
+      time: number,
       link?: string,
       video?: File,
       options?: AxiosRequestConfig
@@ -7135,6 +7820,8 @@ export const LessonsApiFp = function (configuration?: Configuration) {
         id,
         title,
         description,
+        type,
+        time,
         link,
         video,
         options
@@ -7178,6 +7865,8 @@ export const LessonsApiFactory = function (
      * @param {number} sectionId
      * @param {string} title
      * @param {string} description
+     * @param {number} type
+     * @param {number} time
      * @param {string} [link]
      * @param {File} [video]
      * @param {*} [options] Override http request option.
@@ -7187,12 +7876,14 @@ export const LessonsApiFactory = function (
       sectionId: number,
       title: string,
       description: string,
+      type: number,
+      time: number,
       link?: string,
       video?: File,
       options?: any
     ): AxiosPromise<SectionCreate200Response> {
       return localVarFp
-        .create(sectionId, title, description, link, video, options)
+        .create(sectionId, title, description, type, time, link, video, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -7201,6 +7892,8 @@ export const LessonsApiFactory = function (
      * @param {number} id
      * @param {string} title
      * @param {string} description
+     * @param {number} type
+     * @param {number} time
      * @param {string} [link]
      * @param {File} [video]
      * @param {*} [options] Override http request option.
@@ -7210,12 +7903,14 @@ export const LessonsApiFactory = function (
       id: number,
       title: string,
       description: string,
+      type: number,
+      time: number,
       link?: string,
       video?: File,
       options?: any
     ): AxiosPromise<SectionCreate200Response> {
       return localVarFp
-        .update(id, title, description, link, video, options)
+        .update(id, title, description, type, time, link, video, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -7264,6 +7959,20 @@ export interface LessonsApiCreateRequest {
 
   /**
    *
+   * @type {number}
+   * @memberof LessonsApiCreate
+   */
+  readonly type: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof LessonsApiCreate
+   */
+  readonly time: number;
+
+  /**
+   *
    * @type {string}
    * @memberof LessonsApiCreate
    */
@@ -7303,6 +8012,20 @@ export interface LessonsApiUpdateRequest {
    * @memberof LessonsApiUpdate
    */
   readonly description: string;
+
+  /**
+   *
+   * @type {number}
+   * @memberof LessonsApiUpdate
+   */
+  readonly type: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof LessonsApiUpdate
+   */
+  readonly time: number;
 
   /**
    *
@@ -7360,6 +8083,8 @@ export class LessonsApi extends BaseAPI {
         requestParameters.sectionId,
         requestParameters.title,
         requestParameters.description,
+        requestParameters.type,
+        requestParameters.time,
         requestParameters.link,
         requestParameters.video,
         options
@@ -7384,6 +8109,8 @@ export class LessonsApi extends BaseAPI {
         requestParameters.id,
         requestParameters.title,
         requestParameters.description,
+        requestParameters.type,
+        requestParameters.time,
         requestParameters.link,
         requestParameters.video,
         options
@@ -8458,6 +9185,52 @@ export const TeachingRequestsApiAxiosParamCreator = function (
     /**
      *
      * @summary
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne: async (
+      id: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('findOne', 'id', id);
+      const localVarPath = `/api/teaching-requests/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
      * @param {number} status
      * @param {number} page
      * @param {*} [options] Override http request option.
@@ -8647,6 +9420,33 @@ export const TeachingRequestsApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async findOne(
+      id: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<TeachingRequestRequest200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.findOne(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
      * @param {number} status
      * @param {number} page
      * @param {*} [options] Override http request option.
@@ -8760,6 +9560,21 @@ export const TeachingRequestsApiFactory = function (
     /**
      *
      * @summary
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    findOne(
+      id: string,
+      options?: any
+    ): AxiosPromise<TeachingRequestRequest200Response> {
+      return localVarFp
+        .findOne(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
      * @param {number} status
      * @param {number} page
      * @param {*} [options] Override http request option.
@@ -8817,6 +9632,20 @@ export interface TeachingRequestsApiAcceptRequest {
    *
    * @type {string}
    * @memberof TeachingRequestsApiAccept
+   */
+  readonly id: string;
+}
+
+/**
+ * Request parameters for findOne operation in TeachingRequestsApi.
+ * @export
+ * @interface TeachingRequestsApiFindOneRequest
+ */
+export interface TeachingRequestsApiFindOneRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof TeachingRequestsApiFindOne
    */
   readonly id: string;
 }
@@ -8891,6 +9720,23 @@ export class TeachingRequestsApi extends BaseAPI {
   ) {
     return TeachingRequestsApiFp(this.configuration)
       .accept(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {TeachingRequestsApiFindOneRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TeachingRequestsApi
+   */
+  public findOne(
+    requestParameters: TeachingRequestsApiFindOneRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return TeachingRequestsApiFp(this.configuration)
+      .findOne(requestParameters.id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -9271,6 +10117,45 @@ export const UsersApiAxiosParamCreator = function (
     /**
      *
      * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTeacher: async (
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/users/teacher`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
      * @param {string} [q]
      * @param {number} [page]
      * @param {number} [limit]
@@ -9449,6 +10334,30 @@ export const UsersApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getTeacher(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<UserGetTeacher200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getTeacher(
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
      * @param {string} [q]
      * @param {number} [page]
      * @param {number} [limit]
@@ -9558,6 +10467,17 @@ export const UsersApiFactory = function (
     /**
      *
      * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTeacher(options?: any): AxiosPromise<UserGetTeacher200Response> {
+      return localVarFp
+        .getTeacher(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
      * @param {string} [q]
      * @param {number} [page]
      * @param {number} [limit]
@@ -9662,6 +10582,19 @@ export class UsersApi extends BaseAPI {
   public _public(options?: AxiosRequestConfig) {
     return UsersApiFp(this.configuration)
       ._public(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public getTeacher(options?: AxiosRequestConfig) {
+    return UsersApiFp(this.configuration)
+      .getTeacher(options)
       .then((request) => request(this.axios, this.basePath));
   }
 

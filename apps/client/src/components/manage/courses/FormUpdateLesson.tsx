@@ -6,25 +6,33 @@ import {
   LessonsApiUpdateRequest,
 } from '@libs/openapi-generator/generated';
 import {
+  Collapse,
   Dialog,
   FormControl,
+  FormControlLabel,
   IconButton,
+  Radio,
+  RadioGroup,
   Stack,
   TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNotify } from '@client/components/notification/hook';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUpdateLessonMutation } from '@client/hooks/apis/courses/useUpdateLessonMutation';
 import { UploadSingleVideo } from '@client/components/ui/UploadSingleVideo';
+import { TypeLesson } from '@libs/constants/entities/Lesson';
+import { getLinkLesson, getVideoLesson } from '@client/utils/lesson';
+import ReactPlayer from 'react-player';
 
 const schema = yup
   .object({
     title: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
+    type: yup.number().required('Trường này không thể bỏ trống.'),
   })
   .required();
 
@@ -33,8 +41,10 @@ interface Props {
   onCreated: () => void;
 }
 export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
+  const videoRef = useRef<ReactPlayer>();
+  const [timeUpload, setTimeUpload] = useState<number>(0);
+  const [timeYoutube, setTimeYoutube] = useState<number>(0);
   const [open, setOpen] = React.useState(false);
-  const [change, setChange] = useState<boolean>(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -49,7 +59,6 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
     control,
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isValid },
   } = useForm<LessonsApiUpdateRequest>({
     mode: 'onBlur',
@@ -58,18 +67,50 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
       id: lesson.id,
       title: lesson.title,
       description: lesson.description,
-      link: lesson?.video?.path,
+      link: getLinkLesson(lesson),
+      type: lesson.type,
+      time: lesson.time,
     },
   });
-  const video = watch('video');
-
+  const type = watch('type');
+  const link = watch('link');
+  useEffect(() => {
+    if (link) {
+      setTimeout(() => {
+        setTimeYoutube(videoRef.current?.getDuration());
+      }, 500);
+    }
+  }, [link]);
   const onSubmit = handleSubmit(async (data) => {
     const { video, link, ...rest } = data;
     try {
-      await updateLessonMutation.mutateAsync({
+      let time = lesson.time;
+      if (data.type == TypeLesson.UPLOAD) {
+        time = timeUpload;
+      }
+      if (data.type == TypeLesson.YOUTUBE) {
+        time = timeYoutube;
+      }
+      let upload: LessonsApiUpdateRequest = {
         ...rest,
-        [change && 'video']: video,
-        link,
+      };
+      if (link !== lesson.video.path && type == TypeLesson.YOUTUBE) {
+        upload = {
+          ...upload,
+          link,
+          time: Math.floor(time),
+        };
+      }
+      if (type == TypeLesson.UPLOAD) {
+        upload = {
+          ...upload,
+          video,
+          time: Math.floor(time),
+          link: undefined,
+        };
+      }
+      await updateLessonMutation.mutateAsync({
+        ...upload,
       });
       notify();
       onCreated();
@@ -125,46 +166,77 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
             </FormControl>
           </Stack>
           <Stack>
-            <Typography>Video *</Typography>
+            <Typography>Hình thức</Typography>
             <FormControl>
               <Controller
-                name="video"
+                rules={{ required: true }}
+                name="type"
                 control={control}
                 render={({ field }) => (
-                  <UploadSingleVideo
-                    defaultVideo={lesson.video}
-                    file={field.value}
-                    setFile={(file) => {
-                      field.onChange(file);
-                      setChange(true);
-                      setValue('link', undefined);
-                    }}
-                    sx={{ height: '300px' }}
-                  />
+                  <RadioGroup row {...field}>
+                    <FormControlLabel
+                      value={TypeLesson.UPLOAD}
+                      control={<Radio />}
+                      label="Upload"
+                    />
+                    <FormControlLabel
+                      value={TypeLesson.YOUTUBE}
+                      control={<Radio />}
+                      label="Youtube"
+                    />
+                  </RadioGroup>
                 )}
               />
             </FormControl>
+            <Collapse in={type == TypeLesson.UPLOAD}>
+              <Stack>
+                <Typography>Video</Typography>
+                <FormControl>
+                  <Controller
+                    name="video"
+                    control={control}
+                    render={({ field }) => (
+                      <UploadSingleVideo
+                        setTime={setTimeUpload}
+                        defaultVideo={getVideoLesson(lesson)}
+                        file={field.value}
+                        setFile={(file) => field.onChange(file)}
+                        sx={{ height: '300px' }}
+                      />
+                    )}
+                  />
+                </FormControl>
+              </Stack>
+            </Collapse>
+            <Collapse in={type == TypeLesson.YOUTUBE}>
+              <Stack>
+                <Typography>Link Video</Typography>
+                <FormControl>
+                  <TextField
+                    {...register('link')}
+                    size="small"
+                    sx={{
+                      bgcolor: '#9494941a',
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                    }}
+                    placeholder="Title lesson ..."
+                    error={!!errors.link}
+                    helperText={errors.link?.message}
+                  />
+                  <ReactPlayer
+                    ref={videoRef}
+                    style={{ zIndex: 1000 }}
+                    width={'100%'}
+                    height={'100%'}
+                    controls
+                    url={link}
+                  />
+                </FormControl>
+              </Stack>
+            </Collapse>
           </Stack>
-          {!video && !change && (
-            <Stack>
-              <Typography>Link Video</Typography>
-              <FormControl>
-                <TextField
-                  {...register('link')}
-                  size="small"
-                  sx={{
-                    bgcolor: '#9494941a',
-                    '& fieldset': {
-                      border: 'none',
-                    },
-                  }}
-                  placeholder="Title lesson ..."
-                  error={!!errors.link}
-                  helperText={errors.link?.message}
-                />
-              </FormControl>
-            </Stack>
-          )}
           <Stack>
             <Typography>Mô tả *</Typography>
             <FormControl>
@@ -177,7 +249,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
                     border: 'none',
                   },
                 }}
-                placeholder="Title lesson ..."
+                placeholder="Description lesson ..."
                 multiline
                 minRows={3}
                 error={!!errors.description}
@@ -185,6 +257,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
               />
             </FormControl>
           </Stack>
+
           <Stack gap={1} flexDirection="row" justifyContent="flex-end">
             <RoundedButton color="secondary">Reset</RoundedButton>
             <RoundedButton type="submit" disabled={!isValid}>

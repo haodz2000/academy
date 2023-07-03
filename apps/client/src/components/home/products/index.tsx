@@ -1,9 +1,21 @@
 import { Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { ProductItem } from './ProductItem';
+import { useCoursesQuery } from '@client/hooks/apis/courses/useCoursesQuery';
+import { StatusCourse, TypeQueryCourse } from '@libs/constants/entities/Course';
+import { CourseItem } from '@client/components/courses/CourseItem';
 
 export const Products = () => {
+  const coursesQuery = useCoursesQuery({
+    status: StatusCourse.Approved,
+    limit: 3,
+    page: 1,
+    type: TypeQueryCourse.Show,
+  });
+  const courses = useMemo(() => {
+    return coursesQuery.data?.data ?? [];
+  }, [coursesQuery.data?.data]);
   return (
     <Stack mt={6} gap={12} position={'relative'}>
       <Stack
@@ -18,11 +30,12 @@ export const Products = () => {
           fontWeight={700}
           fontSize={35}
         >
-          Produced By Creators.
+          Một số khóa học đề xuất.
         </Typography>
         <Typography variant="subtitle1" fontSize={15} textAlign="center">
-          {`Don't miss out on our special CreatorSeries courses. Want to learn the
-          ins and outs of tools...from the very people who created them?`}
+          Đừng bỏ lỡ các khóa học đặc biệt của chúng tôi. Bạn muốn tìm hiểu
+          thông tin chi tiết về các công cụ...từ chính những người đã tạo ra
+          chúng?
         </Typography>
         <Stack position={'absolute'} top={-25} right={0} zIndex={0}>
           <Stack position={'relative'} width={550} height={306}>
@@ -43,8 +56,8 @@ export const Products = () => {
         gap={7}
         justifyContent="center"
       >
-        {Array.from(Array(3)).map((_, index) => (
-          <ProductItem key={index} />
+        {courses.map((course, index) => (
+          <CourseItem course={course} key={index} />
         ))}
       </Stack>
     </Stack>

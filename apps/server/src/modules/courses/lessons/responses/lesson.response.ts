@@ -20,4 +20,10 @@ export class LessonResponse extends BaseSerialKeyResponse {
 
   @ApiProperty({ type: StoredFileResponse, nullable: true })
   video: StoredFileResponse | null;
+
+  @ApiProperty()
+  type: number;
+
+  @ApiProperty()
+  time: number;
 }

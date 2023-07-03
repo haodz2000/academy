@@ -5,6 +5,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   Property,
 } from '@mikro-orm/core';
 import { BaseEntityWithSerialPrimaryKey } from './BaseEntityWithSerialPrimaryKey';
@@ -25,6 +26,9 @@ import { CourseTeacher } from './CourseTeacher';
 import { CourseStudent } from './CourseStudent';
 import { NotificationSubscription } from './NotificationSubscription';
 import { Notification } from './Notification';
+import { Wallet } from './Wallet';
+import { Transaction } from './Transaction';
+import { WithdrawRequest } from './WithdrawRequest';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -363,4 +367,46 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (notification) => notification.user,
   })
   notifications = new Collection<Notification>(this);
+
+  @OneToOne({
+    entity: () => Wallet,
+    mappedBy: (wallet) => wallet.user,
+  })
+  wallet: Wallet;
+
+  @OneToMany({
+    entity: () => Transaction,
+    mappedBy: (data) => data.creator,
+  })
+  created_transactions = new Collection<Transaction>(this);
+
+  @OneToMany({
+    entity: () => Transaction,
+    mappedBy: (data) => data.updater,
+  })
+  updated_transactions = new Collection<Transaction>(this);
+
+  @OneToMany({
+    entity: () => WithdrawRequest,
+    mappedBy: (data) => data.creator,
+  })
+  created_withdraw_requests = new Collection<WithdrawRequest>(this);
+
+  @OneToMany({
+    entity: () => WithdrawRequest,
+    mappedBy: (data) => data.updater,
+  })
+  updated_withdraw_requests = new Collection<WithdrawRequest>(this);
+
+  @OneToMany({
+    entity: () => WithdrawRequest,
+    mappedBy: (data) => data.acceptor,
+  })
+  accepted_withdraw_requests = new Collection<WithdrawRequest>(this);
+
+  @OneToMany({
+    entity: () => WithdrawRequest,
+    mappedBy: (data) => data.requester,
+  })
+  requested_withdraw_requests = new Collection<WithdrawRequest>(this);
 }

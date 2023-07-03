@@ -1,8 +1,4 @@
 import { UserService } from './../users/user.service';
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { AppApiSuccessResponse } from '@libs/utils/responses';
 import { ApiErrorResponse, ApiSuccessResponse } from '@libs/utils/swagger';
 import { Controller, Get } from '@nestjs/common';

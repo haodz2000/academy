@@ -20,10 +20,10 @@ export class GoogleController {
   @ApiErrorResponse()
   @Public()
   async login(@Body() loginDto: GoogleLoginDto) {
-    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const client = new OAuth2Client(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
       idToken: loginDto.credential,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     });
     const payload = ticket.getPayload();
     return AppApiSuccessResponse.create(

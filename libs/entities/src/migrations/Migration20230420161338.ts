@@ -9,6 +9,8 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
       tableBuilder.string('slug', 255).notNullable().unique();
       tableBuilder.text('description').nullable();
       tableBuilder.smallint('status').defaultTo(1).notNullable();
+      tableBuilder.smallint('type').defaultTo(1).notNullable();
+      tableBuilder.smallint('mode').defaultTo(1).notNullable();
       tableBuilder
         .integer('administrator_id')
         .notNullable()
@@ -42,6 +44,20 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
       this.addTimestampColumns(tableBuilder);
       this.addSoftDeleteColumns(tableBuilder);
     });
+    await knex.schema.createTable('course_prices', (tableBuilder) => {
+      this.addSerialPrimaryColumn(tableBuilder);
+      tableBuilder
+        .integer('course_id')
+        .unique()
+        .index()
+        .references('id')
+        .inTable('courses');
+      tableBuilder.float('price').notNullable().defaultTo(0);
+      tableBuilder.integer('discount').notNullable().defaultTo(0);
+      this.addActorColumns(tableBuilder);
+      this.addTimestampColumns(tableBuilder);
+      this.addSoftDeleteColumns(tableBuilder);
+    });
 
     await knex.schema.createTable('lessons', (tableBuilder) => {
       this.addSerialPrimaryColumn(tableBuilder);
@@ -60,6 +76,8 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
         .index()
         .references('id')
         .inTable('stored_files');
+      tableBuilder.smallint('type').defaultTo(1).notNullable();
+      tableBuilder.integer('time').nullable().defaultTo(0);
       this.addActorColumns(tableBuilder);
       this.addTimestampColumns(tableBuilder);
       this.addSoftDeleteColumns(tableBuilder);
@@ -89,6 +107,7 @@ export class Migration20230420161338 extends MigrationWithTimestamps {
     await knex.schema.dropTable('course_topics');
     await knex.schema.dropTable('lessons');
     await knex.schema.dropTable('sections');
+    await knex.schema.dropTable('course_prices');
     await knex.schema.dropTable('courses');
   }
 }

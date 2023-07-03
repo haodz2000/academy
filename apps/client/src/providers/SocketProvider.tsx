@@ -13,6 +13,9 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   const user = useAppSelector((user) => user.user.user);
   const queryClient = useQueryClient();
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     const socket = io(
       `${process.env.NEXT_PUBLIC_API_BASE_URL ?? ''}/${user?.id}`,
       {
@@ -61,6 +64,6 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       socket.disconnect();
       socketGlobal.disconnect();
     };
-  }, [queryClient, user]);
+  }, [notify, queryClient, user]);
   return <>{children}</>;
 };

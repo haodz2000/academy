@@ -12,6 +12,7 @@ import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
 import Link from '@client/components/ui/Link';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
+import { getProfile } from '@client/utils/user';
 
 export const Index = () => {
   const router = useRouter();
@@ -58,7 +59,7 @@ export const Index = () => {
                     fontSize={12}
                     color="#78909C"
                   >
-                    Developer
+                    {course.administrator?.job || 'Developer'}
                   </Typography>
                   <Stack
                     width={'100%'}
@@ -67,14 +68,7 @@ export const Index = () => {
                   ></Stack>
                 </Stack>
                 <Stack alignItems={'flex-start'} width={'100%'} gap={1}>
-                  <Typography
-                    component={Link}
-                    href={'/users/' + course.administrator?.email.split('@')[0]}
-                    underline="none"
-                    variant="h1"
-                    fontWeight={600}
-                    fontSize={25}
-                  >
+                  <Typography variant="h1" fontWeight={600} fontSize={25}>
                     {course.administrator?.name}
                   </Typography>
                   <Stack flexDirection={'row'}>
@@ -93,7 +87,11 @@ export const Index = () => {
                 </Stack>
               </Stack>
               <Stack>
-                <RoundedButton sx={{ bgcolor: '#328AF11A' }}>
+                <RoundedButton
+                  component={Link}
+                  href={'/users/' + getProfile(course.administrator?.email)}
+                  sx={{ bgcolor: '#328AF11A' }}
+                >
                   Watch Profile
                 </RoundedButton>
               </Stack>

@@ -4,6 +4,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   Property,
   Unique,
 } from '@mikro-orm/core';
@@ -18,6 +19,7 @@ import { TeachingRequest } from './TeachingRequest';
 import { LearningRequest } from './LearningRequest';
 import { CourseTeacher } from './CourseTeacher';
 import { CourseStudent } from './CourseStudent';
+import { CoursePrice } from './CoursePrice';
 
 @Entity({ tableName: 'courses' })
 export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
@@ -30,6 +32,8 @@ export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
       'description',
       'administrator_id',
       'status',
+      'type',
+      'mode',
       'cover_id',
       'created_at',
       'updated_at',
@@ -47,8 +51,14 @@ export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
   @Property({ type: 'text', nullable: true })
   description!: Scalar['text'];
 
-  @Property({ type: 'smallint' })
+  @Property({ type: 'smallint', default: 1 })
   status!: Scalar['smallint'];
+
+  @Property({ type: 'smallint', default: 1 })
+  type!: Scalar['smallint'];
+
+  @Property({ type: 'smallint', default: 1 })
+  mode!: Scalar['smallint'];
 
   @Property({ type: 'uuid' })
   cover_id!: Scalar['uuid'];
@@ -142,4 +152,10 @@ export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
     pivotEntity: () => CourseStudent,
   })
   students = new Collection<User>(this);
+
+  @OneToOne({
+    entity: () => CoursePrice,
+    mappedBy: (coursePrice) => coursePrice.course,
+  })
+  course_price: CoursePrice;
 }

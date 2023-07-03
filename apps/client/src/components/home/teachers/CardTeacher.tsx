@@ -1,13 +1,23 @@
-import { Avatar, IconButton, Paper, Stack, Typography } from '@mui/material';
+import {
+  Avatar,
+  IconButton,
+  Paper,
+  PaperProps,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import Link from '@client/components/ui/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import { TeacherResponse } from '@libs/openapi-generator/generated';
+import Image from 'next/image';
 
-interface Props {
+interface Props extends PaperProps {
   isTop: boolean;
+  teacher: TeacherResponse;
 }
-export const CardTeacher = ({ isTop }: Props) => {
+export const CardTeacher = ({ isTop, teacher, ...props }: Props) => {
   return (
     <Paper
       sx={{
@@ -23,6 +33,7 @@ export const CardTeacher = ({ isTop }: Props) => {
         borderRadius: 3,
         marginTop: isTop ? '-60px' : '0px',
       }}
+      {...props}
     >
       <Stack
         position={'absolute'}
@@ -49,15 +60,23 @@ export const CardTeacher = ({ isTop }: Props) => {
             mt={'-10px'}
             ml={'-2px'}
             sx={{
-              backgroundImage: `url('https://ik.imagekit.io/laracasts/instructors/335.jpeg?tr=w-200,q-50')`,
-              backgroundSize: 'cover',
               zIndex: 1,
               borderRadius: '60px',
-              border: '4px solid #000',
+              border: '3px solid #000',
             }}
             width={105}
             height={165}
-          ></Stack>
+            position={'relative'}
+          >
+            <Image
+              loader={({ src }) => src}
+              src={teacher.avatar.path}
+              alt=""
+              fill
+              unoptimized
+              style={{ borderRadius: '60px' }}
+            />
+          </Stack>
           <Stack flexDirection={'row'} gap={1}>
             <IconButton>
               <FacebookIcon fontSize="large" color={'primary'} />
@@ -76,14 +95,13 @@ export const CardTeacher = ({ isTop }: Props) => {
             color={'inherit'}
             component={Link}
           >
-            Join Swith
+            {teacher.name}
           </Typography>
           <Typography variant="body2" color={'#BAD9FC'}>
             Owner at Laravel
           </Typography>
           <Typography variant="body2" color="#D8E3EE">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-            consequuntur mollitia autem facere suscipit natus cumque voluptate
+            {teacher.description}
           </Typography>
         </Stack>
       </Stack>
@@ -92,18 +110,39 @@ export const CardTeacher = ({ isTop }: Props) => {
         bottom={'-15px'}
         position={'absolute'}
         flexDirection={'row'}
-        gap={3}
       >
-        <Avatar
-          sx={{ width: '54px', height: '54px' }}
-          href={'#'}
-          component={Link}
-        />
-        <Avatar
-          sx={{ width: '54px', height: '54px' }}
-          href={'#'}
-          component={Link}
-        />
+        {teacher.courses.map((course, index) => {
+          if (index < 2) {
+            return (
+              <Avatar
+                key={index}
+                src={course.cover.path}
+                sx={{
+                  width: '54px',
+                  height: '54px',
+                  marginLeft: -index * 12 + 'px',
+                }}
+                href={'/series/' + course.slug}
+                component={Link}
+              />
+            );
+          }
+          if (index == 2) {
+            return (
+              <Avatar
+                key={index}
+                sx={{
+                  width: '54px',
+                  height: '54px',
+                  marginLeft: -index * 8 + 'px',
+                  bgcolor: 'rgba(0, 34, 54, 0.8)',
+                }}
+              >
+                +{teacher.courses.length - 2}
+              </Avatar>
+            );
+          }
+        })}
       </Stack>
     </Paper>
   );

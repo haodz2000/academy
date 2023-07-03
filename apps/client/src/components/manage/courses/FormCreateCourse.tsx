@@ -1,9 +1,13 @@
 import {
   FormControl,
+  FormControlLabel,
   FormHelperText,
+  RadioGroup,
   Stack,
   TextField,
   Typography,
+  Radio,
+  Collapse,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { RoundedButton } from '@client/components/ui/buttons';
@@ -16,12 +20,16 @@ import { TopicSelect } from '@client/components/ui/TopicSelect';
 import { useNotify } from '@client/components/notification/hook';
 import { useCreateCourseMutation } from '@client/hooks/apis/courses/useCreateCourseMutation';
 import { useRouter } from 'next/router';
+import { ModeCourse } from '@libs/constants/entities/Course';
 
 const schema = yup
   .object({
     cover: yup.mixed().required('Trường này không thể bỏ trống.'),
     name: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
+    mode: yup.number().required('Trường này không thể bỏ trống.').min(1),
+    price: yup.number().min(0),
+    discount: yup.number().min(0).max(100),
   })
   .required();
 
@@ -34,6 +42,7 @@ export const FormCreateCourse = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     control,
     formState: { isValid },
   } = useForm<CoursesApiCreateRequest>({
@@ -44,8 +53,12 @@ export const FormCreateCourse = () => {
       description: '',
       topicsIds: [],
       cover: undefined,
+      mode: 1,
+      price: 0,
+      discount: 0,
     },
   });
+  const mode = watch('mode');
   const onReset = () => {
     reset({
       name: '',
@@ -63,6 +76,8 @@ export const FormCreateCourse = () => {
         description: data.description,
         name: data.name,
         topicsIds: [...data.topicsIds],
+        mode: data.mode,
+        price: data.price,
       });
       reset({
         name: '',
@@ -143,6 +158,64 @@ export const FormCreateCourse = () => {
               name="topicsIds"
             />
           </FormControl>
+        </Stack>
+        <Stack>
+          <Typography>Hình thức</Typography>
+          <FormControl>
+            <Controller
+              rules={{ required: true }}
+              control={control}
+              name="mode"
+              render={({ field }) => (
+                <RadioGroup row {...field}>
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label="Miễn phí"
+                  />
+                  <FormControlLabel
+                    value={2}
+                    control={<Radio />}
+                    label="Trả phí"
+                  />
+                </RadioGroup>
+              )}
+            />
+          </FormControl>
+          <Collapse in={mode == ModeCourse.PayFee}>
+            <Stack>
+              <Stack>
+                <FormControl>
+                  <Typography>Giá (VND)*</Typography>
+                  <TextField
+                    {...register('price')}
+                    size="small"
+                    sx={{
+                      bgcolor: '#9494941a',
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Stack>
+              <Stack>
+                <FormControl>
+                  <Typography>Discount (%)*</Typography>
+                  <TextField
+                    {...register('discount')}
+                    size="small"
+                    sx={{
+                      bgcolor: '#9494941a',
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Stack>
+            </Stack>
+          </Collapse>
         </Stack>
         <Stack>
           <Typography>Mô tả</Typography>

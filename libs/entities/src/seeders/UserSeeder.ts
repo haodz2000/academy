@@ -4,12 +4,14 @@ import { User } from '../entities/User';
 import { StoredFile } from '../entities/StoredFile';
 import { Role } from '../entities/Role';
 import { RoleType } from '@libs/constants/entities/Role';
+import { Wallet } from '../entities/Wallet';
 
 const BaseURL = `https://res.cloudinary.com/dhjrftwo1/image/upload/v1680934014/`;
 export class UserSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
     const userRepositoty = em.getRepository(User);
     const storedFileRepository = em.getRepository(StoredFile);
+    const walletRepository = em.getRepository(Wallet);
     const roleReposioty = em.getRepository(Role);
     const avatars: Partial<StoredFile>[] = [
       {
@@ -119,6 +121,10 @@ export class UserSeeder extends Seeder {
         avatar_id: listAvatar[i % 13].id,
       });
       await userRepositoty.persistAndFlush(user);
+      const wallet = walletRepository.create({
+        user_id: user.id,
+      });
+      await walletRepository.persistAndFlush(wallet);
     }
   }
 }

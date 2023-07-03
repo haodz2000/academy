@@ -8,6 +8,7 @@ import { TeachingRequest } from '@libs/entities/entities/TeachingRequest';
 import { AbilityModule } from '../auth/ability/ability.module';
 import { CourseTeacher } from '@libs/entities/entities/CourseTeacher';
 import { NotificationsModule } from '../notifications/notifications.module';
+import { IsCourseIdValidator } from '@server/validators/is-course-id.validator';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { NotificationsModule } from '../notifications/notifications.module';
     NotificationsModule,
   ],
   controllers: [TeachingRequestController],
-  providers: [TeachingRequestService],
+  providers: [TeachingRequestService, IsCourseIdValidator],
 })
 export class TeachingRequestModule {}

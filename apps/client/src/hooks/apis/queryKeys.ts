@@ -1,6 +1,7 @@
 export enum QueryKeys {
   me = 'me',
   profile = 'profile',
+  teachers = 'teachers',
   topics = 'topics',
   topic = 'topic',
   courses = 'courses',
@@ -10,6 +11,7 @@ export enum QueryKeys {
   assignments = 'assignments',
   discussions = 'discussions',
   teachingRequests = 'teachingRequests',
+  teachingRequest = 'teachingRequest',
   learningRequests = 'learningRequests',
   learningRequest = 'learningRequest',
   users = 'users',

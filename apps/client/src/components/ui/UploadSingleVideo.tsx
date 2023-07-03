@@ -1,6 +1,6 @@
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { Box, BoxProps, IconButton, Stack, Typography } from '@mui/material';
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { StoredFileResponse } from '@libs/openapi-generator/generated';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -16,6 +16,7 @@ interface Props extends BoxProps {
   file: File | null;
   setFile: (file: File | null) => void;
   variant?: 'circle' | 'rounded' | 'rect';
+  setTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const UploadSingleVideo: FC<Props> = ({
@@ -25,9 +26,11 @@ export const UploadSingleVideo: FC<Props> = ({
   setFile,
   variant = 'rounded',
   sx,
+  setTime,
   children,
   ...props
 }) => {
+  const videoRef = useRef<ReactPlayer>(null);
   const [openLightbox, setOpenLightbox] = useState<boolean>(false);
   const { getRootProps, getInputProps, inputRef } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -46,6 +49,15 @@ export const UploadSingleVideo: FC<Props> = ({
     }
     return defaultVideo?.path ?? null;
   }, [defaultVideo?.path, file]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (videoUrl) {
+        const time = videoRef.current?.getDuration();
+        setTime(time);
+      }
+    }, 500);
+  }, [setTime, videoUrl]);
 
   const getBorderRadius = () => {
     switch (variant) {
@@ -157,6 +169,7 @@ export const UploadSingleVideo: FC<Props> = ({
       )}
       {!!videoUrl && (
         <ReactPlayer
+          ref={videoRef}
           style={{ zIndex: 1000 }}
           width={'100%'}
           height={'100%'}

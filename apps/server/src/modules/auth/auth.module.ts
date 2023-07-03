@@ -14,10 +14,11 @@ import { GoogleService } from './google/google.service';
 import { HttpModule } from '@nestjs/axios';
 import { PassportModule } from '@nestjs/passport';
 import { AbilityModule } from './ability/ability.module';
+import { Wallet } from '@libs/entities/entities/Wallet';
 
 @Module({
   imports: [
-    MikroOrmModule.forFeature([User, Role, StoredFile]),
+    MikroOrmModule.forFeature([User, Role, StoredFile, Wallet]),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '100d' },

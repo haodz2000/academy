@@ -7,6 +7,7 @@ import { UserTransformer } from '@server/modules/users/transformers/user.transfo
 import { CourseDetailResponse } from '../responses/course-detail.response';
 import { TopicTransformer } from '@server/modules/topics/transformers/topic.transformer';
 import { SectionTransformer } from '../sections/transformers/section.transformer';
+import { CoursePriceTransformer } from '@server/modules/course-prices/transformers/course-price.transformer';
 
 export class CourseTransformer extends BaseResponseTransformer {
   static toCourseResponse(course: Course): CourseResponse {
@@ -22,6 +23,9 @@ export class CourseTransformer extends BaseResponseTransformer {
       administrator: course.administrator
         ? UserTransformer.toUserResponse(course.administrator)
         : null,
+      course_price: CoursePriceTransformer.toCoursePriceResponse(
+        course.course_price
+      ),
       __typename: IdSubject.Courses,
     };
   }

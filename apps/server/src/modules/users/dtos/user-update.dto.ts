@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseDto } from '@server/validators/base.dto';
+import { IsFacebook } from '@server/validators/is-facebook.validator';
+import { IsPhoneNumber } from '@server/validators/is-phone.validator';
 import { IsDefined, IsOptional } from 'class-validator';
 
 export class UserUpdateDto extends BaseDto {
@@ -10,10 +12,12 @@ export class UserUpdateDto extends BaseDto {
 
   @IsOptional()
   @ApiProperty()
+  @IsPhoneNumber()
   phone: string;
 
   @IsOptional()
   @ApiProperty()
+  @IsFacebook()
   facebook: string;
 
   @IsOptional()

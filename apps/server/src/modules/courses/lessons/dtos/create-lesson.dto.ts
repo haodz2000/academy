@@ -1,11 +1,14 @@
+import { TypeLesson } from '@libs/constants/entities/Lesson';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseDto } from '@server/validators/base.dto';
+import { IsSectionId } from '@server/validators/is-section-id.validator';
 import { IsDefined, IsOptional, MaxLength } from 'class-validator';
 
 export class CreateLessonDto extends BaseDto {
   @ApiProperty()
   @IsOptional()
   @IsDefined()
+  @IsSectionId()
   section_id: number;
 
   @ApiProperty()
@@ -32,4 +35,14 @@ export class CreateLessonDto extends BaseDto {
     required: false,
   })
   video: Express.Multer.File;
+
+  @IsOptional()
+  @IsDefined()
+  @ApiProperty({ enum: TypeLesson })
+  type: TypeLesson;
+
+  @IsOptional()
+  @IsDefined()
+  @ApiProperty()
+  time: number;
 }

@@ -12,13 +12,16 @@ const Index = () => {
   const id = router.query?.id as string;
   const learningRequestQuery = useLearningRequestQuery({ id });
   const request = learningRequestQuery.data?.data;
+  const refresh = () => {
+    learningRequestQuery.refetch();
+  };
   if (learningRequestQuery.isLoading) {
     return <LoadingPage />;
   }
   if (learningRequestQuery.isError) {
     return <ErrorPage />;
   }
-  return <LearningRequestDetail request={request} />;
+  return <LearningRequestDetail refresh={refresh} request={request} />;
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {

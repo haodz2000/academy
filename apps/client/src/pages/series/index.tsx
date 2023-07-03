@@ -14,6 +14,7 @@ export const Index = () => {
     page: 1,
     status: StatusCourse.Approved,
     type: TypeQueryCourse.Show,
+    limit: 10,
   });
   const courses = useMemo(() => {
     return coursesQuery.data?.data ?? [];
@@ -24,6 +25,7 @@ export const Index = () => {
   if (coursesQuery.isError) {
     return <ErrorPage />;
   }
+
   return (
     <Stack gap={8}>
       <Stack padding={2} gap={12}>

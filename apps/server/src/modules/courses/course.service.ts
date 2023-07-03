@@ -8,7 +8,12 @@ import { CourseCreateDto } from './dtos/course-create.dto';
 import { createSlug } from '@server/utils/slug';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
-import { StatusCourse, TypeQueryCourse } from '@libs/constants/entities/Course';
+import {
+  ModeCourse,
+  StatusCourse,
+  TypeCourse,
+  TypeQueryCourse,
+} from '@libs/constants/entities/Course';
 import { CourseUpdateDto } from './dtos/course-update.dto';
 import { ForbiddenError } from '@casl/ability';
 import { IdAction } from '@libs/constants/abilities';
@@ -17,12 +22,15 @@ import { DeleteResponse } from './responses/delete.response';
 import { CourseFilterDto } from './dtos/course-filter.dto';
 import { Pagination } from '@libs/utils/responses';
 import { RoleType } from '@libs/constants/entities/Role';
+import { CoursePrice } from '@libs/entities/entities/CoursePrice';
 
 @Injectable()
 export class CourseService {
   constructor(
     @InjectRepository(Course)
     private readonly courseRepository: EntityRepository<Course>,
+    @InjectRepository(CoursePrice)
+    private readonly coursePriceRepository: EntityRepository<CoursePrice>,
     private readonly uploadService: UploadService,
     @Inject(REQUEST) private request: Request,
     private readonly em: EntityManager,
@@ -33,7 +41,7 @@ export class CourseService {
     option: CourseFilterDto
   ): Promise<{ data: Course[]; pagination: Pagination }> {
     const where: FilterQuery<Course> = {};
-    const limit = 15;
+    const limit = option.limit ?? 5;
     if (option) {
       if (option.type == TypeQueryCourse.Show) {
         where.$or = [
@@ -52,7 +60,7 @@ export class CourseService {
       }
     }
     const [data, count] = await this.courseRepository.findAndCount(where, {
-      populate: ['cover', 'administrator.avatar'],
+      populate: ['cover', 'administrator.avatar', 'course_price'],
       limit: limit,
       offset: (option.page - 1) * limit || 0,
     });
@@ -90,6 +98,7 @@ export class CourseService {
         'sections.lessons',
         'topics',
         'students.avatar',
+        'course_price',
       ],
       limit: limit,
     });
@@ -116,6 +125,7 @@ export class CourseService {
           'sections.lessons.video',
           'topics',
           'students.avatar',
+          'course_price',
         ],
       }
     );
@@ -138,11 +148,19 @@ export class CourseService {
         created_by: this.request.user.id,
         updated_by: this.request.user.id,
         status: StatusCourse.Pending,
+        type: TypeCourse.NEW,
+        mode: data.mode,
         topics: ids,
         cover_id: coverStoredFile.id,
         description: data.description,
       });
       await this.courseRepository.persistAndFlush(course);
+      const coursePrice = this.coursePriceRepository.create({
+        course_id: course.id,
+        price: data.mode == ModeCourse.PayFee ? data.price : 0,
+        discount: data.discount ?? 0,
+      });
+      await this.coursePriceRepository.persistAndFlush(coursePrice);
       await this.em.commit();
       return course;
     } catch (error) {
@@ -154,32 +172,43 @@ export class CourseService {
     this.em.begin();
     try {
       const course = await this.courseRepository.findOneOrFail(id, {
-        populate: ['cover', 'administrator'],
+        populate: ['cover', 'administrator', 'course_price'],
       });
       const ability = this.ability.defineAbility(this.request.user);
       ForbiddenError.from(ability)
         .setMessage('Unauthorize update this course')
         .throwUnlessCan(IdAction.Update, course);
-      const { cover, topics_ids, ...updateData } = data;
+      const { cover, topics_ids, mode, price, discount, ...updateData } = data;
       const ids = topics_ids[0]
         .toString()
         .split(',')
         .map((i) => Number(i));
       wrap(course).assign({
         ...updateData,
+        mode: mode,
         topics: ids,
       });
-      await this.courseRepository.persistAndFlush(course);
       if (cover) {
         const newCover = await this.uploadService.uploadFile(cover, {
           folderPath: 'courses',
         });
         course.cover_id = newCover.id;
-        await this.courseRepository.persistAndFlush(course);
       }
+      if (mode) {
+        const coursePrice = course.course_price;
+        if (mode == ModeCourse.Free) {
+          coursePrice.price = 0;
+        } else {
+          coursePrice.price = price;
+          coursePrice.discount = discount;
+        }
+        course.mode = mode;
+        await this.coursePriceRepository.persistAndFlush(coursePrice);
+      }
+      await this.courseRepository.persistAndFlush(course);
       this.em.commit();
       return await this.courseRepository.findOne(id, {
-        populate: ['cover', 'administrator'],
+        populate: ['cover', 'administrator', 'course_price'],
       });
     } catch (error) {
       this.em.rollback();

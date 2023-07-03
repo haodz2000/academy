@@ -12,6 +12,7 @@ import { LessonResponse } from '@libs/openapi-generator/generated';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { ListAssignments } from '@client/components/courses/course/lessons/ListAssignments';
+import { getTimeVideo } from '@client/utils/lesson';
 
 const Index = () => {
   const [lesson, setLesson] = useState<LessonResponse>(null);
@@ -21,7 +22,6 @@ const Index = () => {
     ? Number(router.query.id)
     : 0;
   const courseQuery = useCourseQuery({ slug: query.slug as string });
-  const [loading] = useState(true);
   const course = useMemo(() => {
     return courseQuery.data?.data ?? null;
   }, [courseQuery.data?.data]);
@@ -49,14 +49,13 @@ const Index = () => {
           <Header hasMenu={false} />
         </Stack>
         <Stack width={'100%'} height={800} bgcolor={'#010101'}>
-          {loading && (
-            <ReactPlayer
-              width={'100%'}
-              height={'100%'}
-              controls
-              url={lesson?.video.path}
-            />
-          )}
+          <ReactPlayer
+            playing
+            width={'100%'}
+            height={'100%'}
+            controls
+            url={lesson?.video.path}
+          />
         </Stack>
         <Stack
           width={'100%'}
@@ -92,7 +91,9 @@ const Index = () => {
                   <Divider color="#dbdbdb" orientation="vertical" />
                   <Stack gap={1}>
                     <Typography fontSize={10}>Time</Typography>
-                    {/* <Typography fontWeight={600}>{lesson?.time}</Typography> */}
+                    <Typography fontWeight={600}>
+                      {getTimeVideo(lesson?.time)}
+                    </Typography>
                   </Stack>
                   <Divider color="#dbdbdb" orientation="vertical" />
                   <Stack gap={1}>

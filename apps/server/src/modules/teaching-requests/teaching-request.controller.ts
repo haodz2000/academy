@@ -56,6 +56,22 @@ export class TeachingRequestController {
   @ApiOperation({ tags: [AppSwaggerTag.TeachingRequests] })
   @ApiSuccessResponse(TeachingRequestResponse)
   @ApiErrorResponse()
+  @Get('/:id')
+  async findOne(
+    @Param(
+      'id',
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })
+    )
+    id: string
+  ) {
+    return AppApiSuccessResponse.create(
+      await this.teachingRequestService.findOne(id)
+    );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.TeachingRequests] })
+  @ApiSuccessResponse(TeachingRequestResponse)
+  @ApiErrorResponse()
   @Post()
   async request(@Body() data: TeachingRequestDto) {
     return AppApiSuccessResponse.create(

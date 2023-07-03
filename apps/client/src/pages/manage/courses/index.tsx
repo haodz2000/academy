@@ -17,6 +17,7 @@ const Index = () => {
     page: 1,
     status: 1,
     type: TypeQueryCourse.Manage,
+    limit: 10,
   });
   const courses = useMemo(() => {
     return coursesQuery.data?.data ?? [];

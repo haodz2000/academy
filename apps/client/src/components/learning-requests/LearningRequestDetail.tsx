@@ -47,20 +47,26 @@ const getStatusLearningRequest = (status: number) => {
 
 interface Props extends StackProps {
   request: LearningRequestResponse;
+  refresh: () => void;
 }
-export const LearningRequestDetail = ({ request, ...props }: Props) => {
+export const LearningRequestDetail = ({
+  request,
+  refresh,
+  ...props
+}: Props) => {
   const { notify, notifyError } = useNotify();
   const confirm = useConfirm();
   const learningRequestAcceptMutation = useLearningRequestAcceptMutation();
   const learningRequestRejectMutation = useLearningRequestRejectMutation();
   const onAccept = async () => {
-    confirm({ title: '?' })
+    confirm({ title: 'Bạn chắc chắn đồng ý' })
       .then(async () => {
         try {
           await learningRequestAcceptMutation.mutateAsync({
             id: request.id,
           });
           notify({ content: 'Success' });
+          refresh();
         } catch (error) {
           notifyError({ error });
         }
@@ -77,6 +83,7 @@ export const LearningRequestDetail = ({ request, ...props }: Props) => {
             id: request.id,
           });
           notify({ content: 'Success' });
+          refresh();
         } catch (error) {
           notifyError({ error });
         }

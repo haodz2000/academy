@@ -1,8 +1,10 @@
 import Link from '@client/components/ui/Link';
+import { getTimeVideo } from '@client/utils/lesson';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 interface Props {
   lesson: LessonResponse;
@@ -27,7 +29,11 @@ export const Lesson = ({ lesson, currentId }: Props) => {
       }}
       flexDirection={'row'}
       gap={1}
+      position="relative"
     >
+      {/* <Stack position="absolute" top={"50%"} right={15} sx={{transform: 'translateY(-50%)'}}>
+        <CheckCircleIcon color='success'/>
+      </Stack> */}
       <Stack
         flexDirection={'row'}
         gap={2}
@@ -35,9 +41,14 @@ export const Lesson = ({ lesson, currentId }: Props) => {
         alignItems={'center'}
       >
         <Avatar sx={{ height: 32, width: 32, bgcolor: '#328af11A' }}>01</Avatar>
-        <Typography variant="h1" fontSize={14} fontWeight={600}>
-          {lesson?.title}
-        </Typography>
+        <Stack gap={1}>
+          <Typography variant="h1" fontSize={14} fontWeight={600}>
+            {lesson?.title}
+          </Typography>
+          <Typography variant="body1" fontSize={9} fontWeight={600}>
+            {getTimeVideo(lesson?.time)}
+          </Typography>
+        </Stack>
       </Stack>
     </Stack>
   );

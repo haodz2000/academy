@@ -47,7 +47,7 @@ export class UploadService {
       name: file.originalname,
       path: filePath,
       hash: fileHash,
-      key: fileHash,
+      key: key,
     });
     await this.storedFileRepository.persistAndFlush(storedFile);
     return storedFile;

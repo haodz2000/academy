@@ -23,6 +23,8 @@ export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
       'title',
       'description',
       'order',
+      'type',
+      'time',
       'video_id',
       'created_at',
       'updated_at',
@@ -41,6 +43,12 @@ export class Lesson extends BaseEntityWithSerialPrimaryKey<Lesson, 'id'> {
 
   @Property({ type: 'integer', nullable: true, default: 0 })
   order!: Scalar['integer'];
+
+  @Property({ type: 'smallint', nullable: true, default: 1 })
+  type!: Scalar['smallint'];
+
+  @Property({ type: 'integer', nullable: true, default: 0 })
+  time!: Scalar['integer'];
 
   @Property({ type: 'uuid', nullable: true })
   video_id!: Scalar['uuid'];

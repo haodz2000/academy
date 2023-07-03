@@ -1,7 +1,7 @@
+import { AppSwaggerTag } from '@server/modules/app-swagger/app-swagger.constant';
 import { ApiOperation } from '@nestjs/swagger';
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AppSwaggerTag } from '../app-swagger/app-swagger.constant';
 import {
   ApiErrorResponse,
   ApiPaginatedResponse,
@@ -17,6 +17,7 @@ import { FilterUserQueryDto } from './dtos/filter-user-query.dto';
 import { Public } from '../auth/guards/public.guard';
 import { UserPublicResponse } from './responses/user-public.response';
 import { UserUpdateDto } from './dtos/user-update.dto';
+import { TeacherResponse } from './responses/teacher.response';
 
 @Controller('users')
 export class UserController {
@@ -43,6 +44,19 @@ export class UserController {
     const result = await this.userService.public();
     return AppApiPaginatedResponse.create(
       result.data.map((i) => UserTransformer.toUserPublic(i)),
+      result.pagination
+    );
+  }
+
+  @Public()
+  @ApiOperation({ tags: [AppSwaggerTag.Users] })
+  @ApiPaginatedResponse(TeacherResponse)
+  @ApiErrorResponse()
+  @Get('/teacher')
+  async getTeacher() {
+    const result = await this.userService.getTeacher();
+    return AppApiPaginatedResponse.create(
+      result.data.map((i) => UserTransformer.toTeacherResponse(i)),
       result.pagination
     );
   }

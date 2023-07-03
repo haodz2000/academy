@@ -1,7 +1,5 @@
-import { Avatar, Box, Divider, Stack, Typography } from '@mui/material';
-import React from 'react';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { RoundedButton } from '@client/components/ui/buttons';
+import { Avatar, Divider, Stack, Typography } from '@mui/material';
+import React, { useMemo } from 'react';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Section } from './Section';
@@ -9,12 +7,28 @@ import {
   CourseDetailResponse,
   LessonResponse,
 } from '@libs/openapi-generator/generated';
+import { Back } from '@client/components/ui/Back';
+import { getTimeVideo } from '@client/utils/lesson';
 
 interface Props {
   course: CourseDetailResponse;
   lesson: LessonResponse;
 }
 export const Navbar = ({ course, lesson }: Props) => {
+  const lessons = useMemo(() => {
+    const sections = course.sections;
+    return sections
+      .map((i) => {
+        return i.lessons;
+      })
+      .flat();
+  }, [course]);
+  const totalTime = useMemo(() => {
+    return lessons.reduce(
+      (total, currentValue) => total + currentValue.time,
+      0
+    );
+  }, [lessons]);
   return (
     <Stack
       width={330}
@@ -30,14 +44,7 @@ export const Navbar = ({ course, lesson }: Props) => {
       height={1}
     >
       <Stack flexDirection="row" alignItems="center" height={60}>
-        <Box>
-          <RoundedButton
-            sx={{ bgcolor: '#328AF11A' }}
-            startIcon={<ArrowBackIcon />}
-          >
-            Back
-          </RoundedButton>
-        </Box>
+        <Back />
       </Stack>
       <Stack gap={2}>
         <Stack height={60} flexDirection="row" alignItems="center" gap={2}>
@@ -56,7 +63,9 @@ export const Navbar = ({ course, lesson }: Props) => {
               <Divider color="#FFF" orientation="vertical" />
               <Stack gap={1} flexDirection="row" alignItems="center">
                 <AccessTimeIcon fontSize="small" />
-                <Typography fontSize={12}>5h</Typography>
+                <Typography fontSize={12}>
+                  {getTimeVideo(totalTime || 0)}
+                </Typography>
               </Stack>
             </Stack>
           </Stack>

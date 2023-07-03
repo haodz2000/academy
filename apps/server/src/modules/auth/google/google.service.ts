@@ -9,6 +9,8 @@ import { RoleType } from '@libs/constants/entities/Role';
 import { JwtService } from '@nestjs/jwt';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { UploadService } from '@server/modules/upload/upload.service';
+import { Wallet } from '@libs/entities/entities/Wallet';
+import { TypeWallet } from '@libs/constants/entities/Wallet';
 
 @Injectable()
 export class GoogleService {
@@ -17,6 +19,8 @@ export class GoogleService {
     private readonly userRepository: EntityRepository<User>,
     @InjectRepository(Role)
     private readonly roleRepository: EntityRepository<Role>,
+    @InjectRepository(Wallet)
+    private readonly walletRepository: EntityRepository<Wallet>,
     private jwtService: JwtService,
     private uploadService: UploadService,
     private em: EntityManager
@@ -42,6 +46,12 @@ export class GoogleService {
         user.avatar_id = storedFile.id;
         user.role_id = userRole.id;
         await this.em.persistAndFlush(user);
+        const wallet = this.walletRepository.create({
+          user_id: user.id,
+          balance: 0,
+          type: TypeWallet.Personal,
+        });
+        await this.walletRepository.persistAndFlush(wallet);
       } else {
         user.google_id = payload['sub'];
         if (!user.avatar_id) {

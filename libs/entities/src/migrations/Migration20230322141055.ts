@@ -40,6 +40,22 @@ export class Migration20230322141055 extends MigrationWithTimestamps {
     await knex.schema.alterTable('stored_files', (tableBuilder) => {
       this.addActorColumns(tableBuilder);
     });
+
+    await knex.schema.createTable('wallets', (tableBuilder) => {
+      this.addSerialPrimaryColumn(tableBuilder),
+        tableBuilder
+          .integer('user_id')
+          .unique()
+          .notNullable()
+          .index()
+          .references('id')
+          .inTable('users');
+      tableBuilder.float('balance').defaultTo(0).notNullable();
+      tableBuilder.smallint('type').defaultTo(1).notNullable();
+      this.addActorColumns(tableBuilder);
+      this.addSoftDeleteColumns(tableBuilder);
+      this.addTimestampColumns(tableBuilder);
+    });
   }
 
   async down(): Promise<void> {
@@ -52,6 +68,7 @@ export class Migration20230322141055 extends MigrationWithTimestamps {
       tableBuilder.dropColumn('created_by');
       tableBuilder.dropColumn('updated_by');
     });
+    await knex.schema.dropTable('wallets');
     await knex.schema.dropTable('users');
   }
 }

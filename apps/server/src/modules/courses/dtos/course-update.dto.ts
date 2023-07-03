@@ -1,3 +1,4 @@
+import { ModeCourse } from '@libs/constants/entities/Course';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseDto } from '@server/validators/base.dto';
 import { IsDefined, IsOptional, MaxLength } from 'class-validator';
@@ -25,4 +26,16 @@ export class CourseUpdateDto extends BaseDto {
     isArray: true,
   })
   topics_ids: number[];
+
+  @IsOptional()
+  @ApiProperty({ enum: ModeCourse })
+  mode: ModeCourse;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  price: number;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  discount: number;
 }

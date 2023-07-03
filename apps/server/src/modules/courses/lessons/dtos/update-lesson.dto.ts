@@ -1,3 +1,4 @@
+import { TypeLesson } from '@libs/constants/entities/Lesson';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseDto } from '@server/validators/base.dto';
 import { IsDefined, IsOptional, MaxLength } from 'class-validator';
@@ -27,4 +28,13 @@ export class UpdateLessonDto extends BaseDto {
     required: false,
   })
   video: Express.Multer.File;
+
+  @IsOptional()
+  @IsDefined()
+  @ApiProperty({ enum: TypeLesson })
+  type: TypeLesson;
+
+  @IsOptional()
+  @ApiProperty()
+  time: number;
 }

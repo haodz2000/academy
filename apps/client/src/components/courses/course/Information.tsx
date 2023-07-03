@@ -8,21 +8,35 @@ import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 import { useLearningRequestMutation } from '@client/hooks/apis/learning-requests/useLearningRequestMutation';
 import { useNotify } from '@client/components/notification/hook';
 import Link from '@client/components/ui/Link';
+import { PriceCourse } from '../PriceCourse';
+import { useIsLogin } from '@client/hooks/useIsLogin';
+import { ModeCourse } from '@libs/constants/entities/Course';
+import { Back } from '@client/components/ui/Back';
 
 interface Props {
   course: CourseDetailResponse;
 }
 export const Information = ({ course }: Props) => {
+  const isLogin = useIsLogin();
   const { notify, notifyError } = useNotify();
   const learningRequest = useLearningRequestMutation();
+  const isPay = course.mode === ModeCourse.PayFee;
   const sendRequest = async () => {
     try {
-      await learningRequest.mutateAsync({
-        learningRequestDto: {
-          course_id: course.id,
-        },
-      });
-      notify({ content: 'Gửi yêu cầu thành công, chờ phê duyệt!' });
+      if (isLogin) {
+        if (!isPay) {
+          await learningRequest.mutateAsync({
+            learningRequestDto: {
+              course_id: course.id,
+            },
+          });
+          notify({ content: 'Gửi yêu cầu thành công, chờ phê duyệt!' });
+        } else {
+          notify({ content: 'Khoa hoc chu mo ban' });
+        }
+      } else {
+        notifyError({ content: 'Yêu cầu đăng nhập để học' });
+      }
     } catch (error) {
       notifyError({ error });
     }
@@ -30,12 +44,7 @@ export const Information = ({ course }: Props) => {
   return (
     <Stack gap={1}>
       <Box>
-        <RoundedButton
-          sx={{ bgcolor: '#328AF11A' }}
-          startIcon={<ArrowBackIcon />}
-        >
-          Back
-        </RoundedButton>
+        <Back />
       </Box>
       <Stack minHeight={400} flexDirection={'row'} gap={2}>
         <Stack width={'70%'} gap={2} justifyContent={'space-between'}>
@@ -43,7 +52,8 @@ export const Information = ({ course }: Props) => {
             <Typography variant="h1" fontSize={33} fontWeight={600}>
               {course.name}
             </Typography>
-            <Rating size="small" name="simple-controlled" value={5} />
+            <Rating size="small" readOnly value={5} />
+            <PriceCourse course={course} />
             <Stack flexDirection={'row'} gap={1}>
               {course.topics?.map((topic) => (
                 <RoundedButton

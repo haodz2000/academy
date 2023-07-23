@@ -29,13 +29,7 @@ const ManageUserPage = () => {
   const users = useMemo(() => {
     return usersQuery.data?.data ?? [];
   }, [usersQuery.data?.data]);
-  const totalPage = Math.ceil(usersQuery.data?.pagination.total / 10);
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
+  const totalPage = Math.ceil(usersQuery.data?.pagination?.total ?? 0 / 10);
   if (usersQuery.isLoading) {
     return <LoadingPage />;
   }
@@ -90,7 +84,9 @@ const ManageUserPage = () => {
                 <Pagination
                   page={page}
                   count={totalPage}
-                  onChange={handleChangePage}
+                  onChange={(e, v) => {
+                    setPage(v);
+                  }}
                   color="primary"
                 />
               </Stack>

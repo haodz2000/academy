@@ -8,9 +8,9 @@ export class CourseDetailResponse extends CourseResponse {
   @ApiProperty({ type: SectionFullResponse, isArray: true })
   sections?: SectionFullResponse[];
 
-  @ApiProperty({ type: TopicResponse, isArray: true, nullable: true })
+  @ApiProperty({ type: TopicResponse, isArray: true })
   topics: TopicResponse[];
 
-  @ApiProperty({ type: UserResponse, isArray: true, nullable: true })
+  @ApiProperty({ type: UserResponse, isArray: true })
   students: UserResponse[];
 }

@@ -607,13 +607,13 @@ export interface CourseDetailResponse {
    * @type {Array<TopicResponse>}
    * @memberof CourseDetailResponse
    */
-  topics: Array<TopicResponse> | null;
+  topics: Array<TopicResponse>;
   /**
    *
    * @type {Array<UserResponse>}
    * @memberof CourseDetailResponse
    */
-  students: Array<UserResponse> | null;
+  students: Array<UserResponse>;
 }
 
 export const CourseDetailResponseTypenameEnum = {
@@ -4452,37 +4452,37 @@ export interface UserUpdateDto {
    * @type {string}
    * @memberof UserUpdateDto
    */
-  phone: string;
+  phone?: string;
   /**
    *
    * @type {string}
    * @memberof UserUpdateDto
    */
-  facebook: string;
+  facebook?: string;
   /**
    *
    * @type {string}
    * @memberof UserUpdateDto
    */
-  github: string;
+  github?: string;
   /**
    *
    * @type {string}
    * @memberof UserUpdateDto
    */
-  twitter: string;
+  twitter?: string;
   /**
    *
    * @type {string}
    * @memberof UserUpdateDto
    */
-  job: string;
+  job?: string;
   /**
    *
    * @type {string}
    * @memberof UserUpdateDto
    */
-  description: string;
+  description?: string;
 }
 /**
  *

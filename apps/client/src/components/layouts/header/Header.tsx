@@ -7,6 +7,8 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UserDrawer } from '@client/components/drawer/UserDrawer';
 import { NotificationDrawer } from '@client/components/drawer/NotificationDrawer';
+import NextLink from 'next/link';
+// import Link as NextLink from 'next/link';
 
 interface Props {
   hasMenu: boolean;
@@ -76,9 +78,8 @@ export const Header = ({ hasMenu }: Props) => {
     >
       <Stack>
         <Typography
-          component={Link}
+          component={NextLink}
           href={'/'}
-          underline="none"
           fontSize={36}
           variant="h1"
           fontWeight={700}

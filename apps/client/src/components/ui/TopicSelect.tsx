@@ -58,7 +58,7 @@ export const TopicSelect = forwardRef<typeof Autocomplete, TopicSelectProps>(
               height={50}
               alt=""
               unoptimized
-              src={option.cover.path}
+              src={option?.cover?.path ?? ''}
             />
             <Stack spacing={0.5} flex={1}>
               <Typography color={'#000'} variant="body2">

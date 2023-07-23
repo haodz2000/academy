@@ -32,12 +32,19 @@ const urlRegExp =
 const schema = yup
   .object({
     name: yup.string().required('Trường này không thể bỏ trống.'),
-    description: yup.string().required('Trường này không thể bỏ trống.'),
-    phone: yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ'),
-    facebook: yup.string().matches(urlRegExp, 'URL không hợp lệ'),
-    github: yup.string().matches(urlRegExp, 'URL không hợp lệ'),
-    twitter: yup.string().matches(urlRegExp, 'URL không hợp lệ'),
-    job: yup.string().required('Trường này không thể bỏ trống.'),
+    description: yup.string().notRequired(),
+    phone: yup
+      .string()
+      .matches(phoneRegExp, 'Số điện thoại không hợp lệ')
+      .notRequired(),
+    facebook: yup
+      .string()
+      .notRequired()
+      .matches(urlRegExp, 'URL không hợp lệ')
+      .notRequired(),
+    github: yup.string().matches(urlRegExp, 'URL không hợp lệ').notRequired(),
+    twitter: yup.string().matches(urlRegExp, 'URL không hợp lệ').notRequired(),
+    job: yup.string().notRequired(),
   })
   .required();
 
@@ -49,17 +56,17 @@ export const UpdateUserForm = ({ user, ...props }: Props) => {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<UserUpdateDto>({
+  } = useForm<any>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
       name: user.name,
-      description: user.description,
-      facebook: user.facebook,
-      github: user.github,
-      twitter: user.twitter,
-      job: user.job,
-      phone: user.phone,
+      description: user.description ?? undefined,
+      facebook: user.facebook ?? undefined,
+      github: user.github ?? undefined,
+      twitter: user.twitter ?? undefined,
+      job: user.job ?? undefined,
+      phone: user.phone ?? undefined,
     },
   });
 
@@ -117,7 +124,7 @@ export const UpdateUserForm = ({ user, ...props }: Props) => {
                   variant="standard"
                   size="small"
                   error={!!errors.name}
-                  helperText={errors.name?.message}
+                  // helperText={errors.name?.message}
                 />
               </FormControl>
             </Stack>
@@ -132,7 +139,7 @@ export const UpdateUserForm = ({ user, ...props }: Props) => {
                   variant="standard"
                   size="small"
                   error={!!errors.phone}
-                  helperText={errors.phone?.message}
+                  // helperText={errors.phone?.message}
                 />
               </FormControl>
             </Stack>
@@ -160,7 +167,7 @@ export const UpdateUserForm = ({ user, ...props }: Props) => {
                   variant="standard"
                   size="small"
                   error={!!errors.facebook}
-                  helperText={errors.facebook?.message}
+                  // helperText={errors.facebook?.message}
                 />
               </FormControl>
             </Stack>
@@ -175,7 +182,7 @@ export const UpdateUserForm = ({ user, ...props }: Props) => {
                   variant="standard"
                   size="small"
                   error={!!errors.twitter}
-                  helperText={errors.twitter?.message}
+                  // helperText={errors.twitter?.message}
                 />
               </FormControl>
             </Stack>
@@ -190,7 +197,7 @@ export const UpdateUserForm = ({ user, ...props }: Props) => {
                   variant="standard"
                   size="small"
                   error={!!errors.github}
-                  helperText={errors.github?.message}
+                  // helperText={errors.github?.message}
                 />
               </FormControl>
             </Stack>

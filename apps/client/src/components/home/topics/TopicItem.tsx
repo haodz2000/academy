@@ -1,6 +1,6 @@
-import Link from '@client/components/ui/Link';
 import { TopicStatResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Paper, Stack, Typography } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
 
 interface Props {
@@ -22,7 +22,6 @@ export const TopicItem = ({ topic }: Props) => {
       <Stack
         height={1}
         component={Link}
-        underline="none"
         color="inherit"
         href={'/topics/' + topic.slug}
         gap={2}
@@ -30,7 +29,7 @@ export const TopicItem = ({ topic }: Props) => {
         flexDirection={'row'}
         alignItems="center"
       >
-        <Avatar src={topic.cover.path} />
+        <Avatar src={topic.cover ? topic.cover.path : ''} />
         <Stack>
           <Typography variant="subtitle1" fontSize={15} fontWeight={600}>
             {topic.name}

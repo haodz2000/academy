@@ -29,6 +29,11 @@ const schema = yup
   .object({
     name: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
+    cover: yup.mixed(),
+    mode: yup.number().required('Trường này không thể bỏ trống.').min(1),
+    price: yup.number().min(0).nullable(),
+    discount: yup.number().min(0).max(100),
+    topicsIds: yup.array(),
   })
   .required();
 
@@ -46,14 +51,14 @@ export const FormUpdateCourse = ({ course }: Props) => {
     watch,
     control,
     formState: { errors, isValid },
-  } = useForm<CoursesApiUpdateRequest>({
+  } = useForm<any>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
       id: course.id,
       name: course.name,
       description: course.description,
-      topicsIds: course.topics.map((i) => i.id),
+      topicsIds: course.topics?.length ? course.topics?.map((i) => i.id) : [],
       mode: course.mode,
       price: course.course_price.price,
       discount: course.course_price.discount,
@@ -65,7 +70,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
       id: course.id,
       name: course.name,
       description: course.description,
-      topicsIds: course.topics.map((i) => i.id),
+      topicsIds: course.topics?.length ? course.topics?.map((i) => i.id) : [],
       mode: course.mode,
       price: course.course_price.price,
       discount: course.course_price.discount,
@@ -105,7 +110,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
           render={({ field }) => (
             <UploadSingleImage
               defaultImage={course.cover}
-              file={field.value}
+              file={field.value ? field.value : null}
               setFile={(file) => field.onChange(file)}
               sx={{ width: '100px', height: '100px' }}
             />
@@ -125,7 +130,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
               }}
               placeholder="ReactJS,..."
               error={!!errors.name}
-              helperText={errors.name?.message}
+              // helperText={errors.name?.message}
             />
           </FormControl>
         </Stack>
@@ -140,7 +145,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
               }) => (
                 <FormControl fullWidth>
                   <TopicSelect
-                    topicIds={value}
+                    topicIds={value ? value : []}
                     onValueChange={onChange}
                     {...field}
                   />
@@ -227,7 +232,7 @@ export const FormUpdateCourse = ({ course }: Props) => {
               }}
               placeholder="Mô tả ..."
               error={!!errors.description}
-              helperText={errors.description?.message}
+              // helperText={errors.description?.message}
             />
           </FormControl>
         </Stack>

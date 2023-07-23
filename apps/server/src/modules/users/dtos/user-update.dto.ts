@@ -11,28 +11,28 @@ export class UserUpdateDto extends BaseDto {
   name: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsPhoneNumber()
   phone: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsFacebook()
   facebook: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   github: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   twitter: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   job: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description: string;
 }

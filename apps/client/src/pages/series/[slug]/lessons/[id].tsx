@@ -20,7 +20,7 @@ import { withAuth } from '@client/hocs/withAuth';
 import { createUserAxiosInstanceFromContext } from '@client/libs/axios/functions';
 
 const Index = () => {
-  const [lesson, setLesson] = useState<LessonResponse>(null);
+  const [lesson, setLesson] = useState<LessonResponse>();
   const router = useRouter();
   const query = router.query;
   const id: number = Number.isInteger(Number(router.query.id))
@@ -44,7 +44,7 @@ const Index = () => {
   }
   return (
     <Stack position={'relative'} flexDirection={'row'} minHeight={1}>
-      <Navbar course={course} lesson={lesson} />
+      {course && lesson && <Navbar course={course} lesson={lesson} />}
       <Stack
         width={'calc(100vw - 330px)'}
         margin={'0 auto'}
@@ -59,7 +59,7 @@ const Index = () => {
             width={'100%'}
             height={'100%'}
             controls
-            url={lesson?.video.path}
+            url={lesson?.video?.path}
           />
         </Stack>
         <Stack
@@ -97,21 +97,21 @@ const Index = () => {
                   <Stack gap={1}>
                     <Typography fontSize={10}>Time</Typography>
                     <Typography fontWeight={600}>
-                      {getTimeVideo(lesson?.time)}
+                      {getTimeVideo(lesson?.time ?? 0)}
                     </Typography>
                   </Stack>
                   <Divider color="#dbdbdb" orientation="vertical" />
                   <Stack gap={1}>
                     <Typography fontSize={10}>Published</Typography>
                     <Typography fontWeight={600}>
-                      {new Date(lesson?.created_at).toLocaleDateString()}
+                      {new Date(lesson?.created_at ?? '').toLocaleDateString()}
                     </Typography>
                   </Stack>
                   <Divider color="#dbdbdb" orientation="vertical" />
                   <Stack gap={1}>
                     <Typography fontSize={10}>Topic</Typography>
                     <Typography fontWeight={600}>
-                      {course.topics[0].name}
+                      {course?.topics[0].name}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -122,10 +122,12 @@ const Index = () => {
         </Stack>
         <Stack flexDirection={'row'} width={'100%'} gap={1}>
           <Stack width={'60%'}>
-            <Discusstion lesson={lesson} />
+            {lesson && <Discusstion lesson={lesson} />}
           </Stack>
           <Stack width={'40%'}>
-            <ListAssignments course={course} lesson={lesson} />
+            {course && lesson && (
+              <ListAssignments course={course} lesson={lesson} />
+            )}
           </Stack>
         </Stack>
       </Stack>

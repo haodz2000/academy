@@ -13,7 +13,7 @@ export const MemeberItem = ({ user }: Props) => {
       title={<TooltipDrop user={user} />}
     >
       <Avatar
-        src={user?.avatar.path}
+        src={user.avatar ? user?.avatar.path : ''}
         color={colors.blue[700]}
         sx={{
           width: '82px',

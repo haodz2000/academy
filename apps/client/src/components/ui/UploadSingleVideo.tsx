@@ -53,7 +53,7 @@ export const UploadSingleVideo: FC<Props> = ({
   useEffect(() => {
     setTimeout(() => {
       if (videoUrl) {
-        const time = videoRef.current?.getDuration();
+        const time = videoRef.current?.getDuration() ?? 0;
         setTime(time);
       }
     }, 500);

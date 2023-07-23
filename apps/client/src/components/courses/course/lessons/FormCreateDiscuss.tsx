@@ -13,6 +13,7 @@ import { useNotify } from '@client/components/notification/hook';
 
 const schema = yup
   .object({
+    lesson_id: yup.number().required(),
     description: yup.string().required('Trường này không thể bỏ trống.'),
   })
   .required();

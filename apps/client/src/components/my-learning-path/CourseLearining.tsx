@@ -6,14 +6,15 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ForwardIcon from '@mui/icons-material/Forward';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
-import Link from '../ui/Link';
 import { useAppSelector } from '@client/stores';
 import { RatingCourse } from '../courses/RatingCourse';
+import { useRouter } from 'next/router';
 
 interface Props {
   course: CourseDetailResponse;
 }
 export const CourseLearining = ({ course }: Props) => {
+  const router = useRouter();
   const currentUser = useAppSelector((state) => state.user.user);
   const videos = course.sections.reduce((total, current) => {
     return total + current.lessons.length;
@@ -70,8 +71,7 @@ export const CourseLearining = ({ course }: Props) => {
         </Stack>
         <Avatar src={currentUser?.avatar.path} />
         <RoundedButton
-          component={Link}
-          href={'/series/' + course.slug + '/lessons/'}
+          onClick={() => router.push('/series/' + course.slug + '/lessons/')}
           startIcon={<ForwardIcon />}
           sx={{ bgcolor: '#6a7ea3' }}
         >

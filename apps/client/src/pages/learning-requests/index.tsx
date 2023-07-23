@@ -40,13 +40,15 @@ const Index = () => {
     const map: Record<string, ILearningRequestCustome> = {};
     for (const item of requests) {
       const { course, ...rest } = item;
-      if (map[course.id]) {
-        map[course.id].requests.push(rest);
-      } else {
-        map[course.id] = {
-          course,
-          requests: [rest],
-        };
+      if (course) {
+        if (map[course.id]) {
+          map[course.id].requests.push(rest);
+        } else {
+          map[course.id] = {
+            course,
+            requests: [rest],
+          };
+        }
       }
     }
     return Object.values(map);

@@ -26,6 +26,8 @@ import { useCreateAssignmentMutation } from '@client/hooks/apis/assignments/useC
 const schema = yup
   .object({
     title: yup.string().required('Trường này không thể bỏ trống.'),
+    lesson_id: yup.number().required().min(1),
+    description: yup.string().required(),
   })
   .required();
 interface Props extends StackProps {

@@ -28,8 +28,9 @@ const schema = yup
     name: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
     mode: yup.number().required('Trường này không thể bỏ trống.').min(1),
-    price: yup.number().min(0),
+    price: yup.number().min(0).nullable(),
     discount: yup.number().min(0).max(100),
+    topicsIds: yup.array(),
   })
   .required();
 
@@ -45,7 +46,7 @@ export const FormCreateCourse = () => {
     watch,
     control,
     formState: { isValid },
-  } = useForm<CoursesApiCreateRequest>({
+  } = useForm<any>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
@@ -75,7 +76,7 @@ export const FormCreateCourse = () => {
         cover: data.cover,
         description: data.description,
         name: data.name,
-        topicsIds: [...data.topicsIds],
+        topicsIds: data.topicsIds,
         mode: data.mode,
         price: data.price,
       });
@@ -146,7 +147,7 @@ export const FormCreateCourse = () => {
               }) => (
                 <FormControl fullWidth>
                   <TopicSelect
-                    topicIds={value}
+                    topicIds={value ? value : []}
                     onValueChange={onChange}
                     {...field}
                   />

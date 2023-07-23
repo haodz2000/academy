@@ -37,7 +37,7 @@ const Index = () => {
       </Stack>
       <Stack width={'70%'}>
         <Stack paddingX={2} gap={1}>
-          <FormUpdateCourse course={course} />
+          {course && <FormUpdateCourse course={course} />}
         </Stack>
       </Stack>
     </Stack>

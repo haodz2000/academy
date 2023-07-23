@@ -1,10 +1,9 @@
-import Link from '@client/components/ui/Link';
 import { getTimeVideo } from '@client/utils/lesson';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Link from 'next/link';
 
 interface Props {
   lesson: LessonResponse;
@@ -16,7 +15,6 @@ export const Lesson = ({ lesson, currentId }: Props) => {
   return (
     <Stack
       component={Link}
-      underline="none"
       color={'inherit'}
       href={'/series/' + slug + '/lessons/' + lesson.id}
       borderRadius={2}

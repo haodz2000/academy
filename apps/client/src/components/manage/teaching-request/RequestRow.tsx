@@ -1,6 +1,5 @@
 import {
   IconButton,
-  Link,
   Stack,
   TableCell,
   TableRow,
@@ -19,6 +18,7 @@ import { useConfirm } from 'material-ui-confirm';
 import { StatusTeachingRequest } from '@libs/constants/entities/TeachingRequest';
 import { Can } from '@client/abilities';
 import { IdAction, IdSubject } from '@libs/constants/abilities';
+import Link from 'next/link';
 
 interface Props extends TableRowProps {
   request: TeachingRequestResponse;
@@ -64,18 +64,13 @@ export const RequestRow = ({ request, order, onRefresh, ...props }: Props) => {
     <TableRow {...props}>
       <TableCell>{order}</TableCell>
       <TableCell>
-        <Typography
-          component={Link}
-          href={'/series/' + request.course.slug}
-          underline="none"
-        >
+        <Typography component={Link} href={'/series/' + request.course.slug}>
           {request.course.name}
         </Typography>
       </TableCell>
       <TableCell>
         <Typography
           component={Link}
-          underline="hover"
           href={'/profile/' + request.requester.email.split('@')[0]}
         >
           {request.requester.name}

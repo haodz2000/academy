@@ -7,16 +7,18 @@ import {
 export const getLinkLesson = (lesson: LessonResponse): string => {
   if (lesson) {
     if (lesson.type == TypeLesson.YOUTUBE) {
-      return lesson.video.path;
+      return lesson?.video?.path ?? '';
     }
   }
   return '';
 };
 
-export const getVideoLesson = (lesson: LessonResponse): StoredFileResponse => {
+export const getVideoLesson = (
+  lesson: LessonResponse
+): StoredFileResponse | null => {
   if (lesson) {
     if (lesson.type == TypeLesson.UPLOAD) {
-      return lesson.video;
+      return lesson?.video;
     }
   }
   return null;

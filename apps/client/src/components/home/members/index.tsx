@@ -4,7 +4,7 @@ import { MemeberItem } from './MemeberItem';
 import { usePublicUsersQuery } from '@client/hooks/apis/users/usePublicUsersQuery';
 import { UserPublicResponse } from '@libs/openapi-generator/generated';
 
-const splitArray = (data: UserPublicResponse[], x) => {
+const splitArray = (data: UserPublicResponse[], x: number[]) => {
   const result = [];
   let sub_array: UserPublicResponse[] = [];
   let i = 0;
@@ -49,7 +49,9 @@ export const Members = () => {
         {users.map((data, index) => (
           <Stack
             key={index}
-            mt={index > 2 && index < 11 && index % 2 !== 0 && '150px'}
+            sx={{
+              mt: index > 2 && index < 11 && index % 2 !== 0 ? '150px' : '0px',
+            }}
           >
             <Stack
               position={'relative'}

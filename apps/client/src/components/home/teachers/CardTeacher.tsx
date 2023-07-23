@@ -8,10 +8,10 @@ import {
 } from '@mui/material';
 import React from 'react';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import Link from '@client/components/ui/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { TeacherResponse } from '@libs/openapi-generator/generated';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Props extends PaperProps {
   isTop: boolean;
@@ -70,7 +70,7 @@ export const CardTeacher = ({ isTop, teacher, ...props }: Props) => {
           >
             <Image
               loader={({ src }) => src}
-              src={teacher.avatar.path}
+              src={teacher.avatar?.path}
               alt=""
               fill
               unoptimized
@@ -91,7 +91,6 @@ export const CardTeacher = ({ isTop, teacher, ...props }: Props) => {
             variant="h5"
             fontWeight={700}
             href={'#'}
-            underline="none"
             color={'inherit'}
             component={Link}
           >

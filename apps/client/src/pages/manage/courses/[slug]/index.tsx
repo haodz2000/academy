@@ -42,27 +42,29 @@ const Index = () => {
         </Stack>
       </Stack>
       <Stack width={'70%'}>
-        <Stack paddingX={2} gap={1}>
-          <HeaderInformation course={course} />
-          <Can I={IdAction.Update} this={course}>
-            <FormCreateSection onCreated={onRefresh} course={course} />
-          </Can>
-          <Stack gap={2}>
-            <Typography variant="h6" fontWeight={600}>
-              Lộ trình học
-            </Typography>
-            <Stack gap={1}>
-              {course.sections?.map((section) => (
-                <Section
-                  course={course}
-                  onCreated={onRefresh}
-                  section={section}
-                  key={section.id}
-                />
-              ))}
+        {course && (
+          <Stack paddingX={2} gap={1}>
+            <HeaderInformation course={course} />
+            <Can I={IdAction.Update} this={course}>
+              <FormCreateSection onCreated={onRefresh} course={course} />
+            </Can>
+            <Stack gap={2}>
+              <Typography variant="h6" fontWeight={600}>
+                Lộ trình học
+              </Typography>
+              <Stack gap={1}>
+                {course.sections?.map((section) => (
+                  <Section
+                    course={course}
+                    onCreated={onRefresh}
+                    section={section}
+                    key={section.id}
+                  />
+                ))}
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        )}
       </Stack>
     </Stack>
   );

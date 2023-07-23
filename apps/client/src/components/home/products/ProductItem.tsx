@@ -1,11 +1,11 @@
 import { RoundedButton } from '@client/components/ui/buttons';
-import Link from '@client/components/ui/Link';
 import { Button, Divider, Paper, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Image from 'next/image';
 import React from 'react';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import Link from 'next/link';
 
 export const ProductItem = () => {
   return (
@@ -104,7 +104,6 @@ export const ProductItem = () => {
           <Stack paddingY={1} paddingX={2} height={1}>
             <Stack
               justifyContent={'flex-end'}
-              underline="none"
               color={'inherit'}
               component={Link}
               href={'#'}

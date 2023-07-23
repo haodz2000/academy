@@ -13,7 +13,7 @@ import Image from 'next/image';
 import React from 'react';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import Link from '@client/components/ui/Link';
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
@@ -118,7 +118,6 @@ export const Footer = () => {
                   <Typography
                     component={Link}
                     href={'/series'}
-                    underline="none"
                     color={'#BAD9FC80'}
                   >
                     Series
@@ -126,7 +125,6 @@ export const Footer = () => {
                   <Typography
                     component={Link}
                     href={'/my-learning-path'}
-                    underline="none"
                     color={'#BAD9FC80'}
                   >
                     Learning path
@@ -134,7 +132,6 @@ export const Footer = () => {
                   <Typography
                     component={Link}
                     href={'/topics'}
-                    underline="none"
                     color={'#BAD9FC80'}
                   >
                     Categories
@@ -142,7 +139,6 @@ export const Footer = () => {
                   <Typography
                     component={Link}
                     href={'/topics'}
-                    underline="none"
                     color={'#BAD9FC80'}
                   >
                     Topics

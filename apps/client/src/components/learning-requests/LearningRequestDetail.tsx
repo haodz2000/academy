@@ -21,7 +21,7 @@ import { IdAction, IdSubject } from '@libs/constants/abilities';
 
 const getStatusLearningRequest = (status: number) => {
   let text = '';
-  let color: 'info' | 'success' | 'error';
+  let color: 'info' | 'success' | 'error' | 'default';
   switch (status) {
     case StatusLearningRequest.Pending: {
       text = 'Đang chờ';
@@ -39,6 +39,7 @@ const getStatusLearningRequest = (status: number) => {
       break;
     }
     default: {
+      color = 'default';
       break;
     }
   }
@@ -120,7 +121,7 @@ export const LearningRequestDetail = ({
                   <Avatar
                     alt=""
                     sx={{ height: 60, width: 60 }}
-                    src={request.requester.avatar.path}
+                    src={request.requester ? request.requester.avatar.path : ''}
                   />
                   <TextField
                     size="small"
@@ -129,7 +130,7 @@ export const LearningRequestDetail = ({
                       bgcolor: 'rgba(165, 165, 165, 0.2)',
                     }}
                     InputProps={{ readOnly: true }}
-                    value={request.requester.name}
+                    value={request.requester ? request.requester.name : ''}
                   />
                   <TextField
                     sx={{
@@ -138,7 +139,7 @@ export const LearningRequestDetail = ({
                     }}
                     InputProps={{ readOnly: true }}
                     size="small"
-                    value={request.requester.email}
+                    value={request.requester ? request.requester.email : ''}
                   />
                 </Stack>
               </Stack>
@@ -165,9 +166,11 @@ export const LearningRequestDetail = ({
                 <Avatar
                   sx={{ height: 180, width: 180 }}
                   alt=""
-                  src={request.course.cover.path}
+                  src={request.course ? request.course.cover.path : ''}
                 />
-                <Typography>{request.course.name}</Typography>
+                <Typography>
+                  {request.course ? request.course.name : ''}
+                </Typography>
               </Stack>
             </Stack>
           </Grid>

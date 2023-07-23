@@ -1,5 +1,4 @@
 import { RoundedButton } from '@client/components/ui/buttons';
-import Link from '@client/components/ui/Link';
 import { Avatar, Paper, Rating, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import React, { useRef } from 'react';
@@ -7,6 +6,7 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { CourseResponse } from '@libs/openapi-generator/generated';
 import { PriceCourse } from './PriceCourse';
+import Link from 'next/link';
 
 interface Props {
   course: CourseResponse;
@@ -25,7 +25,6 @@ export const CourseItem = ({ course }: Props) => {
         }}
         color={'inherit'}
         component={Link}
-        underline="none"
         href={'/series/' + course.slug}
       >
         <Stack
@@ -113,9 +112,9 @@ export const CourseItem = ({ course }: Props) => {
             </Stack>
           </Stack>
           <Stack paddingY={1} paddingX={2} height={1}>
-            <Link
+            <Stack
+              component={Link}
               href={'/user/' + course.administrator.email.split('@')[0]}
-              underline="none"
               height={1}
             >
               <Stack
@@ -128,7 +127,7 @@ export const CourseItem = ({ course }: Props) => {
                 <Image
                   loader={({ src }) => src}
                   alt="image"
-                  src={course.administrator.avatar.path}
+                  src={course.administrator.avatar?.path}
                   fill
                   style={{
                     borderRadius: '25px',
@@ -169,7 +168,7 @@ export const CourseItem = ({ course }: Props) => {
                   </Stack>
                 </Stack>
               </Stack>
-            </Link>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>

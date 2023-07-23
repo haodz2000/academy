@@ -20,7 +20,7 @@ import { createUserAxiosInstanceFromContext } from '@client/libs/axios/functions
 import { Empty } from '@client/components/ui/Empty';
 
 const Index = () => {
-  const [lesson, setLesson] = useState<LessonResponse>(null);
+  const [lesson, setLesson] = useState<LessonResponse>();
   const router = useRouter();
   const query = router.query;
   const courseQuery = useCourseQuery({ slug: query.slug as string });
@@ -42,7 +42,7 @@ const Index = () => {
   }
   return (
     <Stack position={'relative'} flexDirection={'row'} minHeight={1}>
-      <Navbar course={course} lesson={lesson} />
+      {course && lesson && <Navbar course={course} lesson={lesson} />}
       <Stack
         width={'calc(100vw - 330px)'}
         margin={'0 auto'}
@@ -59,7 +59,7 @@ const Index = () => {
                   width={'100%'}
                   height={'100%'}
                   controls
-                  url={lesson?.video.path}
+                  url={lesson?.video?.path}
                 />
               )}
             </Stack>
@@ -112,7 +112,7 @@ const Index = () => {
                       <Stack gap={1}>
                         <Typography fontSize={10}>Topic</Typography>
                         <Typography fontWeight={600}>
-                          {course.topics[0].name}
+                          {course?.topics[0].name}
                         </Typography>
                       </Stack>
                     </Stack>
@@ -126,7 +126,9 @@ const Index = () => {
                 <Discusstion lesson={lesson} />
               </Stack>
               <Stack width={'40%'}>
-                <ListAssignments course={course} lesson={lesson} />
+                {course && lesson && (
+                  <ListAssignments course={course} lesson={lesson} />
+                )}
               </Stack>
             </Stack>
           </Stack>

@@ -26,21 +26,23 @@ const Index = () => {
   return (
     <Stack gap={3}>
       <Topics />
-      <Stack gap={6}>
-        <Stack margin={'0 auto'} flexDirection={'row'} gap={1}>
-          <Typography fontSize={33}>Exploring</Typography>
-          <Typography fontSize={33} color={'blue'}>
-            {'//' + topic.name}
-          </Typography>
+      {topic && (
+        <Stack gap={6}>
+          <Stack margin={'0 auto'} flexDirection={'row'} gap={1}>
+            <Typography fontSize={33}>Exploring</Typography>
+            <Typography fontSize={33} color={'blue'}>
+              {'//' + topic.name}
+            </Typography>
+          </Stack>
+          <Stack gap={4}>
+            {!!topic &&
+              topic.courses.map((course) => (
+                <CourseItem course={course} key={course.id} />
+              ))}
+            {!topic.courses.length && <Empty content="No course" />}
+          </Stack>
         </Stack>
-        <Stack gap={4}>
-          {!!topic &&
-            topic.courses.map((course) => (
-              <CourseItem course={course} key={course.id} />
-            ))}
-          {!topic.courses.length && <Empty content="No course" />}
-        </Stack>
-      </Stack>
+      )}
     </Stack>
   );
 };

@@ -21,7 +21,11 @@ const Index = () => {
   if (teachingRequestQuery.isError) {
     return <ErrorPage />;
   }
-  return <TeachingRequestDetail refresh={refresh} request={request} />;
+  if (request) {
+    return <TeachingRequestDetail refresh={refresh} request={request} />;
+  } else {
+    return <ErrorPage />;
+  }
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {

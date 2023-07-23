@@ -30,7 +30,7 @@ export class CourseResponse extends BaseSerialKeyResponse {
   administrator_id: number;
 
   @ApiProperty({ type: UserResponse })
-  administrator: UserResponse | null;
+  administrator: UserResponse;
 
   @ApiProperty({ type: CoursePriceResponse })
   course_price: CoursePriceResponse;

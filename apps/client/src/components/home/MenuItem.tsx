@@ -1,7 +1,7 @@
 import { colors, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { IMenu } from './Menu';
-import Link from '@client/components/ui/Link';
+import Link from 'next/link';
 
 interface Props {
   menu: IMenu;
@@ -10,7 +10,6 @@ export const MenuItem = ({ menu }: Props) => {
   return (
     <Stack
       component={Link}
-      underline="none"
       href={menu.url}
       position={'relative'}
       paddingX={2}

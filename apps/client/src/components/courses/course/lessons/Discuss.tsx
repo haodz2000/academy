@@ -1,6 +1,5 @@
-import Link from '@client/components/ui/Link';
 import { DiscussionResponse } from '@libs/openapi-generator/generated';
-import { Avatar, Stack, Typography } from '@mui/material';
+import { Avatar, Link, Stack, Typography } from '@mui/material';
 import React from 'react';
 
 interface Props {
@@ -10,12 +9,14 @@ export const Discuss = ({ discussion }: Props) => {
   return (
     <Stack flexDirection={'row'} width={'100%'} gap={2}>
       <Stack>
-        <Avatar
-          src={discussion.creator.avatar.path}
-          sx={{ height: 60, width: 60 }}
-        >
-          H
-        </Avatar>
+        {discussion.creator && (
+          <Avatar
+            src={discussion.creator.avatar.path}
+            sx={{ height: 60, width: 60 }}
+          >
+            H
+          </Avatar>
+        )}
       </Stack>
       <Stack gap={1}>
         <Stack flexDirection={'row'} gap={1} alignItems={'center'}>

@@ -21,7 +21,7 @@ import { useTeachingRequestAcceptMutation } from '@client/hooks/apis/teaching-re
 
 const getStatusLearningRequest = (status: number) => {
   let text = '';
-  let color: 'info' | 'success' | 'error';
+  let color: 'info' | 'success' | 'error' | 'default';
   switch (status) {
     case StatusLearningRequest.Pending: {
       text = 'Đang chờ';
@@ -39,6 +39,7 @@ const getStatusLearningRequest = (status: number) => {
       break;
     }
     default: {
+      color = 'default';
       break;
     }
   }

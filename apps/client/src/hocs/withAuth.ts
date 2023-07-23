@@ -53,7 +53,7 @@ export const withAuth = (
       };
     }
     try {
-      if (getServiceSiteProps) {
+      if (getServiceSiteProps && user) {
         const { props: contextProps, ...rest } = await getServiceSiteProps(
           context,
           user,

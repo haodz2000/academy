@@ -33,20 +33,19 @@ export const NavbarManage = ({ children }: PropsWithChildren) => {
       <Stack width={1}>{children}</Stack>
       <Stack gap={1}>
         {menu.map((i, index) => (
-          <Stack
+          <Link
             key={index}
             position="relative"
-            component={Link}
             underline="none"
             href={i.href}
             paddingX={3}
             paddingY={1}
             borderRadius={2}
-            bgcolor={path.includes(i.href) && '#328af11A'}
             sx={(theme) => ({
               '.text': {
                 color: path.includes(i.href) ? '#328AF1' : '#FFFFFFD9',
               },
+              bgcolor: path.includes(i.href) && '#328af11A',
               ':after': {
                 content: '""',
                 width: '8px',
@@ -74,7 +73,7 @@ export const NavbarManage = ({ children }: PropsWithChildren) => {
             <Typography fontWeight={500} className="text">
               {i.title}
             </Typography>
-          </Stack>
+          </Link>
         ))}
       </Stack>
     </Stack>

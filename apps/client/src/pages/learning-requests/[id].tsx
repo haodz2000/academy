@@ -5,13 +5,15 @@ import { LearningRequestDetail } from '@client/components/learning-requests/Lear
 import { withAuth } from '@client/hocs/withAuth';
 import { useLearningRequestQuery } from '@client/hooks/apis/learning-requests/useLearningRequestQuery';
 import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 
 const Index = () => {
   const router = useRouter();
   const id = router.query?.id as string;
   const learningRequestQuery = useLearningRequestQuery({ id });
-  const request = learningRequestQuery.data?.data;
+  const request = useMemo(() => {
+    return learningRequestQuery.data?.data;
+  }, [learningRequestQuery.data?.data]);
   const refresh = () => {
     learningRequestQuery.refetch();
   };
@@ -21,7 +23,11 @@ const Index = () => {
   if (learningRequestQuery.isError) {
     return <ErrorPage />;
   }
-  return <LearningRequestDetail refresh={refresh} request={request} />;
+  if (request) {
+    return <LearningRequestDetail refresh={refresh} request={request} />;
+  } else {
+    return <ErrorPage />;
+  }
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {

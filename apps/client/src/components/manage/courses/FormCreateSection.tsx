@@ -13,6 +13,7 @@ import { useCreateSectionMutation } from '@client/hooks/apis/courses/useCreateSe
 
 const schema = yup
   .object({
+    course_id: yup.number().required(),
     title: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
   })

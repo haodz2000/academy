@@ -26,9 +26,13 @@ import ReactPlayer from 'react-player';
 
 const schema = yup
   .object({
+    video: yup.mixed().notRequired(),
     title: yup.string().required('Trường này không thể bỏ trống.'),
     description: yup.string().required('Trường này không thể bỏ trống.'),
     type: yup.number().required('Trường này không thể bỏ trống.'),
+    link: yup.string().notRequired(),
+    time: yup.number().required(),
+    sectionId: yup.number().required(),
   })
   .required();
 
@@ -37,7 +41,7 @@ interface Props {
   onCreated: () => void;
 }
 export const FormCreateLesson = ({ section, onCreated }: Props) => {
-  const videoRef = useRef<ReactPlayer>();
+  const videoRef = useRef<ReactPlayer>(null);
   const [timeUpload, setTimeUpload] = useState<number>(0);
   const [timeYoutube, setTimeYoutube] = useState<number>(0);
   const { notify, notifyError } = useNotify();
@@ -49,7 +53,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
     reset,
     watch,
     formState: { errors, isValid },
-  } = useForm<LessonsApiCreateRequest>({
+  } = useForm<any>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
@@ -67,7 +71,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
   useEffect(() => {
     if (link) {
       setTimeout(() => {
-        setTimeYoutube(videoRef.current.getDuration());
+        setTimeYoutube(videoRef.current ? videoRef.current.getDuration() : 0);
       }, 500);
     }
   }, [link]);
@@ -127,7 +131,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
             }}
             placeholder="Title lesson ..."
             error={!!errors.title}
-            helperText={errors.title?.message}
+            // helperText={errors.title?.message}
           />
         </FormControl>
       </Stack>
@@ -166,7 +170,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
                   <UploadSingleVideo
                     setTime={setTimeUpload}
                     defaultVideo={null}
-                    file={field.value}
+                    file={field.value ? field.value : null}
                     setFile={(file) => field.onChange(file)}
                     sx={{ height: '300px' }}
                   />
@@ -190,7 +194,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
                 }}
                 placeholder="Title lesson ..."
                 error={!!errors.link}
-                helperText={errors.link?.message}
+                // helperText={errors.link?.message}
               />
               <ReactPlayer
                 ref={videoRef}
@@ -198,7 +202,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
                 width={'100%'}
                 height={'100%'}
                 controls
-                url={link}
+                url={link ? link : ''}
               />
             </FormControl>
           </Stack>
@@ -220,7 +224,7 @@ export const FormCreateLesson = ({ section, onCreated }: Props) => {
             multiline
             minRows={3}
             error={!!errors.description}
-            helperText={errors.description?.message}
+            // helperText={errors.description?.message}
           />
         </FormControl>
       </Stack>

@@ -41,7 +41,7 @@ interface Props {
   onCreated: () => void;
 }
 export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
-  const videoRef = useRef<ReactPlayer>();
+  const videoRef = useRef<any>();
   const [timeUpload, setTimeUpload] = useState<number>(0);
   const [timeYoutube, setTimeYoutube] = useState<number>(0);
   const [open, setOpen] = React.useState(false);
@@ -60,7 +60,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<LessonsApiUpdateRequest>({
+  } = useForm<any>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
@@ -94,12 +94,14 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
       let upload: LessonsApiUpdateRequest = {
         ...rest,
       };
-      if (link !== lesson.video.path && type == TypeLesson.YOUTUBE) {
-        upload = {
-          ...upload,
-          link,
-          time: Math.floor(time),
-        };
+      if (lesson.video) {
+        if (link !== lesson.video.path && type == TypeLesson.YOUTUBE) {
+          upload = {
+            ...upload,
+            link,
+            time: Math.floor(time),
+          };
+        }
       }
       if (type == TypeLesson.UPLOAD) {
         upload = {
@@ -161,7 +163,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
                 }}
                 placeholder="Title lesson ..."
                 error={!!errors.title}
-                helperText={errors.title?.message}
+                // helperText={errors.title?.message}
               />
             </FormControl>
           </Stack>
@@ -199,7 +201,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
                       <UploadSingleVideo
                         setTime={setTimeUpload}
                         defaultVideo={getVideoLesson(lesson)}
-                        file={field.value}
+                        file={field.value ? field.value : null}
                         setFile={(file) => field.onChange(file)}
                         sx={{ height: '300px' }}
                       />
@@ -223,7 +225,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
                     }}
                     placeholder="Title lesson ..."
                     error={!!errors.link}
-                    helperText={errors.link?.message}
+                    // helperText={errors.link?.message}
                   />
                   <ReactPlayer
                     ref={videoRef}
@@ -253,7 +255,7 @@ export const FormUpdateLesson = ({ lesson, onCreated }: Props) => {
                 multiline
                 minRows={3}
                 error={!!errors.description}
-                helperText={errors.description?.message}
+                // helperText={errors.description?.message}
               />
             </FormControl>
           </Stack>

@@ -1,9 +1,9 @@
 import { Avatar, IconButton, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
-import Link from '@client/components/ui/Link';
 import { CourseResponse } from '@libs/openapi-generator/generated';
 import AddIcon from '@mui/icons-material/Add';
+import Link from 'next/link';
 
 interface Props {
   course: CourseResponse;
@@ -43,7 +43,6 @@ export const Course = ({ course }: Props) => {
                 color="#FFFFFFE8"
                 fontWeight={600}
                 component={Link}
-                underline="none"
                 href={'/manage/courses/' + course.slug}
               >
                 {course.name}
@@ -68,10 +67,13 @@ export const Course = ({ course }: Props) => {
                   fontWeight={600}
                   color="#328AF1"
                   component={Link}
-                  underline="hover"
-                  href={'profile/' + course.creator.email.split('@')[0]}
+                  href={
+                    course.creator
+                      ? 'profile/' + course.creator.email.split('@')[0]
+                      : '#'
+                  }
                 >
-                  {course.creator.name}
+                  {course.creator ? course.creator.name : ''}
                 </Typography>
                 <Typography fontSize={10} color={'#D8E3EE'} variant="body2">
                   cập nhật lúc {new Date().toLocaleDateString()}

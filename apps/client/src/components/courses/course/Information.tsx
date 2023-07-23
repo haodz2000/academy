@@ -13,11 +13,11 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 import { useLearningRequestMutation } from '@client/hooks/apis/learning-requests/useLearningRequestMutation';
 import { useNotify } from '@client/components/notification/hook';
-import Link from '@client/components/ui/Link';
 import { PriceCourse } from '../PriceCourse';
 import { useIsLogin } from '@client/hooks/useIsLogin';
 import { ModeCourse } from '@libs/constants/entities/Course';
 import { Back } from '@client/components/ui/Back';
+import Link from 'next/link';
 
 interface Props {
   course: CourseDetailResponse;

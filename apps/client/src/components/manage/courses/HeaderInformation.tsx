@@ -2,14 +2,13 @@ import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
-import Link from '@client/components/ui/Link';
 import { Back } from '@client/components/ui/Back';
 import { StatusCourse } from '@libs/constants/entities/Course';
 import { useTeachingRequestMutation } from '@client/hooks/apis/teaching-requests/useTeachingRequestMutation';
 import { useNotify } from '@client/components/notification/hook';
 import { Can } from '@client/abilities';
 import { IdAction } from '@libs/constants/abilities';
-import { useAppSelector } from '@client/stores';
+import Link from 'next/link';
 
 interface Props {
   course: CourseDetailResponse;
@@ -50,7 +49,6 @@ export const HeaderInformation = ({ course }: Props) => {
               <Typography>Administrator:</Typography>
               <Typography
                 fontWeight={600}
-                underline="hover"
                 component={Link}
                 href={'/profile/' + course.administrator.email.split('@')[0]}
               >

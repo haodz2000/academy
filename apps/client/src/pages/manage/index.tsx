@@ -4,14 +4,16 @@ import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage'
 import { NavbarManage } from '@client/components/manage/NavbarManage';
 import { Course } from '@client/components/manage/courses/Course';
 import { Empty } from '@client/components/ui/Empty';
-import Link from '@client/components/ui/Link';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { withAuth } from '@client/hocs/withAuth';
 import { useCoursesManageQuery } from '@client/hooks/apis/courses/useCoursesManageQuery';
 import { Pagination, Stack } from '@mui/material';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { ReactElement, useMemo, useState } from 'react';
 
 const Index = () => {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const coursesQuery = useCoursesManageQuery({
     page: page,
@@ -34,7 +36,9 @@ const Index = () => {
       <Stack width={'30%'}>
         <Stack width={220}>
           <NavbarManage>
-            <RoundedButton href="/manage/courses/create" component={Link}>
+            <RoundedButton
+              onClick={() => router.push('/manage/courses/create')}
+            >
               Tạo khóa học
             </RoundedButton>
           </NavbarManage>

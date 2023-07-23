@@ -1,6 +1,5 @@
-import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { IconButton, Link, Stack, Tooltip, Typography } from '@mui/material';
 import React from 'react';
-import Link from '../ui/Link';
 import { NotificationResponse } from '@libs/openapi-generator/generated';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useReadNotificationMutation } from '@client/hooks/apis/notifications/useReadNotificationMutation';
@@ -15,6 +14,7 @@ interface Props {
 export const NotificationItem = ({ notification }: Props) => {
   const { notifyError } = useNotify();
   const queryClient = useQueryClient();
+  console.log(notification);
   const readNotificationMutation = useReadNotificationMutation();
   const onClick = async () => {
     try {
@@ -50,8 +50,8 @@ export const NotificationItem = ({ notification }: Props) => {
       </Stack>
       <Stack
         component={Link}
-        href={notification.fcm_message.webpush.fcmOptions.link}
         underline="none"
+        href={notification.fcm_message?.webpush?.fcmOptions?.link}
         gap={1}
       >
         <Typography fontWeight={600}>

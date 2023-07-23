@@ -87,7 +87,14 @@ export class LearningRequestService {
   async findOne(id: string) {
     const where: FilterQuery<LearningRequest> = {};
     if (this.request.user.role.type !== RoleType.Admin) {
-      where.requester_id = this.request.user.id;
+      where.$or = [
+        {
+          requester_id: this.request.user.id,
+        },
+        {
+          course: { administrator_id: this.request.user.id },
+        },
+      ];
     }
     where.id = id;
     return await this.learningRequestRepository.findOneOrFail(where, {
@@ -182,8 +189,8 @@ export class LearningRequestService {
       await this.em.commit();
       return learningRequest;
     } catch (error) {
-      console.log('error', error);
       await this.em.rollback();
+      throw new BadRequestException(error);
     }
   }
 

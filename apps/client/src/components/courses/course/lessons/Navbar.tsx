@@ -48,7 +48,7 @@ export const Navbar = ({ course, lesson }: Props) => {
       </Stack>
       <Stack gap={2}>
         <Stack height={60} flexDirection="row" alignItems="center" gap={2}>
-          <Avatar sx={{ height: 59, width: 59 }} />
+          <Avatar src={course.cover.path} sx={{ height: 59, width: 59 }} />
           <Stack gap={1}>
             <Typography variant="h3" fontSize={18} fontWeight={600}>
               {course.name}

@@ -7,16 +7,14 @@ import { Empty } from '@client/components/ui/Empty';
 import Link from '@client/components/ui/Link';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { withAuth } from '@client/hocs/withAuth';
-import { useCoursesQuery } from '@client/hooks/apis/courses/useCoursesQuery';
-import { TypeQueryCourse } from '@libs/constants/entities/Course';
+import { useCoursesManageQuery } from '@client/hooks/apis/courses/useCoursesManageQuery';
 import { Stack } from '@mui/material';
 import React, { ReactElement, useMemo } from 'react';
 
 const Index = () => {
-  const coursesQuery = useCoursesQuery({
+  const coursesQuery = useCoursesManageQuery({
     page: 1,
-    status: 1,
-    type: TypeQueryCourse.Manage,
+    status: 2,
     limit: 10,
   });
   const courses = useMemo(() => {

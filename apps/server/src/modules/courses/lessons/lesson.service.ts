@@ -15,9 +15,10 @@ import { UpdateLessonDto } from './dtos/update-lesson.dto';
 import { wrap } from '@mikro-orm/core';
 import { StoredFile } from '@libs/entities/entities/StoredFile';
 import { MinioFolder } from '@server/modules/upload/minio/minio.config';
-import { UploadService } from '@server/modules/upload/upload.service';
 import { User } from '@libs/entities/entities/User';
 import { Course } from '@libs/entities/entities/Course';
+import { AwsUploadService } from '@server/modules/upload/aws/aws-upload.service';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class LessonService {
@@ -27,7 +28,7 @@ export class LessonService {
     @InjectRepository(StoredFile)
     private readonly storedFileRepository: EntityRepository<StoredFile>,
     @Inject(REQUEST) private request: Request,
-    private readonly uploadService: UploadService,
+    private readonly awsUploadService: AwsUploadService,
     private readonly em: EntityManager,
     private readonly ability: AbilityFactory
   ) {}
@@ -56,7 +57,7 @@ export class LessonService {
       });
       if (data.type == TypeLesson.UPLOAD) {
         if (video) {
-          const videoStored = await this.uploadService.uploadFile(video, {
+          const videoStored = await this.awsUploadService.uploadFile(video, {
             folderPath: MinioFolder.Lessons,
           });
           lesson.video_id = videoStored.id;
@@ -69,8 +70,8 @@ export class LessonService {
         if (link) {
           const videoStored = this.storedFileRepository.create({
             name: data.title,
-            hash: link,
-            key: link,
+            hash: uuid() + link,
+            key: uuid() + link,
             path: link,
             created_by: this.request.user.id,
             updated_by: this.request.user.id,
@@ -114,13 +115,13 @@ export class LessonService {
         if (type == TypeLesson.UPLOAD) {
           if (video) {
             oldVideo = lesson.video;
-            videoStored = await this.uploadService.uploadFile(video, {
+            videoStored = await this.awsUploadService.uploadFile(video, {
               folderPath: MinioFolder.Lessons,
             });
             lesson.video_id = videoStored.id;
             lesson.time = time;
             if (lesson.type == TypeLesson.UPLOAD) {
-              await this.uploadService.removeFile(oldVideo);
+              await this.awsUploadService.removeFile(oldVideo);
             }
           }
         }
@@ -129,8 +130,8 @@ export class LessonService {
             oldVideo = lesson.video;
             videoStored = this.storedFileRepository.create({
               name: data.title,
-              hash: link,
-              key: link,
+              hash: uuid() + link,
+              key: uuid() + link,
               path: link,
               created_by: this.request.user.id,
               updated_by: this.request.user.id,
@@ -139,14 +140,14 @@ export class LessonService {
             lesson.time = time;
             lesson.video_id = videoStored.id;
             if (lesson.type == TypeLesson.UPLOAD) {
-              await this.uploadService.removeFile(oldVideo);
+              await this.awsUploadService.removeFile(oldVideo);
             }
           }
         }
         lesson.type = type;
         if (type == TypeLesson.YOUTUBE) {
-          lesson.video = videoStored;
           await this.lessonRepository.persistAndFlush(lesson);
+          lesson.video = videoStored;
         } else {
           await this.lessonRepository.persistAndFlush(lesson);
           lesson.video = videoStored;

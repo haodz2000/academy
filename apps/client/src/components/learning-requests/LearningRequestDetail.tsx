@@ -172,7 +172,7 @@ export const LearningRequestDetail = ({
             </Stack>
           </Grid>
         </Grid>
-        <Can I={IdAction.Manage} a={IdSubject.TeachingRequests}>
+        <Can I={IdAction.Manage} a={IdSubject.LearningRequest}>
           <Stack flexDirection="row" justifyContent={'flex-end'} gap={1}>
             <RoundedButton
               disabled={request.status !== StatusLearningRequest.Pending}

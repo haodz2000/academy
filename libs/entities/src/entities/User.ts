@@ -29,6 +29,8 @@ import { Notification } from './Notification';
 import { Wallet } from './Wallet';
 import { Transaction } from './Transaction';
 import { WithdrawRequest } from './WithdrawRequest';
+import { RatingCourse } from './RatingCourse';
+import { WalletBalance } from './WalletBalance';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
@@ -409,4 +411,22 @@ export class User extends BaseEntityWithSerialPrimaryKey<User, 'id'> {
     mappedBy: (data) => data.requester,
   })
   requested_withdraw_requests = new Collection<WithdrawRequest>(this);
+
+  @OneToMany({
+    entity: () => RatingCourse,
+    mappedBy: (ratingCourse) => ratingCourse.user,
+  })
+  rating_courses = new Collection<RatingCourse>(this);
+
+  @OneToMany({
+    entity: () => WalletBalance,
+    mappedBy: (walletBalance) => walletBalance.creator,
+  })
+  created_wallet_balance = new Collection<WalletBalance>(this);
+
+  @OneToMany({
+    entity: () => WalletBalance,
+    mappedBy: (walletBalance) => walletBalance.updater,
+  })
+  updated_wallet_balance = new Collection<WalletBalance>(this);
 }

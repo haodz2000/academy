@@ -10,10 +10,13 @@ export const userTypePermissions: Record<'admin' | 'user', DefinePermissions> =
       can(IdAction.Read, IdSubject.Courses, { administrator_id: user?.id });
       can(IdAction.Update, IdSubject.Courses, { administrator_id: user?.id });
       cannot(IdAction.Update, IdSubject.Users, ['type', 'email', 'google_id']);
-      cannot(IdAction.Read, IdSubject.TeachingRequests, {
+      can(IdAction.Manage, IdSubject.LearningRequest, {
+        course: { administrator_id: user?.id },
+      });
+      can(IdAction.Read, IdSubject.TeachingRequests, {
         requester_id: user?.id,
       });
-      cannot(IdAction.Read, IdSubject.LearningRequest, {
+      can(IdAction.Read, IdSubject.LearningRequest, {
         requester_id: user?.id,
       });
     },

@@ -1,8 +1,5 @@
 import { StatusLearningRequest } from '@libs/constants/entities/LearningRequest';
-import {
-  LearningRequestResponse,
-  TeachingRequestResponse,
-} from '@libs/openapi-generator/generated';
+import { TeachingRequestResponse } from '@libs/openapi-generator/generated';
 import {
   Avatar,
   Chip,
@@ -17,8 +14,6 @@ import React from 'react';
 import { RoundedButton } from '../ui/buttons';
 import { useConfirm } from 'material-ui-confirm';
 import { useNotify } from '../notification/hook';
-import { useLearningRequestAcceptMutation } from '@client/hooks/apis/learning-requests/useLearningRequestAcceptMutation';
-import { useLearningRequestRejectMutation } from '@client/hooks/apis/learning-requests/useLearningRequestRejectMutation';
 import { Can } from '@client/abilities';
 import { IdAction, IdSubject } from '@libs/constants/abilities';
 import { useTeachingRequestRejectMutation } from '@client/hooks/apis/teaching-requests/useTeachingRequestRejectMutation';

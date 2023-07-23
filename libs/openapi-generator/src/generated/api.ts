@@ -292,11 +292,25 @@ export const AssignmentResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type AssignmentResponseTypenameEnum =
   (typeof AssignmentResponseTypenameEnum)[keyof typeof AssignmentResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface AverageResponse
+ */
+export interface AverageResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof AverageResponse
+   */
+  rate_point: number;
+}
 /**
  *
  * @export
@@ -410,6 +424,7 @@ export const CategoryResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type CategoryResponseTypenameEnum =
@@ -586,7 +601,7 @@ export interface CourseDetailResponse {
    * @type {Array<SectionFullResponse>}
    * @memberof CourseDetailResponse
    */
-  sections: Array<SectionFullResponse> | null;
+  sections: Array<SectionFullResponse>;
   /**
    *
    * @type {Array<TopicResponse>}
@@ -620,6 +635,7 @@ export const CourseDetailResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type CourseDetailResponseTypenameEnum =
@@ -814,6 +830,7 @@ export const CoursePriceResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type CoursePriceResponseTypenameEnum =
@@ -942,11 +959,69 @@ export const CourseResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type CourseResponseTypenameEnum =
   (typeof CourseResponseTypenameEnum)[keyof typeof CourseResponseTypenameEnum];
 
+/**
+ *
+ * @export
+ * @interface CourseStats200Response
+ */
+export interface CourseStats200Response {
+  /**
+   *
+   * @type {string}
+   * @memberof CourseStats200Response
+   */
+  message: string;
+  /**
+   *
+   * @type {CourseStatsResponse}
+   * @memberof CourseStats200Response
+   */
+  data: CourseStatsResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseStats200ResponseAllOf
+ */
+export interface CourseStats200ResponseAllOf {
+  /**
+   *
+   * @type {CourseStatsResponse}
+   * @memberof CourseStats200ResponseAllOf
+   */
+  data?: CourseStatsResponse;
+}
+/**
+ *
+ * @export
+ * @interface CourseStatsResponse
+ */
+export interface CourseStatsResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof CourseStatsResponse
+   */
+  total_course: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseStatsResponse
+   */
+  total_video: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CourseStatsResponse
+   */
+  total_time: number;
+}
 /**
  *
  * @export
@@ -1219,6 +1294,7 @@ export const DiscussionResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type DiscussionResponseTypenameEnum =
@@ -1534,6 +1610,7 @@ export const LearningRequestResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type LearningRequestResponseTypenameEnum =
@@ -1662,6 +1739,7 @@ export const LearningRequestResponseCourseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type LearningRequestResponseCourseTypenameEnum =
@@ -1814,6 +1892,7 @@ export const LearningRequestResponseRequesterTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type LearningRequestResponseRequesterTypenameEnum =
@@ -1930,6 +2009,7 @@ export const LessonResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type LessonResponseTypenameEnum =
@@ -2088,6 +2168,7 @@ export const NotificationResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type NotificationResponseTypenameEnum =
@@ -2244,6 +2325,7 @@ export const NotificationSubscriptionResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type NotificationSubscriptionResponseTypenameEnum =
@@ -2392,6 +2474,200 @@ export interface Pagination {
 /**
  *
  * @export
+ * @interface RateDto
+ */
+export interface RateDto {
+  /**
+   *
+   * @type {number}
+   * @memberof RateDto
+   */
+  course_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof RateDto
+   */
+  point: number;
+  /**
+   *
+   * @type {string}
+   * @memberof RateDto
+   */
+  comment: string;
+}
+/**
+ *
+ * @export
+ * @interface RatingCoursesGetPoint200Response
+ */
+export interface RatingCoursesGetPoint200Response {
+  /**
+   *
+   * @type {Array<AverageResponse>}
+   * @memberof RatingCoursesGetPoint200Response
+   */
+  data: Array<AverageResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof RatingCoursesGetPoint200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof RatingCoursesGetPoint200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface RatingCoursesGetPoint200ResponseAllOf
+ */
+export interface RatingCoursesGetPoint200ResponseAllOf {
+  /**
+   *
+   * @type {Array<AverageResponse>}
+   * @memberof RatingCoursesGetPoint200ResponseAllOf
+   */
+  data?: Array<AverageResponse>;
+}
+/**
+ *
+ * @export
+ * @interface RatingCoursesList200Response
+ */
+export interface RatingCoursesList200Response {
+  /**
+   *
+   * @type {Array<RatingResponse>}
+   * @memberof RatingCoursesList200Response
+   */
+  data: Array<RatingResponse>;
+  /**
+   *
+   * @type {Pagination}
+   * @memberof RatingCoursesList200Response
+   */
+  pagination: Pagination;
+  /**
+   *
+   * @type {string}
+   * @memberof RatingCoursesList200Response
+   */
+  message: string;
+}
+/**
+ *
+ * @export
+ * @interface RatingCoursesList200ResponseAllOf
+ */
+export interface RatingCoursesList200ResponseAllOf {
+  /**
+   *
+   * @type {Array<RatingResponse>}
+   * @memberof RatingCoursesList200ResponseAllOf
+   */
+  data?: Array<RatingResponse>;
+}
+/**
+ *
+ * @export
+ * @interface RatingResponse
+ */
+export interface RatingResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof RatingResponse
+   */
+  created_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof RatingResponse
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof RatingResponse
+   */
+  creator: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {UserBasicResponseCreator}
+   * @memberof RatingResponse
+   */
+  updater: UserBasicResponseCreator | null;
+  /**
+   *
+   * @type {string}
+   * @memberof RatingResponse
+   */
+  __typename?: RatingResponseTypenameEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof RatingResponse
+   */
+  user_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof RatingResponse
+   */
+  course_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof RatingResponse
+   */
+  point: number;
+  /**
+   *
+   * @type {string}
+   * @memberof RatingResponse
+   */
+  comment: string;
+  /**
+   *
+   * @type {UserResponse}
+   * @memberof RatingResponse
+   */
+  user: UserResponse;
+}
+
+export const RatingResponseTypenameEnum = {
+  All: 'all',
+  Users: 'users',
+  Roles: 'roles',
+  StoredFiles: 'stored_files',
+  Categories: 'categories',
+  Topics: 'topics',
+  Courses: 'courses',
+  Sections: 'sections',
+  Lessons: 'lessons',
+  Discussions: 'discussions',
+  Assignments: 'assignments',
+  TeachingRequests: 'teaching_requests',
+  LearningRequests: 'learning_requests',
+  CourseTeachers: 'course_teachers',
+  CourseStudents: 'course_students',
+  NotificationSubscriptions: 'notification_subscriptions',
+  CoursePrices: 'course_prices',
+  Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
+} as const;
+
+export type RatingResponseTypenameEnum =
+  (typeof RatingResponseTypenameEnum)[keyof typeof RatingResponseTypenameEnum];
+
+/**
+ *
+ * @export
  * @interface RoleResponse
  */
 export interface RoleResponse {
@@ -2464,6 +2740,7 @@ export const RoleResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type RoleResponseTypenameEnum =
@@ -2579,7 +2856,7 @@ export interface SectionFullResponse {
    * @type {Array<LessonResponse>}
    * @memberof SectionFullResponse
    */
-  lessons: Array<LessonResponse> | null;
+  lessons: Array<LessonResponse>;
 }
 
 export const SectionFullResponseTypenameEnum = {
@@ -2601,6 +2878,7 @@ export const SectionFullResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type SectionFullResponseTypenameEnum =
@@ -2693,6 +2971,7 @@ export const StoredFileResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type StoredFileResponseTypenameEnum =
@@ -2851,6 +3130,7 @@ export const TeacherResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type TeacherResponseTypenameEnum =
@@ -3032,6 +3312,7 @@ export const TeachingRequestResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type TeachingRequestResponseTypenameEnum =
@@ -3206,6 +3487,7 @@ export const TopicFullResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type TopicFullResponseTypenameEnum =
@@ -3298,6 +3580,7 @@ export const TopicResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type TopicResponseTypenameEnum =
@@ -3402,6 +3685,7 @@ export const TopicStatResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type TopicStatResponseTypenameEnum =
@@ -3494,6 +3778,7 @@ export const TopicStatResponseCoverTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type TopicStatResponseCoverTypenameEnum =
@@ -3647,6 +3932,7 @@ export const UserBasicResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type UserBasicResponseTypenameEnum =
@@ -3781,6 +4067,7 @@ export const UserBasicResponseCreatorTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type UserBasicResponseCreatorTypenameEnum =
@@ -3957,6 +4244,7 @@ export const UserPublicResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type UserPublicResponseTypenameEnum =
@@ -4109,6 +4397,7 @@ export const UserResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type UserResponseTypenameEnum =
@@ -4308,6 +4597,7 @@ export const WalletResponseTypenameEnum = {
   NotificationSubscriptions: 'notification_subscriptions',
   CoursePrices: 'course_prices',
   Wallets: 'wallets',
+  RatingCourses: 'rating_courses',
 } as const;
 
 export type WalletResponseTypenameEnum =
@@ -5641,7 +5931,6 @@ export const CoursesApiAxiosParamCreator = function (
      * @param {number} status
      * @param {number} page
      * @param {number} limit
-     * @param {'manage' | 'show'} type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5649,7 +5938,6 @@ export const CoursesApiAxiosParamCreator = function (
       status: number,
       page: number,
       limit: number,
-      type: 'manage' | 'show',
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'status' is not null or undefined
@@ -5658,8 +5946,6 @@ export const CoursesApiAxiosParamCreator = function (
       assertParamExists('list', 'page', page);
       // verify required parameter 'limit' is not null or undefined
       assertParamExists('list', 'limit', limit);
-      // verify required parameter 'type' is not null or undefined
-      assertParamExists('list', 'type', type);
       const localVarPath = `/api/courses`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5688,9 +5974,105 @@ export const CoursesApiAxiosParamCreator = function (
         localVarQueryParameter['limit'] = limit;
       }
 
-      if (type !== undefined) {
-        localVarQueryParameter['type'] = type;
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {number} status
+     * @param {number} page
+     * @param {number} limit
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listCoursesMange: async (
+      status: number,
+      page: number,
+      limit: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'status' is not null or undefined
+      assertParamExists('listCoursesMange', 'status', status);
+      // verify required parameter 'page' is not null or undefined
+      assertParamExists('listCoursesMange', 'page', page);
+      // verify required parameter 'limit' is not null or undefined
+      assertParamExists('listCoursesMange', 'limit', limit);
+      const localVarPath = `/api/courses/manage`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
       }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (status !== undefined) {
+        localVarQueryParameter['status'] = status;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    stats: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/courses/stats`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
@@ -5946,7 +6328,6 @@ export const CoursesApiFp = function (configuration?: Configuration) {
      * @param {number} status
      * @param {number} page
      * @param {number} limit
-     * @param {'manage' | 'show'} type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -5954,7 +6335,6 @@ export const CoursesApiFp = function (configuration?: Configuration) {
       status: number,
       page: number,
       limit: number,
-      type: 'manage' | 'show',
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -5966,9 +6346,64 @@ export const CoursesApiFp = function (configuration?: Configuration) {
         status,
         page,
         limit,
-        type,
         options
       );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} status
+     * @param {number} page
+     * @param {number} limit
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async listCoursesMange(
+      status: number,
+      page: number,
+      limit: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseList200Response>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.listCoursesMange(
+          status,
+          page,
+          limit,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async stats(
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CourseStats200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.stats(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -6120,7 +6555,6 @@ export const CoursesApiFactory = function (
      * @param {number} status
      * @param {number} page
      * @param {number} limit
-     * @param {'manage' | 'show'} type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6128,11 +6562,40 @@ export const CoursesApiFactory = function (
       status: number,
       page: number,
       limit: number,
-      type: 'manage' | 'show',
       options?: any
     ): AxiosPromise<CourseList200Response> {
       return localVarFp
-        .list(status, page, limit, type, options)
+        .list(status, page, limit, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {number} status
+     * @param {number} page
+     * @param {number} limit
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listCoursesMange(
+      status: number,
+      page: number,
+      limit: number,
+      options?: any
+    ): AxiosPromise<CourseList200Response> {
+      return localVarFp
+        .listCoursesMange(status, page, limit, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    stats(options?: any): AxiosPromise<CourseStats200Response> {
+      return localVarFp
+        .stats(options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -6287,13 +6750,34 @@ export interface CoursesApiListRequest {
    * @memberof CoursesApiList
    */
   readonly limit: number;
+}
+
+/**
+ * Request parameters for listCoursesMange operation in CoursesApi.
+ * @export
+ * @interface CoursesApiListCoursesMangeRequest
+ */
+export interface CoursesApiListCoursesMangeRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiListCoursesMange
+   */
+  readonly status: number;
 
   /**
    *
-   * @type {'manage' | 'show'}
-   * @memberof CoursesApiList
+   * @type {number}
+   * @memberof CoursesApiListCoursesMange
    */
-  readonly type: 'manage' | 'show';
+  readonly page: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof CoursesApiListCoursesMange
+   */
+  readonly limit: number;
 }
 
 /**
@@ -6456,9 +6940,43 @@ export class CoursesApi extends BaseAPI {
         requestParameters.status,
         requestParameters.page,
         requestParameters.limit,
-        requestParameters.type,
         options
       )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {CoursesApiListCoursesMangeRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public listCoursesMange(
+    requestParameters: CoursesApiListCoursesMangeRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return CoursesApiFp(this.configuration)
+      .listCoursesMange(
+        requestParameters.status,
+        requestParameters.page,
+        requestParameters.limit,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CoursesApi
+   */
+  public stats(options?: AxiosRequestConfig) {
+    return CoursesApiFp(this.configuration)
+      .stats(options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -8700,6 +9218,451 @@ export class NotificationsApi extends BaseAPI {
   ) {
     return NotificationsApiFp(this.configuration)
       .readNotification(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * RatingCoursesApi - axios parameter creator
+ * @export
+ */
+export const RatingCoursesApiAxiosParamCreator = function (
+  configuration?: Configuration
+) {
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPoint: async (
+      id: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('getPoint', 'id', id);
+      const localVarPath = `/api/rating-courses/{id}/point`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {number} courseId
+     * @param {number} limit
+     * @param {number} page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list: async (
+      courseId: number,
+      limit: number,
+      page: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'courseId' is not null or undefined
+      assertParamExists('list', 'courseId', courseId);
+      // verify required parameter 'limit' is not null or undefined
+      assertParamExists('list', 'limit', limit);
+      // verify required parameter 'page' is not null or undefined
+      assertParamExists('list', 'page', page);
+      const localVarPath = `/api/rating-courses`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (courseId !== undefined) {
+        localVarQueryParameter['course_id'] = courseId;
+      }
+
+      if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
+     * @param {RateDto} rateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    rate: async (
+      rateDto: RateDto,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'rateDto' is not null or undefined
+      assertParamExists('rate', 'rateDto', rateDto);
+      const localVarPath = `/api/rating-courses`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        rateDto,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * RatingCoursesApi - functional programming interface
+ * @export
+ */
+export const RatingCoursesApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    RatingCoursesApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getPoint(
+      id: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<RatingCoursesGetPoint200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getPoint(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {number} courseId
+     * @param {number} limit
+     * @param {number} page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async list(
+      courseId: number,
+      limit: number,
+      page: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<RatingCoursesList200Response>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.list(
+        courseId,
+        limit,
+        page,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary
+     * @param {RateDto} rateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async rate(
+      rateDto: RateDto,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.rate(
+        rateDto,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+  };
+};
+
+/**
+ * RatingCoursesApi - factory interface
+ * @export
+ */
+export const RatingCoursesApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  const localVarFp = RatingCoursesApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPoint(
+      id: number,
+      options?: any
+    ): AxiosPromise<RatingCoursesGetPoint200Response> {
+      return localVarFp
+        .getPoint(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {number} courseId
+     * @param {number} limit
+     * @param {number} page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    list(
+      courseId: number,
+      limit: number,
+      page: number,
+      options?: any
+    ): AxiosPromise<RatingCoursesList200Response> {
+      return localVarFp
+        .list(courseId, limit, page, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {RateDto} rateDto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    rate(rateDto: RateDto, options?: any): AxiosPromise<void> {
+      return localVarFp
+        .rate(rateDto, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * Request parameters for getPoint operation in RatingCoursesApi.
+ * @export
+ * @interface RatingCoursesApiGetPointRequest
+ */
+export interface RatingCoursesApiGetPointRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof RatingCoursesApiGetPoint
+   */
+  readonly id: number;
+}
+
+/**
+ * Request parameters for list operation in RatingCoursesApi.
+ * @export
+ * @interface RatingCoursesApiListRequest
+ */
+export interface RatingCoursesApiListRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof RatingCoursesApiList
+   */
+  readonly courseId: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof RatingCoursesApiList
+   */
+  readonly limit: number;
+
+  /**
+   *
+   * @type {number}
+   * @memberof RatingCoursesApiList
+   */
+  readonly page: number;
+}
+
+/**
+ * Request parameters for rate operation in RatingCoursesApi.
+ * @export
+ * @interface RatingCoursesApiRateRequest
+ */
+export interface RatingCoursesApiRateRequest {
+  /**
+   *
+   * @type {RateDto}
+   * @memberof RatingCoursesApiRate
+   */
+  readonly rateDto: RateDto;
+}
+
+/**
+ * RatingCoursesApi - object-oriented interface
+ * @export
+ * @class RatingCoursesApi
+ * @extends {BaseAPI}
+ */
+export class RatingCoursesApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {RatingCoursesApiGetPointRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof RatingCoursesApi
+   */
+  public getPoint(
+    requestParameters: RatingCoursesApiGetPointRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return RatingCoursesApiFp(this.configuration)
+      .getPoint(requestParameters.id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {RatingCoursesApiListRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof RatingCoursesApi
+   */
+  public list(
+    requestParameters: RatingCoursesApiListRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return RatingCoursesApiFp(this.configuration)
+      .list(
+        requestParameters.courseId,
+        requestParameters.limit,
+        requestParameters.page,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {RatingCoursesApiRateRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof RatingCoursesApi
+   */
+  public rate(
+    requestParameters: RatingCoursesApiRateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return RatingCoursesApiFp(this.configuration)
+      .rate(requestParameters.rateDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

@@ -1,20 +1,21 @@
-import {
-  Paper,
-  Stack,
-  Typography,
-  PaperProps,
-} from '@mui/material';
+import { Paper, Stack, Typography, PaperProps } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { Assigment } from './Assigment';
-import { LessonResponse } from '@libs/openapi-generator/generated';
+import {
+  CourseResponse,
+  LessonResponse,
+} from '@libs/openapi-generator/generated';
 import { useAssignmentsQuery } from '@client/hooks/apis/assignments/useAssignmentsQuery';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { FormCreateAssignment } from './FormCreateAssignment';
+import { Can } from '@client/abilities';
+import { IdAction } from '@libs/constants/abilities';
 
 interface Props extends PaperProps {
   lesson: LessonResponse;
+  course: CourseResponse;
 }
-export const ListAssignments = ({ lesson, ...props }: Props) => {
+export const ListAssignments = ({ lesson, course, ...props }: Props) => {
   const [page] = useState<number>(1);
   const assignmentsQuery = useAssignmentsQuery({ lessonId: lesson?.id, page });
   const assignments = useMemo(() => {
@@ -41,7 +42,9 @@ export const ListAssignments = ({ lesson, ...props }: Props) => {
           <Typography variant="h3" fontSize={22} fontWeight={700}>
             Bài tập
           </Typography>
-          <FormCreateAssignment onCreated={onRefresh} lesson={lesson} />
+          <Can I={IdAction.Update} this={course}>
+            <FormCreateAssignment onCreated={onRefresh} lesson={lesson} />
+          </Can>
         </Stack>
         <Stack gap={3}>
           {assignments.map((assignment, index) => (

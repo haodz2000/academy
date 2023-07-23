@@ -1,7 +1,13 @@
-import { Avatar, Box, Rating, Stack, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Rating,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 import { RoundedButton } from '@client/components/ui/buttons';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
@@ -91,15 +97,47 @@ export const Information = ({ course }: Props) => {
             <Stack flexDirection="row" gap={3}>
               <RoundedButton
                 size="large"
-                sx={{ bgcolor: '#328AF11A' }}
+                sx={(theme) => ({
+                  bgcolor: '#328AF11A',
+                  [theme.breakpoints.down('sm')]: {
+                    display: 'none',
+                  },
+                })}
                 startIcon={<PlayCircleOutlineIcon />}
                 onClick={sendRequest}
               >
                 Tham gia khóa học
               </RoundedButton>
+              <IconButton
+                sx={(theme) => ({
+                  bgcolor: '#328AF11A',
+                  [theme.breakpoints.up('sm')]: {
+                    display: 'none',
+                  },
+                })}
+                onClick={sendRequest}
+              >
+                <PlayCircleOutlineIcon htmlColor="#FFF" />
+              </IconButton>
+              <IconButton
+                sx={(theme) => ({
+                  bgcolor: '#328AF11A',
+                  [theme.breakpoints.up('sm')]: {
+                    display: 'none',
+                  },
+                })}
+                onClick={sendRequest}
+              >
+                <BookmarkBorderIcon htmlColor="#FFF" />
+              </IconButton>
               <RoundedButton
                 size="large"
-                sx={{ bgcolor: '#328AF11A' }}
+                sx={(theme) => ({
+                  bgcolor: '#328AF11A',
+                  [theme.breakpoints.down('sm')]: {
+                    display: 'none',
+                  },
+                })}
                 startIcon={<BookmarkBorderIcon />}
               >
                 Thêm vào danh sách yêu thích
@@ -107,7 +145,15 @@ export const Information = ({ course }: Props) => {
             </Stack>
           </Stack>
         </Stack>
-        <Stack justifyContent={'flex-start'} width={'30%'}>
+        <Stack
+          justifyContent={'flex-start'}
+          width={'30%'}
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              display: 'none',
+            },
+          })}
+        >
           <Avatar src={course.cover?.path} sx={{ height: 216, width: 216 }} />
         </Stack>
       </Stack>

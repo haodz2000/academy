@@ -1,13 +1,19 @@
-import { LessonResponse } from '@libs/openapi-generator/generated';
+import {
+  CourseDetailResponse,
+  LessonResponse,
+} from '@libs/openapi-generator/generated';
 import { Avatar, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { FormUpdateLesson } from './FormUpdateLesson';
+import { Can } from '@client/abilities';
+import { IdAction } from '@libs/constants/abilities';
 
 interface Props {
   lesson: LessonResponse;
   onCreated: () => void;
+  course: CourseDetailResponse;
 }
-export const Lesson = ({ lesson, onCreated }: Props) => {
+export const Lesson = ({ lesson, onCreated, course }: Props) => {
   return (
     <Stack
       color={'inherit'}
@@ -48,7 +54,9 @@ export const Lesson = ({ lesson, onCreated }: Props) => {
           transform: 'translateY(-50%)',
         }}
       >
-        <FormUpdateLesson lesson={lesson} onCreated={onCreated} />
+        <Can I={IdAction.Update} this={course}>
+          <FormUpdateLesson lesson={lesson} onCreated={onCreated} />
+        </Can>
       </Stack>
     </Stack>
   );

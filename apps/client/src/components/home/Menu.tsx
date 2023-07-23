@@ -1,6 +1,8 @@
 import { colors, Stack, styled, Typography } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { MenuItem } from './MenuItem';
+import { useStatsCourseQuery } from '@client/hooks/apis/courses/useCourseStatsQuery';
+import { getTimeVideo } from '@client/utils/lesson';
 
 export interface IMenu {
   url: string;
@@ -59,26 +61,31 @@ const Keyframes = styled(Stack)({
 });
 
 export const Menu = () => {
-  const stats: IMenu[] = [
-    {
-      url: '/',
-      subtitle: '181',
-      title: 'series',
-      topic: '// multi-episode training',
-    },
-    {
-      url: '/',
-      subtitle: '2704',
-      title: 'lessons',
-      topic: '// new ones every week',
-    },
-    {
-      url: '/',
-      subtitle: '420',
-      title: 'hour',
-      topic: '// hour and hours of content',
-    },
-  ];
+  const statsCourseQuery = useStatsCourseQuery();
+  const stats = useMemo(() => {
+    if (statsCourseQuery.data?.data) {
+      return [
+        {
+          url: '/',
+          subtitle: statsCourseQuery.data.data.total_course,
+          title: 'series',
+          topic: '// multi-episode training',
+        },
+        {
+          url: '/',
+          subtitle: statsCourseQuery.data.data.total_video,
+          title: 'lessons',
+          topic: '// new ones every week',
+        },
+        {
+          url: '/',
+          subtitle: getTimeVideo(statsCourseQuery.data.data.total_time),
+          title: 'hour',
+          topic: '// hour and hours of content',
+        },
+      ] as IMenu[];
+    }
+  }, [statsCourseQuery.data?.data]);
   return (
     <Keyframes
       bgcolor={'#000'}
@@ -112,7 +119,7 @@ export const Menu = () => {
           <Typography fontWeight={700}>{'=> ['}</Typography>
         </Stack>
         <Stack gap={2}>
-          {stats.map((i, index) => (
+          {stats?.map((i, index) => (
             <MenuItem menu={i} key={index} />
           ))}
         </Stack>

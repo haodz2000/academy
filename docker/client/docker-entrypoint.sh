@@ -4,7 +4,7 @@
 set -e
 
 # Start services
-npx next start -p 4200 id-client
+npx next start -p 4200 client
 
 # Finally call command issued to the docker service
 exec "$@"

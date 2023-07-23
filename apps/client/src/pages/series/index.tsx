@@ -5,7 +5,7 @@ import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage'
 import { Topics } from '@client/components/topics';
 import { withUnAuth } from '@client/hocs/withUnAuth';
 import { useCoursesQuery } from '@client/hooks/apis/courses/useCoursesQuery';
-import { StatusCourse, TypeQueryCourse } from '@libs/constants/entities/Course';
+import { StatusCourse } from '@libs/constants/entities/Course';
 import { Stack, Typography } from '@mui/material';
 import React, { ReactElement, useMemo } from 'react';
 
@@ -13,7 +13,6 @@ export const Index = () => {
   const coursesQuery = useCoursesQuery({
     page: 1,
     status: StatusCourse.Approved,
-    type: TypeQueryCourse.Show,
     limit: 10,
   });
   const courses = useMemo(() => {

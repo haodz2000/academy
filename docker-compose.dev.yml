@@ -16,20 +16,6 @@ services:
     networks:
       - academy-network
 
-  minio:
-    container_name: academy-minio
-    image: quay.io/minio/minio
-    restart: always
-    volumes:
-      - academy_minio_data:/data
-    ports:
-      - '${MINIO_API_PORT}:9000'
-      - '${MINIO_CONSOLE_PORT}:9001'
-    environment:
-      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
-      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
-    command: 'server /data --console-address ":9001"'
-
   redis:
     container_name: academy-redis
     image: redis:7-alpine

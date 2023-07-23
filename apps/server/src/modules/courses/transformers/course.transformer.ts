@@ -8,6 +8,7 @@ import { CourseDetailResponse } from '../responses/course-detail.response';
 import { TopicTransformer } from '@server/modules/topics/transformers/topic.transformer';
 import { SectionTransformer } from '../sections/transformers/section.transformer';
 import { CoursePriceTransformer } from '@server/modules/course-prices/transformers/course-price.transformer';
+import { CourseStatsResponse } from '../responses/course-stats.response';
 
 export class CourseTransformer extends BaseResponseTransformer {
   static toCourseResponse(course: Course): CourseResponse {
@@ -42,6 +43,12 @@ export class CourseTransformer extends BaseResponseTransformer {
       students: course.students
         .getItems()
         .map((i) => UserTransformer.toUserResponse(i)),
+    };
+  }
+
+  static toCourseStatsResponse(data: CourseStatsResponse): CourseStatsResponse {
+    return {
+      ...data,
     };
   }
 }

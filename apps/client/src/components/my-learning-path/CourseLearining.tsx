@@ -7,11 +7,14 @@ import ForwardIcon from '@mui/icons-material/Forward';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { CourseDetailResponse } from '@libs/openapi-generator/generated';
 import Link from '../ui/Link';
+import { useAppSelector } from '@client/stores';
+import { RatingCourse } from '../courses/RatingCourse';
 
 interface Props {
   course: CourseDetailResponse;
 }
 export const CourseLearining = ({ course }: Props) => {
+  const currentUser = useAppSelector((state) => state.user.user);
   const videos = course.sections.reduce((total, current) => {
     return total + current.lessons.length;
   }, 0);
@@ -26,7 +29,7 @@ export const CourseLearining = ({ course }: Props) => {
       justifyContent="space-between"
     >
       <Stack flexDirection="row" alignItems="center" gap={1}>
-        <Avatar sx={{ height: 60, width: 60 }} />
+        <Avatar src={course.cover.path} sx={{ height: 60, width: 60 }} />
         <Stack gap={1}>
           <Typography fontWeight={700}>{course.name}</Typography>
           <Stack position="relative" flexDirection="row" alignItems="center">
@@ -65,7 +68,7 @@ export const CourseLearining = ({ course }: Props) => {
             </Typography>
           </Stack>
         </Stack>
-        <Avatar />
+        <Avatar src={currentUser?.avatar.path} />
         <RoundedButton
           component={Link}
           href={'/series/' + course.slug + '/lessons/'}
@@ -74,12 +77,7 @@ export const CourseLearining = ({ course }: Props) => {
         >
           Học tiếp
         </RoundedButton>
-        <RoundedButton
-          startIcon={<StarOutlineIcon />}
-          sx={{ bgcolor: '#797944' }}
-        >
-          Đánh giá
-        </RoundedButton>
+        <RatingCourse course={course} />
       </Stack>
     </Stack>
   );

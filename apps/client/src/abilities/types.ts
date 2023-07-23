@@ -19,12 +19,19 @@ import { IdAction, IdSubject } from '@libs/constants/abilities';
 import {
   CourseDetailResponse,
   CourseResponse,
+  LearningRequestResponse,
   UserResponse,
 } from '@libs/openapi-generator/generated';
 
 export type AppAbilities = [
   IdAction,
-  IdSubject | UserResponse | CourseResponse | CourseDetailResponse
+  (
+    | IdSubject
+    | UserResponse
+    | CourseResponse
+    | CourseDetailResponse
+    | LearningRequestResponse
+  )
 ];
 
 /** @see https://casl.js.org/v5/en/advanced/typescript#application-ability */

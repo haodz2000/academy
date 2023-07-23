@@ -7,22 +7,21 @@ import { Empty } from '@client/components/ui/Empty';
 import Link from '@client/components/ui/Link';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { withAuth } from '@client/hocs/withAuth';
-import { useCoursesQuery } from '@client/hooks/apis/courses/useCoursesQuery';
-import { TypeQueryCourse } from '@libs/constants/entities/Course';
-import { Stack } from '@mui/material';
-import React, { ReactElement, useMemo } from 'react';
+import { useCoursesManageQuery } from '@client/hooks/apis/courses/useCoursesManageQuery';
+import { Pagination, Stack } from '@mui/material';
+import React, { ReactElement, useMemo, useState } from 'react';
 
 const Index = () => {
-  const coursesQuery = useCoursesQuery({
-    page: 1,
+  const [page, setPage] = useState(1);
+  const coursesQuery = useCoursesManageQuery({
+    page: page,
     status: 1,
-    type: TypeQueryCourse.Manage,
     limit: 10,
   });
   const courses = useMemo(() => {
     return coursesQuery.data?.data ?? [];
   }, [coursesQuery.data?.data]);
-
+  const total = coursesQuery.data?.pagination.total ?? 0;
   if (coursesQuery.isLoading) {
     return <LoadingPage />;
   }
@@ -42,12 +41,18 @@ const Index = () => {
         </Stack>
       </Stack>
       <Stack width={'70%'}>
-        <Stack paddingX={2} gap={2}>
+        <Stack paddingX={2} gap={2} justifyContent={'space-between'}>
           <Stack gap={2}>
             {courses.map((course) => (
               <Course course={course} key={course.id} />
             ))}
             {!courses.length && <Empty content="Không có khóa học nào" />}
+          </Stack>
+          <Stack>
+            <Pagination
+              count={Math.ceil(total / 10)}
+              onChange={(e, v) => setPage(v)}
+            />
           </Stack>
         </Stack>
       </Stack>

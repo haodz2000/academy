@@ -1,3 +1,4 @@
+import { Can } from '@client/abilities';
 import { AppLayout } from '@client/components/layouts/AppLayout';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
@@ -8,6 +9,7 @@ import { Section } from '@client/components/manage/courses/Section';
 import { RoundedButton } from '@client/components/ui/buttons';
 import { withAuth } from '@client/hocs/withAuth';
 import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
+import { IdAction } from '@libs/constants/abilities';
 import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { ReactElement, useMemo } from 'react';
@@ -42,7 +44,9 @@ const Index = () => {
       <Stack width={'70%'}>
         <Stack paddingX={2} gap={1}>
           <HeaderInformation course={course} />
-          <FormCreateSection onCreated={onRefresh} course={course} />
+          <Can I={IdAction.Update} this={course}>
+            <FormCreateSection onCreated={onRefresh} course={course} />
+          </Can>
           <Stack gap={2}>
             <Typography variant="h6" fontWeight={600}>
               Lộ trình học
@@ -50,6 +54,7 @@ const Index = () => {
             <Stack gap={1}>
               {course.sections?.map((section) => (
                 <Section
+                  course={course}
                   onCreated={onRefresh}
                   section={section}
                   key={section.id}

@@ -13,6 +13,7 @@ import Link from '@client/components/ui/Link';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { getProfile } from '@client/utils/user';
+import { ListRating } from '@client/components/courses/course/ListRating';
 
 export const Index = () => {
   const router = useRouter();
@@ -31,7 +32,15 @@ export const Index = () => {
     <Stack position={'relative'} gap={8}>
       <Stack width={'100%'} flexDirection={'row'} padding={2} gap={12}>
         <Grid container>
-          <Grid item md={3}>
+          <Grid
+            item
+            md={3}
+            sx={(theme) => ({
+              [theme.breakpoints.down('md')]: {
+                display: 'none',
+              },
+            })}
+          >
             <Stack paddingX={2} gap={2}>
               <Stack width={315} height={445} position={'relative'}>
                 {course.administrator && (
@@ -97,11 +106,12 @@ export const Index = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item md={9} paddingX={10}>
+          <Grid item xs={12} md={9} paddingX={10}>
             {!!course && (
               <Stack gap={5}>
                 <Information course={course} />
                 <Content course={course} />
+                <ListRating course={course} />
               </Stack>
             )}
           </Grid>

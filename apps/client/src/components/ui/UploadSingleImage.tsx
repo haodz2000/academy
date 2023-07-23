@@ -76,7 +76,8 @@ export const UploadSingleImage: FC<Props> = ({
         minHeight: '200px',
         borderRadius: getBorderRadius(),
         backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
         cursor: 'pointer',
         overflow: 'hidden',
         '&::before': {

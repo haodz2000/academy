@@ -28,4 +28,5 @@ export enum IdSubject {
   NotificationSubscriptions = 'notification_subscriptions',
   CoursePrices = 'course_prices',
   Wallets = 'wallets',
+  RatingCourse = 'rating_courses',
 }

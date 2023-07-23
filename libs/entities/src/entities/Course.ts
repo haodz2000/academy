@@ -20,6 +20,7 @@ import { LearningRequest } from './LearningRequest';
 import { CourseTeacher } from './CourseTeacher';
 import { CourseStudent } from './CourseStudent';
 import { CoursePrice } from './CoursePrice';
+import { RatingCourse } from './RatingCourse';
 
 @Entity({ tableName: 'courses' })
 export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
@@ -158,4 +159,10 @@ export class Course extends BaseEntityWithSerialPrimaryKey<Course, 'id'> {
     mappedBy: (coursePrice) => coursePrice.course,
   })
   course_price: CoursePrice;
+
+  @OneToMany({
+    entity: () => RatingCourse,
+    mappedBy: (ratingCourse) => ratingCourse.course,
+  })
+  ratings = new Collection<RatingCourse>(this);
 }

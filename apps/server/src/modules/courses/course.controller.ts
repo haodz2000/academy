@@ -37,6 +37,8 @@ import { CourseUpdateDto } from './dtos/course-update.dto';
 import { DeleteResponse } from './responses/delete.response';
 import { CourseDetailResponse } from './responses/course-detail.response';
 import { CourseFilterDto } from './dtos/course-filter.dto';
+import { Public } from '../auth/guards/public.guard';
+import { CourseStatsResponse } from './responses/course-stats.response';
 
 @UseGuards(AbilitiesGuard)
 @Controller('courses')
@@ -47,7 +49,7 @@ export class CourseController {
   @UseInterceptors()
   @ApiPaginatedResponse(CourseResponse)
   @ApiErrorResponse()
-  @InjectUserToQuery()
+  @Public()
   @Get()
   async list(@Query() option: CourseFilterDto) {
     const result = await this.courseSerive.list(option);
@@ -55,6 +57,30 @@ export class CourseController {
       result.data.map((i) => CourseTransformer.toCourseResponse(i)),
       result.pagination
     );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.Courses] })
+  @UseInterceptors()
+  @ApiPaginatedResponse(CourseResponse)
+  @ApiErrorResponse()
+  @InjectUserToQuery()
+  @Get('/manage')
+  async listCoursesMange(@Query() option: CourseFilterDto) {
+    const result = await this.courseSerive.listCoursesManage(option);
+    return AppApiPaginatedResponse.create(
+      result.data.map((i) => CourseTransformer.toCourseResponse(i)),
+      result.pagination
+    );
+  }
+
+  @ApiOperation({ tags: [AppSwaggerTag.Courses] })
+  @UseInterceptors()
+  @ApiSuccessResponse(CourseStatsResponse)
+  @ApiErrorResponse()
+  @Public()
+  @Get('/stats')
+  async stats() {
+    return AppApiSuccessResponse.create(await this.courseSerive.stats());
   }
 
   @ApiOperation({ tags: [AppSwaggerTag.Courses] })
@@ -75,7 +101,7 @@ export class CourseController {
   @UseInterceptors()
   @ApiSuccessResponse(CourseDetailResponse)
   @ApiErrorResponse()
-  @InjectUserToQuery()
+  @Public()
   @Get('/:slug')
   async findOne(@Param('slug') slug: string) {
     return AppApiSuccessResponse.create(

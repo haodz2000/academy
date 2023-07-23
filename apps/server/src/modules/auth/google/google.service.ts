@@ -8,9 +8,9 @@ import { TokenPayload } from 'google-auth-library';
 import { RoleType } from '@libs/constants/entities/Role';
 import { JwtService } from '@nestjs/jwt';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { UploadService } from '@server/modules/upload/upload.service';
 import { Wallet } from '@libs/entities/entities/Wallet';
 import { TypeWallet } from '@libs/constants/entities/Wallet';
+import { AwsUploadService } from '@server/modules/upload/aws/aws-upload.service';
 
 @Injectable()
 export class GoogleService {
@@ -22,7 +22,7 @@ export class GoogleService {
     @InjectRepository(Wallet)
     private readonly walletRepository: EntityRepository<Wallet>,
     private jwtService: JwtService,
-    private uploadService: UploadService,
+    private awsUploadService: AwsUploadService,
     private em: EntityManager
   ) {}
 
@@ -36,7 +36,7 @@ export class GoogleService {
     await this.em.begin();
     try {
       if (!user) {
-        const storedFile = await this.uploadService.uploadAvatar(
+        const storedFile = await this.awsUploadService.uploadAvatar(
           payload['picture']
         );
         user = new User();
@@ -55,7 +55,7 @@ export class GoogleService {
       } else {
         user.google_id = payload['sub'];
         if (!user.avatar_id) {
-          const storedFile = await this.uploadService.uploadAvatar(
+          const storedFile = await this.awsUploadService.uploadAvatar(
             payload['picture']
           );
           user.avatar_id = storedFile.id;

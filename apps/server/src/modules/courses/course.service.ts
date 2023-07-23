@@ -1,5 +1,4 @@
 import { AbilityFactory } from './../auth/ability/ability.factory';
-import { UploadService } from './../upload/upload.service';
 import { Course } from '@libs/entities/entities/Course';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
@@ -23,6 +22,9 @@ import { CourseFilterDto } from './dtos/course-filter.dto';
 import { Pagination } from '@libs/utils/responses';
 import { RoleType } from '@libs/constants/entities/Role';
 import { CoursePrice } from '@libs/entities/entities/CoursePrice';
+import { AwsUploadService } from '../upload/aws/aws-upload.service';
+import { Lesson } from '@libs/entities/entities/Lesson';
+import { CourseStatsResponse } from './responses/course-stats.response';
 
 @Injectable()
 export class CourseService {
@@ -31,7 +33,7 @@ export class CourseService {
     private readonly courseRepository: EntityRepository<Course>,
     @InjectRepository(CoursePrice)
     private readonly coursePriceRepository: EntityRepository<CoursePrice>,
-    private readonly uploadService: UploadService,
+    private readonly awsUploadService: AwsUploadService,
     @Inject(REQUEST) private request: Request,
     private readonly em: EntityManager,
     private readonly ability: AbilityFactory
@@ -42,22 +44,37 @@ export class CourseService {
   ): Promise<{ data: Course[]; pagination: Pagination }> {
     const where: FilterQuery<Course> = {};
     const limit = option.limit ?? 5;
-    if (option) {
-      if (option.type == TypeQueryCourse.Show) {
-        where.$or = [
-          {
-            teaching_requests: { status: option.status },
-          },
-          {
-            status: option.status,
-          },
-        ];
-      }
-      if (option.type == TypeQueryCourse.Manage) {
-        if (this.request.user.role.type == RoleType.User) {
-          where.administrator_id = this.request.user.id;
-        }
-      }
+    where.$or = [
+      {
+        teaching_requests: { status: option.status },
+      },
+      {
+        status: StatusCourse.Approved,
+      },
+    ];
+    const [data, count] = await this.courseRepository.findAndCount(where, {
+      populate: ['cover', 'administrator.avatar', 'course_price'],
+      limit: limit,
+      offset: (option.page - 1) * limit || 0,
+    });
+    return {
+      data: data,
+      pagination: {
+        limit: limit,
+        total: count,
+        lastPage: Math.ceil(count / limit),
+        page: 1,
+      },
+    };
+  }
+
+  async listCoursesManage(
+    option: CourseFilterDto
+  ): Promise<{ data: Course[]; pagination: Pagination }> {
+    const where: FilterQuery<Course> = {};
+    const limit = option.limit ?? 5;
+    if (this.request.user.role.type == RoleType.User) {
+      where.administrator_id = this.request?.user?.id;
     }
     const [data, count] = await this.courseRepository.findAndCount(where, {
       populate: ['cover', 'administrator.avatar', 'course_price'],
@@ -131,12 +148,35 @@ export class CourseService {
     );
   }
 
+  async stats(): Promise<CourseStatsResponse> {
+    const countCourse = await this.courseRepository.count({
+      status: StatusCourse.Approved,
+    });
+    const [lessons, countLessons] = await this.em.findAndCount(
+      Lesson,
+      {
+        section: { course: { status: StatusCourse.Approved } },
+      },
+      { fields: ['time'] }
+    );
+    const time = lessons.reduce((a, b) => {
+      return a + b.time;
+    }, 0);
+    return {
+      total_course: countCourse,
+      total_video: countLessons,
+      total_time: time,
+    };
+  }
   async create(data: CourseCreateDto): Promise<Course> {
     await this.em.begin();
     try {
-      const coverStoredFile = await this.uploadService.uploadFile(data.cover, {
-        folderPath: 'courses',
-      });
+      const coverStoredFile = await this.awsUploadService.uploadFile(
+        data.cover,
+        {
+          folderPath: 'courses',
+        }
+      );
       const ids = data.topics_ids[0]
         .toString()
         .split(',')
@@ -189,9 +229,10 @@ export class CourseService {
         topics: ids,
       });
       if (cover) {
-        const newCover = await this.uploadService.uploadFile(cover, {
+        const newCover = await this.awsUploadService.uploadFile(cover, {
           folderPath: 'courses',
         });
+        await this.awsUploadService.removeFile(course.cover);
         course.cover_id = newCover.id;
       }
       if (mode) {
@@ -227,7 +268,7 @@ export class CourseService {
         .throwUnlessCan(IdAction.Delete, course);
       const cover = course.cover;
       await this.courseRepository.removeAndFlush(course);
-      await this.uploadService.removeFile(cover);
+      await this.awsUploadService.removeFile(cover);
       this.em.commit();
       return { id };
     } catch (error) {

@@ -12,14 +12,20 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 import { FormCreateLesson } from './FormCreateLesson';
-import { SectionFullResponse } from '@libs/openapi-generator/generated';
+import {
+  CourseDetailResponse,
+  SectionFullResponse,
+} from '@libs/openapi-generator/generated';
 import { FormUpdateSection } from './FormUpdateSection';
+import { Can } from '@client/abilities';
+import { IdAction } from '@libs/constants/abilities';
 
 interface Props {
   section: SectionFullResponse;
   onCreated: () => void;
+  course: CourseDetailResponse;
 }
-export const Section = ({ section, onCreated }: Props) => {
+export const Section = ({ section, onCreated, course }: Props) => {
   const [open, setOpen] = React.useState(false);
   const [openForm, setOpenForm] = React.useState(false);
 
@@ -48,12 +54,14 @@ export const Section = ({ section, onCreated }: Props) => {
           </Typography>
         </Stack>
         <Stack flexDirection={'row'} alignItems={'center'}>
-          <FormUpdateSection section={section} onCreated={onCreated} />
-          <Tooltip title={'Tạo bài giảng'}>
-            <IconButton onClick={() => setOpenForm(!openForm)}>
-              <AddIcon fontSize="large" htmlColor="#FFF" />
-            </IconButton>
-          </Tooltip>
+          <Can I={IdAction.Update} this={course}>
+            <FormUpdateSection section={section} onCreated={onCreated} />
+            <Tooltip title={'Tạo bài giảng'}>
+              <IconButton onClick={() => setOpenForm(!openForm)}>
+                <AddIcon fontSize="large" htmlColor="#FFF" />
+              </IconButton>
+            </Tooltip>
+          </Can>
           <IconButton onClick={handleClick}>
             {open ? (
               <ExpandLess fontSize="large" htmlColor="#FFF" />
@@ -69,7 +77,12 @@ export const Section = ({ section, onCreated }: Props) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Stack gap={2}>
           {section.lessons?.map((lesson) => (
-            <Lesson lesson={lesson} key={lesson.id} onCreated={onCreated} />
+            <Lesson
+              course={course}
+              lesson={lesson}
+              key={lesson.id}
+              onCreated={onCreated}
+            />
           ))}
         </Stack>
       </Collapse>

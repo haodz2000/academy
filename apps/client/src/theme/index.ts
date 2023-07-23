@@ -1,9 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
-// import '@fontsource/cabin/400.css';
-// import '@fontsource/cabin/500.css';
-// import '@fontsource/cabin/600.css';
-// import '@fontsource/cabin/700.css';
 
 // Create a index instance.
 const index = createTheme({

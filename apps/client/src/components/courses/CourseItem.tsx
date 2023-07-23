@@ -1,9 +1,8 @@
 import { RoundedButton } from '@client/components/ui/buttons';
 import Link from '@client/components/ui/Link';
-import { Avatar, Paper, Rating, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
+import { Avatar, Paper, Rating, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import React, { useRef } from 'react';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { CourseResponse } from '@libs/openapi-generator/generated';
@@ -15,10 +14,7 @@ interface Props {
 export const CourseItem = ({ course }: Props) => {
   return (
     <Stack paddingX={6} zIndex={1} width={'100%'}>
-      <Paper
-        component={Link}
-        href={'/series/' + course.slug}
-        underline="none"
+      <Stack
         sx={{
           minHeight: '420px',
           bgcolor: '#18273f',
@@ -27,6 +23,10 @@ export const CourseItem = ({ course }: Props) => {
             borderRadius: '16px',
           },
         }}
+        color={'inherit'}
+        component={Link}
+        underline="none"
+        href={'/series/' + course.slug}
       >
         <Stack
           flexDirection={'row'}
@@ -113,63 +113,66 @@ export const CourseItem = ({ course }: Props) => {
             </Stack>
           </Stack>
           <Stack paddingY={1} paddingX={2} height={1}>
-            <Stack
-              component={Link}
+            <Link
               href={'/user/' + course.administrator.email.split('@')[0]}
               underline="none"
-              justifyContent={'flex-end'}
-              color={'inherit'}
-              width={280}
-              position={'relative'}
               height={1}
             >
-              <Image
-                loader={({ src }) => src}
-                alt="image"
-                src={course.administrator.avatar.path}
-                fill
-                style={{
-                  borderRadius: '25px',
-                  position: 'absolute',
-                  boxShadow: '-10px 8px 5px 0px rgba(51, 51, 51, 0.65)',
-                }}
-                unoptimized
-              />
               <Stack
-                sx={{ borderRadius: '0px 0px 25px 25px' }}
-                paddingY={1}
-                paddingX={2}
-                bgcolor="rgba(136, 136, 136, 0.5)"
-                zIndex={1}
+                justifyContent={'flex-end'}
+                color={'inherit'}
+                width={280}
+                position={'relative'}
+                height={1}
               >
-                <Typography variant="body1" fontWeight={600} fontSize={15}>
-                  {course.administrator.name}
-                </Typography>
+                <Image
+                  loader={({ src }) => src}
+                  alt="image"
+                  src={course.administrator.avatar.path}
+                  fill
+                  style={{
+                    borderRadius: '25px',
+                    position: 'absolute',
+                    boxShadow: '-10px 8px 5px 0px rgba(51, 51, 51, 0.65)',
+                  }}
+                  unoptimized
+                />
                 <Stack
-                  width={'100%'}
-                  flexDirection={'row'}
-                  alignItems="center"
-                  gap={1}
+                  sx={{ borderRadius: '0px 0px 25px 25px' }}
+                  paddingY={1}
+                  paddingX={2}
+                  bgcolor="rgba(136, 136, 136, 0.5)"
+                  zIndex={1}
                 >
-                  <Typography
-                    fontWeight={600}
-                    variant="body2"
-                    fontSize={12}
-                    color="#78909C"
-                  >
-                    Developer
+                  <Typography variant="body1" fontWeight={600} fontSize={15}>
+                    {course.administrator.name}
                   </Typography>
                   <Stack
                     width={'100%'}
-                    height={'2px'}
-                    bgcolor={'#78909C'}
-                  ></Stack>
+                    flexDirection={'row'}
+                    alignItems="center"
+                    gap={1}
+                  >
+                    <Typography
+                      fontWeight={600}
+                      variant="body2"
+                      fontSize={12}
+                      color="#78909C"
+                    >
+                      Developer
+                    </Typography>
+                    <Stack
+                      width={'100%'}
+                      height={'2px'}
+                      bgcolor={'#78909C'}
+                    ></Stack>
+                  </Stack>
                 </Stack>
               </Stack>
-            </Stack>
+            </Link>
           </Stack>
         </Stack>
-      </Paper>
+      </Stack>
     </Stack>
   );
 };

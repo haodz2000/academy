@@ -9,6 +9,7 @@ import { Maybe, Scalar } from '@libs/constants/interfaces/scalar';
 import { BaseEntityWithSerialPrimaryKey } from './BaseEntityWithSerialPrimaryKey';
 import { User } from './User';
 import { Transaction } from './Transaction';
+import { WalletBalance } from './WalletBalance';
 
 @Entity({ tableName: 'wallets' })
 export class Wallet extends BaseEntityWithSerialPrimaryKey<Wallet, 'id'> {
@@ -53,4 +54,10 @@ export class Wallet extends BaseEntityWithSerialPrimaryKey<Wallet, 'id'> {
     mappedBy: (data) => data.senderWallet,
   })
   sent_transactions = new Collection<Transaction>(this);
+
+  @OneToMany({
+    entity: () => WalletBalance,
+    mappedBy: (walletBalance) => walletBalance.wallet,
+  })
+  balances = new Collection<WalletBalance>(this);
 }

@@ -14,4 +14,5 @@ export enum AppSwaggerTag {
   LearningRequests = 'learining-requests',
   NotificationSubscriptions = 'notification-subscriptions',
   Notifications = 'notifications',
+  RatingCourses = 'rating-courses',
 }

@@ -7,12 +7,17 @@ import ReactPlayer from 'react-player';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Discusstion } from '@client/components/courses/course/lessons/Discusstion';
 import { useRouter } from 'next/router';
-import { useCourseQuery } from '@client/hooks/apis/courses/useCourseQuery';
+import {
+  fetchCourse,
+  useCourseQuery,
+} from '@client/hooks/apis/courses/useCourseQuery';
 import { LessonResponse } from '@libs/openapi-generator/generated';
 import { ErrorPage } from '@client/components/layouts/ErrorPage/ErrorPage';
 import { LoadingPage } from '@client/components/layouts/LoadingPage/LoadingPage';
 import { ListAssignments } from '@client/components/courses/course/lessons/ListAssignments';
 import { getTimeVideo } from '@client/utils/lesson';
+import { withAuth } from '@client/hocs/withAuth';
+import { createUserAxiosInstanceFromContext } from '@client/libs/axios/functions';
 
 const Index = () => {
   const [lesson, setLesson] = useState<LessonResponse>(null);
@@ -120,7 +125,7 @@ const Index = () => {
             <Discusstion lesson={lesson} />
           </Stack>
           <Stack width={'40%'}>
-            <ListAssignments lesson={lesson} />
+            <ListAssignments course={course} lesson={lesson} />
           </Stack>
         </Stack>
       </Stack>
@@ -136,9 +141,22 @@ Index.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export const getServerSideProps = async () => {
-  return {
+export const getServerSideProps = withAuth(async (context, user) => {
+  const notFoundResponse = {
     props: {},
+    redirect: {
+      destination: '/',
+    },
   };
-};
+  const slug = context.query.slug as string;
+  const axiosInstance = createUserAxiosInstanceFromContext(context);
+  const course = await fetchCourse({ slug: slug }, axiosInstance);
+  const ids = course.data.students.map((i) => i.id);
+  if (ids.includes(user.id)) {
+    return {
+      props: {},
+    };
+  }
+  return notFoundResponse;
+});
 export default Index;

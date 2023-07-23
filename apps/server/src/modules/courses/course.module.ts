@@ -12,12 +12,12 @@ import { Section } from '@libs/entities/entities/Section';
 import { Lesson } from '@libs/entities/entities/Lesson';
 import { Topic } from '@libs/entities/entities/Topic';
 import { CourseTopic } from '@libs/entities/entities/CourseTopic';
-import { UploadModule } from '../upload/upload.module';
 import { AbilityModule } from '../auth/ability/ability.module';
 import { SectionController } from './sections/section.controller';
 import { IsArrayTopicIdsValidator } from '@server/validators/is-array-topic-ids.validator';
 import { IsSectionIdValidator } from '@server/validators/is-section-id.validator';
 import { CoursePrice } from '@libs/entities/entities/CoursePrice';
+import { AwsUploadModule } from '../upload/aws/aws-upload.module';
 
 @Module({
   imports: [
@@ -31,8 +31,8 @@ import { CoursePrice } from '@libs/entities/entities/CoursePrice';
       StoredFile,
       CoursePrice,
     ]),
-    UploadModule,
     AbilityModule,
+    AwsUploadModule,
   ],
   controllers: [CourseController, SectionController, LessonController],
   providers: [

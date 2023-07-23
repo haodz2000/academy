@@ -1,3 +1,5 @@
+import { AwsUploadModule } from './../upload/aws/aws-upload.module';
+import { RatingCoursesModule } from './../rating-courses/rating-courses.module';
 import { SocketModule } from './../socket/socket.module';
 import { FirebaseModule } from './../firebase/firebase.module';
 import { NotificationsModule } from './../notifications/notifications.module';
@@ -10,7 +12,6 @@ import { AssignmentModule } from './../assignments/assignment.module';
 import { TopicModule } from './../topics/topic.module';
 import { CourseModule } from './../courses/course.module';
 import { CategoryModule } from './../categories/category.module';
-import { UploadModule } from './../upload/upload.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -28,6 +29,8 @@ import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
+    AwsUploadModule,
+    RatingCoursesModule,
     SocketModule,
     FirebaseModule,
     NotificationsModule,
@@ -52,7 +55,6 @@ import { BullModule } from '@nestjs/bull';
     MikroOrmModule,
     UserModule,
     AuthModule,
-    UploadModule,
     AbilityModule,
   ],
   controllers: [AppController],

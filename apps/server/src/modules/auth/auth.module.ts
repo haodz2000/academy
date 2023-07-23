@@ -1,4 +1,3 @@
-import { UploadModule } from './../upload/upload.module';
 import { JwtStrategy } from './jwt.strategy';
 import { GoogleController } from './google/google.controller';
 import { UserService } from './../users/user.service';
@@ -15,6 +14,7 @@ import { HttpModule } from '@nestjs/axios';
 import { PassportModule } from '@nestjs/passport';
 import { AbilityModule } from './ability/ability.module';
 import { Wallet } from '@libs/entities/entities/Wallet';
+import { AwsUploadModule } from '../upload/aws/aws-upload.module';
 
 @Module({
   imports: [
@@ -25,8 +25,8 @@ import { Wallet } from '@libs/entities/entities/Wallet';
     }),
     HttpModule,
     PassportModule,
-    UploadModule,
     AbilityModule,
+    AwsUploadModule,
   ],
   controllers: [AuthController, GoogleController],
   providers: [AuthService, UserService, GoogleService, JwtStrategy],

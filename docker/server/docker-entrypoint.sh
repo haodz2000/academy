@@ -4,7 +4,7 @@
 set -e
 
 # Start services
-node id-server/main.js
+node server/main.js
 
 # Finally call command issued to the docker service
 exec "$@"

@@ -18,4 +18,7 @@ export enum QueryKeys {
   userPublics = 'userPublics',
   courseLearnings = 'courseLearnings',
   notifications = 'notifications',
+  ratingCourses = 'ratingCourses',
+  coursesManage = 'coursesManage',
+  statsCourses = 'statsCourses',
 }

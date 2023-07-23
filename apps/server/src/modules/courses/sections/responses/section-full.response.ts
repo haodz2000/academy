@@ -3,6 +3,6 @@ import { SectionRespone } from './section.response';
 import { LessonResponse } from '../../lessons/responses/lesson.response';
 
 export class SectionFullResponse extends SectionRespone {
-  @ApiProperty({ type: LessonResponse, isArray: true, nullable: true })
+  @ApiProperty({ type: LessonResponse, isArray: true })
   lessons?: LessonResponse[];
 }

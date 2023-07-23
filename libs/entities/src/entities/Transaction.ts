@@ -2,12 +2,20 @@ import {
   TransactionStatus,
   TransactionType,
 } from '@libs/constants/entities/Transaction';
-import { Entity, ManyToOne, OneToOne, Property } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  Property,
+} from '@mikro-orm/core';
 import { BaseEntityWithUuidPrimaryKey } from './BaseEntityWithUuidPrimaryKey';
 import { Scalar } from '@libs/constants/interfaces/scalar';
 import { Wallet } from './Wallet';
 import { User } from './User';
 import { WithdrawRequest } from './WithdrawRequest';
+import { WalletBalance } from './WalletBalance';
 
 @Entity({ tableName: 'transactions' })
 export class Transaction extends BaseEntityWithUuidPrimaryKey<
@@ -70,6 +78,12 @@ export class Transaction extends BaseEntityWithUuidPrimaryKey<
     joinColumn: 'from_wallet_id',
   })
   senderWallet: Wallet | null;
+
+  @OneToMany({
+    entity: () => WalletBalance,
+    mappedBy: (balance) => balance.transaction,
+  })
+  balances = new Collection<WalletBalance>(this);
 
   @ManyToOne({
     entity: () => User,
